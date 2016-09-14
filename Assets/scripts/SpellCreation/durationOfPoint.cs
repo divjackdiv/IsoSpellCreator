@@ -3,9 +3,9 @@ using System.Collections;
 
 public class durationOfPoint : MonoBehaviour {
 
-	public GameObject inputManager;
+	public GameObject inputSpellCreator;
 	public int number;
 	void OnMouseDown () {
-    	inputManager.GetComponent<inputManager>().modifyPointDuration(number);
+    	inputSpellCreator.GetComponent<inputSpellCreator>().modifyPointDuration(number);
 	}
 }

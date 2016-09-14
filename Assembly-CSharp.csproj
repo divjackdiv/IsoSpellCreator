@@ -48,19 +48,21 @@
      <Compile Include="Assets\scripts\Combat\CombatInputManager.cs" />
      <Compile Include="Assets\scripts\Combat\CombatManager.cs" />
      <Compile Include="Assets\scripts\Combat\SpellBook.cs" />
-     <Compile Include="Assets\scripts\OldCode\oldGridManager.cs" />
+     <Compile Include="Assets\scripts\Combat\mobCombat.cs" />
+     <Compile Include="Assets\scripts\Combat\playerCombat.cs" />
+     <Compile Include="Assets\scripts\Overall\camera.cs" />
      <Compile Include="Assets\scripts\Overall\gridManager.cs" />
+     <Compile Include="Assets\scripts\Overall\overallManager.cs" />
      <Compile Include="Assets\scripts\Overall\staticFunctions.cs" />
      <Compile Include="Assets\scripts\Overall\tile.cs" />
      <Compile Include="Assets\scripts\SpellCreation\SpellBranch.cs" />
-     <Compile Include="Assets\scripts\SpellCreation\SpellClasses.cs" />
      <Compile Include="Assets\scripts\SpellCreation\SpellCreator.cs" />
      <Compile Include="Assets\scripts\SpellCreation\SpellPoint.cs" />
      <Compile Include="Assets\scripts\SpellCreation\SpellScript.cs" />
      <Compile Include="Assets\scripts\SpellCreation\durationOfPoint.cs" />
-     <Compile Include="Assets\scripts\SpellCreation\inputManager.cs" />
-     <Compile Include="Assets\scripts\World\Player.cs" />
-     <None Include="Assets\sprites\InternetAssets\tiles-credits.txt" />
+     <Compile Include="Assets\scripts\SpellCreation\inputSpellCreator.cs" />
+     <Compile Include="Assets\scripts\World\mobWorld.cs" />
+     <Compile Include="Assets\scripts\World\playerWorld.cs" />
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Program Files/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: f4781400beb0df64db10e63d9e159805
-timeCreated: 1473357983
+timeCreated: 1473373949
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -65,21 +65,21 @@ TextureImporter:
         y: 14
         width: 70
         height: 122
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: 15, y: 61}
-        - {x: -17, y: 61}
-        - {x: -23, y: 60}
-        - {x: -32, y: 45}
-        - {x: -35, y: 31}
-        - {x: -35, y: -55}
-        - {x: -29, y: -61}
-        - {x: 21, y: -61}
-        - {x: 35, y: -47}
-        - {x: 35, y: 27}
-        - {x: 29, y: 49}
+      - - {x: 15, y: 122}
+        - {x: -17, y: 122}
+        - {x: -23, y: 121}
+        - {x: -32, y: 106}
+        - {x: -35, y: 92}
+        - {x: -35, y: 6}
+        - {x: -29, y: 0}
+        - {x: 21, y: 0}
+        - {x: 35, y: 14}
+        - {x: 35, y: 88}
+        - {x: 29, y: 110}
     - name: testSprite_1
       rect:
         serializedVersion: 2

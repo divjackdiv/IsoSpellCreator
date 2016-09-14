@@ -1,28 +1,27 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
 public class SpellBranch : MonoBehaviour {
 
-	public Branch branch;
-	List<Point> nextPoints;
 
 	public void Start(){
-		nextPoints = new List<Point>();
 	}
 
 	public void updateBranch(){
-		for(int i = 0; i < branch.currentPoints.Count; i++){
-			Point p = branch.currentPoints[i];
-			print("		branch");
-			bool shouldMove = p.getGameObject().GetComponent<SpellPoint>().updatePoint();
-			if(shouldMove){
-				nextPoints.Remove(p);
-				foreach(Point child in p.children){
-					nextPoints.Add(child);
+		List<Transform> currentChildren = new List<Transform>();
+		foreach(Transform child in transform){
+			currentChildren.Add(child);
+		}
+		foreach(Transform child in currentChildren){
+			bool pointDestroyed = child.gameObject.GetComponent<SpellPoint>().updatePoint();
+			if(pointDestroyed){
+				foreach(Transform grandChild in child.transform){
+					grandChild.parent = transform;
 				}
+				Destroy(child.gameObject);
 			}
 		}
-		branch.currentPoints = nextPoints;
+		if(transform.childCount == 0)Destroy(gameObject);
 	}
 }

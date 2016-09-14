@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 public class SpellBook : MonoBehaviour {
 
-	public GameObject combatManager;
-	public List<GameObject> Spells;
+	public GameObject playerCombat;
+	public GameObject player;
+	List<GameObject> Spells;
 	// Use this for initialization
 	void Start () {
 		Spells = new List<GameObject>();
@@ -14,25 +15,28 @@ public class SpellBook : MonoBehaviour {
 		if (index < 0) return;
 		if (index < Spells.Count){
 			GameObject s = Spells[index];
+			s = (GameObject) Instantiate(s);
 			s.active = true;
-			foreach(Branch b in s.GetComponent<SpellScript>().spell.branches){
-				bool durOverOne = false;
-				Point point = b.root;
-				setupPoints(point, durOverOne);
-			}
-			combatManager.GetComponent<CombatManager>().spells.Add(s);
+			setupSpell(s.transform.GetChild(0).transform.GetChild(0).gameObject, false);
+			playerCombat.GetComponent<playerCombat>().addSpell(s);
+			s.transform.parent = player.transform;
+			s.transform.localPosition = new Vector3(0, 0, 0);
+			s.transform.parent = playerCombat.transform;
 		}
 	}
 
-	void setupPoints(Point point, bool b){
+	void setupSpell(GameObject spell, bool b){
 		bool durOverOne = b;
-		if(!durOverOne && point.duration <= 1) point.getGameObject().active = true;
+		if(!durOverOne && spell.GetComponent<SpellPoint>().duration <= 1) spell.active = true;
 		else {
-			point.getGameObject().active = false;
+			spell.active = false;
 			durOverOne = true;
 		}
-		foreach(Point p in point.children){
-			setupPoints(p, durOverOne);
+		foreach(Transform child in spell.transform){
+			setupSpell(child.gameObject, durOverOne);
 		}
+	}
+	public void addSpell(GameObject spell){
+		Spells.Add(spell);
 	}
 }

@@ -5,28 +5,39 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class SpellPoint : MonoBehaviour { 
-    public GameObject originalCopy;
-    public Point point;
-
+    public int duration;
+    public float damage;
+    
     public bool updatePoint(){
-        print("             Point " + point.duration);
-    	if(point.duration > 0) point.duration--;
-    	if(point.duration <= 0){
-    		applyEffect();
+        if(duration > 0){
+            burn();
+            duration--;
+        }
+        if(duration <= 0){
+            applyEffect();
             return true;
-    	}
+        }
         return false;
     }
 
     //eg explode, poison, dissapear ect
     void applyEffect(){
-    	explode();
+        explode();
+    }
+    void burn(){
+        GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+        if(currentTile.GetComponent<tile>().taken){
+            GameObject takenBy = currentTile.GetComponent<tile>().takenBy;
+            if(takenBy.tag == "mob"){
+                takenBy.GetComponent<mobCombat>().takeDamage(damage);
+            }
+        }
     }
     void explode(){
-        foreach(Point child in point.children){
-            child.getGameObject().active = true;
+        foreach(Transform child in transform){
+            child.gameObject.active = true;
         }
-    	point.getGameObject().active = false;
-        print("exploded");
+        gameObject.active = false;
+        burn();
     }
 }

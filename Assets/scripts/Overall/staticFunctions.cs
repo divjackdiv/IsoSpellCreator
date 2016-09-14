@@ -23,8 +23,8 @@ public class StaticFunctions {
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, layerMask);
         if (hit){
             if (hit.collider != null){
-                GameObject tile = hit.collider.gameObject;
-                return tile;
+                GameObject obj = hit.collider.gameObject;
+                return obj;
             }
         }
         return null;
@@ -32,6 +32,17 @@ public class StaticFunctions {
 
     public static GameObject getObjectAt(Vector2 pos, int layerMask){
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, layerMask);
+        if (hit){
+            if (hit.collider != null){
+                GameObject obj = hit.collider.gameObject;
+                return obj;
+            }
+        }
+        return null;
+    }
+    public static GameObject getTileAt(Vector2 pos){
+        int groundLayerMask = 1<<9;
+        RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, groundLayerMask);
         if (hit){
             if (hit.collider != null){
                 GameObject tile = hit.collider.gameObject;

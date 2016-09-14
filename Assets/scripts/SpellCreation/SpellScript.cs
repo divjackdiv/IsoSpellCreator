@@ -1,9 +1,8 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 
 public class SpellScript : MonoBehaviour {
 
-	public Spell spell;
 	// Use this for initialization
 	void Start () {
 	
@@ -17,9 +16,11 @@ public class SpellScript : MonoBehaviour {
 	public void nextTurn(){
 		updateBranches();
 	}
+
 	void updateBranches(){
-		foreach(Branch b in spell.branches){
-			b.getGameObject().GetComponent<SpellBranch>().updateBranch();
+		foreach(Transform child in transform){
+			child.GetComponent<SpellBranch>().updateBranch();
 		}
+		if(transform.childCount == 0)Destroy(gameObject);
 	}
 }
