@@ -3,6 +3,8 @@ using System.Collections;
 
 public class SpellScript : MonoBehaviour {
 
+	public int cost;
+	public GameObject playerCombat;
 	// Use this for initialization
 	void Start () {
 	
@@ -13,14 +15,18 @@ public class SpellScript : MonoBehaviour {
 	
 	}
 
-	public void nextTurn(){
-		updateBranches();
+	public bool nextTurn(){
+		 return updateBranches();
 	}
 
-	void updateBranches(){
+	bool updateBranches(){
+		bool shouldDelete = true;
 		foreach(Transform child in transform){
-			child.GetComponent<SpellBranch>().updateBranch();
+			if(!child.GetComponent<SpellBranch>().updateBranch()) shouldDelete = false;
 		}
-		if(transform.childCount == 0)Destroy(gameObject);
+		if(shouldDelete){
+			Destroy(gameObject);
+		}
+		return shouldDelete;
 	}
 }

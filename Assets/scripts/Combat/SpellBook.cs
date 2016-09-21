@@ -24,7 +24,14 @@ public class SpellBook : MonoBehaviour {
 			s.transform.parent = playerCombat.transform;
 		}
 	}
+	public GameObject getSpell(int index){
+		if (index < 0 || index >= Spells.Count) return null;
+		return Spells[index];
+	}
 
+	public int getSpellCount(){
+		return Spells.Count;
+	}
 	void setupSpell(GameObject spell, bool b){
 		bool durOverOne = b;
 		if(!durOverOne && spell.GetComponent<SpellPoint>().duration <= 1) spell.active = true;

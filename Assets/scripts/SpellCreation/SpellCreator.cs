@@ -10,6 +10,7 @@ public class SpellCreator : MonoBehaviour {
     public List<GameObject> spellsGameObjects;
     public GameObject spellGameObject;
     public GameObject spellBook;
+    public GameObject playerCombat;
     public GameObject player;
 
     public GameObject spellCanvasObject;
@@ -79,15 +80,50 @@ public class SpellCreator : MonoBehaviour {
 
     public void saveSpell(){
         if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0  && spellIndex < 4){
+            enableChildrenLineRenderers(spell, false);
             spell.active = false;
+            int cost = calculateSpellCost(spell);
+            spell.GetComponent<SpellScript>().playerCombat = playerCombat;
+            spell.GetComponent<SpellScript>().cost = cost;
             spellBook.GetComponent<SpellBook>().addSpell(spell);
             Sprite sprite = spell.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;
+            spellCanvasObject.transform.GetChild(spellIndex).GetChild(0).GetComponent<Text>().text = cost + "";
             spellCanvasObject.transform.GetChild(spellIndex++).GetComponent<Image>().sprite = sprite;
             spell.transform.parent = spellBook.transform;
         }
         else Destroy(spell);
-        overallManager.GetComponent<overallManager>().closeSpellCreator();
+        overallManager.GetComponent<overallManager>().closeSpellCreator(true);
     }
+
+    public int calculateSpellCost(GameObject s){
+        int cost = 0;
+        foreach(Transform branch in s.transform){
+            if(branch.GetChild(0) != null){
+                cost += calculatePointCost(branch.GetChild(0).gameObject, 0);
+            }
+        }
+        return cost;
+    }
+
+    public int calculatePointCost(GameObject sp, int currentCost){
+        int cost = currentCost;
+        foreach(Transform child in sp.transform){
+            cost += calculatePointCost(child.gameObject, currentCost); 
+        }        
+        cost += sp.gameObject.GetComponent<SpellPoint>().cost;
+        cost += sp.gameObject.GetComponent<SpellPoint>().duration;
+        return cost;
+    }
+
     public void close(){
+        Destroy(spell);
+    }
+
+
+    void enableChildrenLineRenderers(GameObject g, bool enable){
+        LineRenderer[] lrs = g.GetComponentsInChildren<LineRenderer>(true);
+        foreach (LineRenderer lr in lrs){
+            lr.enabled = enable;
+        }
     }
 }

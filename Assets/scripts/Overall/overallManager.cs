@@ -38,7 +38,7 @@ public class overallManager : MonoBehaviour {
         spellCreator.GetComponent<SpellCreator>().open();
 	}
 
-	public void closeSpellCreator(){
+	public void closeSpellCreator(bool saved){
         inputSpellCreator.GetComponent<inputSpellCreator>().hideOptions();
         combatScripts.active = false;
         combatCanvas.active = false;
@@ -47,7 +47,7 @@ public class overallManager : MonoBehaviour {
         worldScripts.active = true;
         worldCanvas.active = true;
         gridManager.GetComponent<gridManager>().clearGrid();
-        //spellCreator.GetComponent<SpellCreator>().close();
+        if (!saved) spellCreator.GetComponent<SpellCreator>().close();
     }
 
     public void startCombat(GameObject enemies){

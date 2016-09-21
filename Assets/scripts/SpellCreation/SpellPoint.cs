@@ -7,6 +7,7 @@ using System.Collections.Generic;
 public class SpellPoint : MonoBehaviour { 
     public int duration;
     public float damage;
+    public int cost;
     
     public bool updatePoint(){
         if(duration > 0){
@@ -14,7 +15,7 @@ public class SpellPoint : MonoBehaviour {
             duration--;
         }
         if(duration <= 0){
-            applyEffect();
+            //applyEffect();
             return true;
         }
         return false;

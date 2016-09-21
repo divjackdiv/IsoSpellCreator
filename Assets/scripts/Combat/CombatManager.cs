@@ -12,7 +12,6 @@ public class CombatManager : MonoBehaviour {
 	int index;
 	bool characterPlayed;
 	bool combatStarted;
-
 	// Use this for initialization
 	void Start () {
 		index = 0;
@@ -41,12 +40,12 @@ public class CombatManager : MonoBehaviour {
 		characters = new List<GameObject>();
 		turn = 0;
 		characters.Add(player);
-		GameObject playerTile = StaticFunctions.getTileAt(player.transform.position);
-		playerTile.GetComponent<tile>().takeTile(player);
-		player.transform.position = playerTile.transform.position;
+		playerCombat.GetComponent<playerCombat>().startCombat();
 		foreach(Transform child in enemies.transform){
 			characters.Add(child.gameObject);
 			child.GetComponent<mobWorld>().enabled = false;
+			child.GetComponent<mobCombat>().enabled  = true;
+			child.GetComponent<mobCombat>().startCombat();
 		}
 		characterPlayed = true;
 		combatStarted = true;

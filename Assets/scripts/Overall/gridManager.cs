@@ -18,4 +18,14 @@ public class gridManager : MonoBehaviour {
 			clearTile(child.gameObject);
 		}
 	}
+
+	public int movementCost(GameObject currentTile, GameObject target){
+		float xCost = Mathf.Abs(currentTile.transform.position.x - target.transform.position.x); 
+		float yCost = Mathf.Abs(currentTile.transform.position.y - target.transform.position.y); 
+		xCost *= 2;
+		yCost *= 4;
+		int totalCost = (int) xCost;
+		if (totalCost < yCost) totalCost = (int) yCost;
+		return totalCost;
+	}
 }

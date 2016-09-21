@@ -11,6 +11,7 @@ public class mobCombat : MonoBehaviour {
 
     Animator animator;
     int state;
+    bool playing;
 	// Use this for initialization
 	void Start () {
         animator = GetComponent<Animator>();
@@ -18,44 +19,46 @@ public class mobCombat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		if (state == 0){
-			animator.SetInteger("state", 0); 	//State 0 is Idle
-		}
-		else if(state == 1){
-			animator.SetInteger("state", 1);	//State 1 is walking
-			moveTo(currentTile.transform.position);
-		}
-		else if(state == 2){
-			animator.SetInteger("state", 2);	//State 2 is attacking
-		}
-		else if(state == 3){
-			animator.SetInteger("state", 3);	//State 3 is dying 
-			if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0)){
-				die();
-				endPlay();
-			}
-			
-		}
-	}
-	public void takeDamage(float damage){
-		lifePoints -= damage;
 		if(lifePoints <= 0){
-			state = 3;
+			animator.SetInteger("state", 3);	//State 3 is dying 
+			//if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime > 1 && !animator.IsInTransition(0)){
+				die();
+			//}
 		}
+		else {
+			if (state == 0){
+				animator.SetInteger("state", 0); 	//State 0 is Idle
+			}
+			else if(state == 1){
+				animator.SetInteger("state", 1);	//State 1 is walking
+				moveTo(currentTile.transform.position);
+			}
+			else if(state == 2){
+				animator.SetInteger("state", 2);	//State 2 is attacking
+			}
+		}
+	} 
+	public void takeDamage(float damage){
+		print("'arggghh tu fais mal' - Vous avez infligé " +damage +" dégats");
+		lifePoints -= damage;
 	}
 
 	public void die(){
 		currentTile.GetComponent<tile>().leaveTile();
 		combatManager.GetComponent<CombatManager>().characters.Remove(gameObject);
-		endPlay();
+		if(playing)combatManager.GetComponent<CombatManager>().finishedPlaying();
 		Destroy(gameObject);
 	}
 
 	public void startCombat(){
 		GetComponent<mobWorld>().enabled = false;
+		currentTile = StaticFunctions.getTileAt(transform.position);
+		currentTile.GetComponent<tile>().takeTile(gameObject);
+		state = 1;
 	}
 
 	public void play(){
+		playing = true;
 		currentTile = StaticFunctions.getTileAt(transform.position);
 		currentTile.GetComponent<tile>().takeTile(gameObject);
         state = 0;
@@ -78,12 +81,13 @@ public class mobCombat : MonoBehaviour {
         Vector2 currentPos = transform.position;
         if(currentPos == pos){
         	state = 0;
-        	endPlay();
+        	if (playing) endPlay();
         }
 	}
 
 
 	public void endPlay(){
+		playing = false;
 		animator.SetInteger("state", 0); 	//State 0 is Idle
 		combatManager.GetComponent<CombatManager>().finishedPlaying();
 	}

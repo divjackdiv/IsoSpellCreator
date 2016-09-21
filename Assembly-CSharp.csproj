@@ -53,6 +53,7 @@
      <Compile Include="Assets\scripts\Overall\camera.cs" />
      <Compile Include="Assets\scripts\Overall\gridManager.cs" />
      <Compile Include="Assets\scripts\Overall\overallManager.cs" />
+     <Compile Include="Assets\scripts\Overall\playerStats.cs" />
      <Compile Include="Assets\scripts\Overall\staticFunctions.cs" />
      <Compile Include="Assets\scripts\Overall\tile.cs" />
      <Compile Include="Assets\scripts\SpellCreation\SpellBranch.cs" />
