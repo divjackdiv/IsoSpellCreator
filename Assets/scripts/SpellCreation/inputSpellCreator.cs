@@ -213,6 +213,7 @@ public class inputSpellCreator : MonoBehaviour {
     void dropPoint(){
         GameObject tile = StaticFunctions.getObjectAtMousePos(groundLayerMask); 
         if(tile == null){
+            oldTile.GetComponent<tile>().leaveTile();
             Destroy(currentGameObject);
             isDragging = false;
             currentGameObject = null; 

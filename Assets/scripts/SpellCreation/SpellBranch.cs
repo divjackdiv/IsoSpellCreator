@@ -10,6 +10,7 @@ public class SpellBranch : MonoBehaviour {
 
 	void Update(){
 		if(updating && currentPoints.Count == 0){
+			print("branches has no more points");
 			//retrun should delete
 			updating = false;
 			transform.parent.GetComponent<SpellScript>().currentBranches.Remove(transform);

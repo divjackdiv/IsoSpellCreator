@@ -17,9 +17,10 @@ public class SpellScript : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if(updating && currentBranches.Count <= 0){
+			print("spell has no more points");
 			updating = false;
+			playerCombat.GetComponent<playerCombat>().spellFinished();
 			if(shouldDelete){
-				playerCombat.GetComponent<playerCombat>().spellFinished();
 				playerCombat.GetComponent<playerCombat>().removeSpell(gameObject);
 				Destroy(gameObject);
 			}

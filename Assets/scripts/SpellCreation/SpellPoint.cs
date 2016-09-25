@@ -59,6 +59,7 @@ public class SpellPoint : MonoBehaviour {
     }
 
     void finished(){
+        if(duration >= 0) branch.GetComponent<SpellBranch>().shouldDelete = false;
         branch.GetComponent<SpellBranch>().currentPoints.Remove(transform);
         if(duration <= 0){
             List<Transform> temp = new List<Transform>();
@@ -70,6 +71,5 @@ public class SpellPoint : MonoBehaviour {
             }
             Destroy(gameObject);
         }
-        else branch.GetComponent<SpellBranch>().shouldDelete = false;
     }
 }
