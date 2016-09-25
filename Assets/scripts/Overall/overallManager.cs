@@ -29,6 +29,7 @@ public class overallManager : MonoBehaviour {
 	}
 
 	public void openSpellCreator(){
+		Time.timeScale = 0;
         combatScripts.active = false;
         combatCanvas.active = false;
         spellCreationCanvas.active = true;
@@ -48,6 +49,7 @@ public class overallManager : MonoBehaviour {
         worldCanvas.active = true;
         gridManager.GetComponent<gridManager>().clearGrid();
         if (!saved) spellCreator.GetComponent<SpellCreator>().close();
+        Time.timeScale = 1;
     }
 
     public void startCombat(GameObject enemies){

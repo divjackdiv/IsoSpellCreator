@@ -20,6 +20,9 @@ public class playerCombat : MonoBehaviour {
 	public GameObject spellPointsUi;
 
 	List<GameObject> spells;
+	int spellsStillRunning;
+	bool waitingForSpells;
+
 	GameObject spellCanvasObject;
 	bool playing;
 	float step;
@@ -72,6 +75,12 @@ public class playerCombat : MonoBehaviour {
         else{
         	canWalk = true;
         }
+
+        if(waitingForSpells && spellsStillRunning <= 0){
+        	waitingForSpells = false;
+			combatManager.GetComponent<CombatManager>().finishedPlaying();
+			combatManager.GetComponent<CombatManager>().nextTurn();
+        }
 	}
 
 	public void play(){
@@ -110,16 +119,13 @@ public class playerCombat : MonoBehaviour {
 				whiteOut(mvmtPointsUi);
 
 				//Update spell durations and move spells
-				List<GameObject> temp = new List<GameObject>();
+				spellsStillRunning = 0;
 				foreach (GameObject s in spells){
-	       			bool shouldRemove = s.GetComponent<SpellScript>().nextTurn();
-	       			if(!shouldRemove) temp.Add(s);
+					spellsStillRunning++;
+	       			s.GetComponent<SpellScript>().nextTurn();
 	   			}
-	   			spells = temp;
-
+	   			waitingForSpells = true;
 	   			playing = false;
-				combatManager.GetComponent<CombatManager>().finishedPlaying();
-				combatManager.GetComponent<CombatManager>().nextTurn();
 			}
 		}
 	}
@@ -159,6 +165,9 @@ public class playerCombat : MonoBehaviour {
 	}
 	public void removeSpell(GameObject spell){
 		spells.Remove(spell);
+	}
+	public void spellFinished(){
+		spellsStillRunning--;
 	}
 	public void endCombat(){
 		foreach(GameObject spell in spells){

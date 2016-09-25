@@ -17,7 +17,7 @@ public class SpellBook : MonoBehaviour {
 			GameObject s = Spells[index];
 			s = (GameObject) Instantiate(s);
 			s.active = true;
-			setupSpell(s.transform.GetChild(0).transform.GetChild(0).gameObject, false);
+			setupSpell(s.transform.GetChild(0).transform.GetChild(0).gameObject, true);
 			playerCombat.GetComponent<playerCombat>().addSpell(s);
 			s.transform.parent = player.transform;
 			s.transform.localPosition = new Vector3(0, 0, 0);
@@ -32,6 +32,7 @@ public class SpellBook : MonoBehaviour {
 	public int getSpellCount(){
 		return Spells.Count;
 	}
+	/*
 	void setupSpell(GameObject spell, bool b){
 		bool durOverOne = b;
 		if(!durOverOne && spell.GetComponent<SpellPoint>().duration <= 1) spell.active = true;
@@ -43,6 +44,17 @@ public class SpellBook : MonoBehaviour {
 			setupSpell(child.gameObject, durOverOne);
 		}
 	}
+	*/
+	void setupSpell(GameObject spell, bool isRoot){
+		if(isRoot) spell.active = true;
+		else {
+			spell.active = false;
+		}
+		foreach(Transform child in spell.transform){
+			setupSpell(child.gameObject, false);
+		}
+	}
+
 	public void addSpell(GameObject spell){
 		Spells.Add(spell);
 	}

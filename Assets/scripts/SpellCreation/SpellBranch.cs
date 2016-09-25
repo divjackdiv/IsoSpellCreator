@@ -4,38 +4,33 @@ using System.Collections.Generic;
 
 public class SpellBranch : MonoBehaviour {
 
+	public List<Transform> currentPoints;
+	public bool shouldDelete = true;
+	bool updating = false;
 
-	public void Start(){
+	void Update(){
+		if(updating && currentPoints.Count == 0){
+			//retrun should delete
+			updating = false;
+			transform.parent.GetComponent<SpellScript>().currentBranches.Remove(transform);
+			if(shouldDelete) Destroy(gameObject);
+			else transform.parent.GetComponent<SpellScript>().shouldDelete = false;
+		}
 	}
 
-	public bool updateBranch(){
+	public void updateBranch(){
+		transform.parent.GetComponent<SpellScript>().currentBranches.Add(transform);
+		updating = true;
+		shouldDelete = true;
+		currentPoints = new List<Transform>();
+
 		List<Transform> currentChildren = new List<Transform>();
 		foreach(Transform child in transform){
 			currentChildren.Add(child);
 		}
-		bool shouldDelete = true;
 		foreach(Transform child in currentChildren){
-			if(!updatePoint(child)) shouldDelete = false;
+			child.gameObject.GetComponent<SpellPoint>().updatePoint(gameObject);
 		}
+	}
 
-		if(shouldDelete)Destroy(gameObject);
-		return shouldDelete;
-	}
-	
-	public bool updatePoint(Transform child){
-		bool pointDestroyed = child.gameObject.GetComponent<SpellPoint>().updatePoint();
-		if(pointDestroyed){
-			List<Transform> temp = new List<Transform>();
-			foreach(Transform grandChild in child){
-				temp.Add(grandChild);
-			}
-			foreach(Transform grandChild in temp){
-				grandChild.parent = child.parent;
-				grandChild.gameObject.active = true;
-				pointDestroyed = updatePoint(grandChild);
-			}
-			Destroy(child.gameObject);
-		}
-		return pointDestroyed;
-	}
 }
