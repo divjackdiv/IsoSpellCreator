@@ -6,7 +6,7 @@ public class SpellScript : MonoBehaviour {
 
 	public int cost;
 	public List<Transform> currentBranches;
-	public GameObject playerCombat;
+	public GameObject player;
 	public bool shouldDelete = true;
 	bool updating;
 	// Use this for initialization
@@ -19,9 +19,9 @@ public class SpellScript : MonoBehaviour {
 		if(updating && currentBranches.Count <= 0){
 			print("spell has no more points");
 			updating = false;
-			playerCombat.GetComponent<playerCombat>().spellFinished();
+			player.GetComponent<playerCombat>().spellFinished();
 			if(shouldDelete){
-				playerCombat.GetComponent<playerCombat>().removeSpell(gameObject);
+				player.GetComponent<playerCombat>().removeSpell(gameObject);
 				Destroy(gameObject);
 			}
 		}

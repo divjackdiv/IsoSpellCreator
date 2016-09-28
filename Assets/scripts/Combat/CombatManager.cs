@@ -6,7 +6,6 @@ public class CombatManager : MonoBehaviour {
     public GameObject spellCreator;
     public GameObject overallManager;
     public GameObject player;
-    public GameObject playerCombat;
 	public int turn;
 	public List<GameObject> characters;
 	int index;
@@ -40,11 +39,14 @@ public class CombatManager : MonoBehaviour {
 		characters = new List<GameObject>();
 		turn = 0;
 		characters.Add(player);
-		playerCombat.GetComponent<playerCombat>().startCombat();
+		player.GetComponent<playerWorld>().enabled = false;
+		player.GetComponent<playerCombat>().enabled = true;
+		player.GetComponent<playerCombat>().startCombat();
 		foreach(Transform child in enemies.transform){
 			characters.Add(child.gameObject);
 			child.GetComponent<mobWorld>().enabled = false;
 			child.GetComponent<mobCombat>().enabled  = true;
+			child.GetComponent<mobCombat>().target = player;
 			child.GetComponent<mobCombat>().startCombat();
 		}
 		characterPlayed = true;
@@ -55,7 +57,7 @@ public class CombatManager : MonoBehaviour {
 	public void permissionToPlay(GameObject character){
 		characterPlayed = false;
 		if(character == player){
-			playerCombat.GetComponent<playerCombat>().play();
+			player.GetComponent<playerCombat>().play();
 		}
 		else if(character.GetComponent<mobCombat>() != null){
 			character.GetComponent<mobCombat>().play();
@@ -69,7 +71,7 @@ public class CombatManager : MonoBehaviour {
 	public void endCombat(){
 		combatStarted = false;
 		characterPlayed = true;
-		playerCombat.GetComponent<playerCombat>().endCombat();
+		player.GetComponent<playerCombat>().endCombat();
 		characters.Remove(player);
 		foreach(GameObject g in characters){
 			g.GetComponent<mobCombat>().enabled = false;

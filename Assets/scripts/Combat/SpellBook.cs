@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 public class SpellBook : MonoBehaviour {
 
-	public GameObject playerCombat;
 	public GameObject player;
 	List<GameObject> Spells;
 	// Use this for initialization
@@ -21,10 +20,10 @@ public class SpellBook : MonoBehaviour {
 			foreach(Transform branch in s.transform){
 				setupSpell(branch.transform.GetChild(0).gameObject, true);
 			}
-			playerCombat.GetComponent<playerCombat>().addSpell(s);
+			player.GetComponent<playerCombat>().addSpell(s);
 			s.transform.parent = player.transform;
 			s.transform.localPosition = new Vector3(0, 0, 0);
-			s.transform.parent = playerCombat.transform;
+			s.transform.parent = player.transform;
 		}
 	}
 	public GameObject getSpell(int index){

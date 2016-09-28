@@ -10,7 +10,6 @@ public class SpellCreator : MonoBehaviour {
     public List<GameObject> spellsGameObjects;
     public GameObject spellGameObject;
     public GameObject spellBook;
-    public GameObject playerCombat;
     public GameObject player;
 
     public GameObject spellCanvasObject;
@@ -83,7 +82,7 @@ public class SpellCreator : MonoBehaviour {
             enableChildrenLineRenderers(spell, false);
             spell.active = false;
             int cost = calculateSpellCost(spell);
-            spell.GetComponent<SpellScript>().playerCombat = playerCombat;
+            spell.GetComponent<SpellScript>().player = player;
             spell.GetComponent<SpellScript>().cost = cost;
             spellBook.GetComponent<SpellBook>().addSpell(spell);
             Sprite sprite = spell.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;

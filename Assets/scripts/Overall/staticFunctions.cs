@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class StaticFunctions {
 
@@ -52,4 +53,80 @@ public class StaticFunctions {
         return null;
     }
 
+
+    public static int movementCost(GameObject currentTile, GameObject target){
+        float xCost = Mathf.Abs(currentTile.transform.position.x - target.transform.position.x); 
+        float yCost = Mathf.Abs(currentTile.transform.position.y - target.transform.position.y); 
+        xCost *= 2;
+        yCost *= 4;
+        int totalCost = (int) xCost;
+        if (totalCost < yCost) totalCost = (int) yCost;
+        return totalCost;
+    }
+    public static List<GameObject> getPath(GameObject currentTile, GameObject target){
+        List<GameObject> path = new List<GameObject>();
+        Vector2 currentPos = currentTile.transform.position;
+        Vector2 targetPos = target.transform.position;
+        float xDifference = currentPos.x - targetPos.x;
+        float yDifference = currentPos.y - targetPos.y;
+        int max = 100;
+        while (xDifference != 0 || yDifference != 0){
+            max--;
+            if(max <= 0 ) return new List<GameObject>(); //If anything goes wrong this returns an empty list
+            if(xDifference == 0){
+                if(yDifference > 0){
+                    currentPos.x -= 0.5f;
+                    currentPos.y -= 0.25f;
+                }
+                //if y is negative and x does not matter
+                else{
+                    currentPos.x -= 0.5f;
+                    currentPos.y += 0.25f;
+                }
+            }
+            else if(yDifference == 0){
+                //if x is positive and y does not matter
+                if(xDifference > 0){
+                    currentPos.x -= 0.5f;
+                    currentPos.y -= 0.25f;
+                }
+                //if x is negative and y does not matter
+                else{
+                    currentPos.x += 0.5f;
+                    currentPos.y -= 0.25f;
+                }
+            }
+            else{
+                if(xDifference > 0){
+                    //if both x and y are positive
+                    if(yDifference > 0){
+                        currentPos.x -= 0.5f;
+                        currentPos.y -= 0.25f;
+                    }
+                    //if x is positive and y is negative
+                    else{
+                        currentPos.x -= 0.5f;
+                        currentPos.y += 0.25f;
+                    }
+                }
+                else {
+                    //if x is negative but y is positive
+                    if(yDifference > 0){
+                        currentPos.x += 0.5f;
+                        currentPos.y -= 0.25f;
+                    }
+
+                    //if x and y are negative
+                    else{
+                        currentPos.x += 0.5f;
+                        currentPos.y += 0.25f;
+                    }
+                }
+            }
+            xDifference = currentPos.x - targetPos.x;
+            yDifference = currentPos.y - targetPos.y;
+            path.Add(StaticFunctions.getTileAt(currentPos));
+        }
+        return path;
+    }
 }
