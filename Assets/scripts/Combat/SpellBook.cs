@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class SpellBook : MonoBehaviour {
 
 	public GameObject player;
+	public GameObject combatManager;
 	List<GameObject> Spells;
 	// Use this for initialization
 	void Start () {
@@ -16,14 +17,13 @@ public class SpellBook : MonoBehaviour {
 			GameObject s = Spells[index];
 			s = (GameObject) Instantiate(s);
 			s.active = true;
-			print("size " +  s.transform.GetChild(0).childCount);
 			foreach(Transform branch in s.transform){
 				setupSpell(branch.transform.GetChild(0).gameObject, true);
 			}
 			player.GetComponent<playerCombat>().addSpell(s);
 			s.transform.parent = player.transform;
 			s.transform.localPosition = new Vector3(0, 0, 0);
-			s.transform.parent = player.transform;
+			s.transform.parent = combatManager.transform;
 		}
 	}
 	public GameObject getSpell(int index){

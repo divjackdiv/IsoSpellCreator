@@ -9,15 +9,14 @@ public class playerWorld : MonoBehaviour {
 	public float walkSpeed;
 	public GameObject spellCreator;
 	List<GameObject> path;
-	float step;
 	int groundLayer;
     int groundLayerMask;
     bool shouldWalk;
+    bool creatingSpell;
 
 
 	void Start () {
 		path = new List<GameObject>();
-		step = walkSpeed * Time.deltaTime;   
         groundLayer = spellCreator.GetComponent<SpellCreator>().groundLayer;
         groundLayerMask = 1<<groundLayer;
 	}
@@ -48,8 +47,9 @@ public class playerWorld : MonoBehaviour {
 			path.RemoveAt(0);
 		}
 	}
+
 	bool walkTo(Vector2 position){
-        transform.position = Vector3.MoveTowards(transform.position, position, step);
+        transform.position = Vector3.MoveTowards(transform.position, position, walkSpeed * Time.deltaTime);
         Vector2 p = new Vector2(transform.position.x, transform.position.y);
         if(p == position){
         	return true;

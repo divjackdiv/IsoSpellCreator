@@ -10,7 +10,6 @@ public class mobWorld : MonoBehaviour {
 	public GameObject overallManager;
 	public GameObject player;
 	public float range;
-	float step;
 	int groundLayer;
     int groundLayerMask;
     int state;
@@ -22,8 +21,6 @@ public class mobWorld : MonoBehaviour {
 	void Start () {
 		animator = GetComponent<Animator>();
 		state = 0;
-		animator.SetInteger("state", 0); 	//State 0 is Idle
-		step = speed * Time.deltaTime;   
         groundLayer = spellCreator.GetComponent<SpellCreator>().groundLayer;
         groundLayerMask = 1<<groundLayer;
 	}
@@ -44,7 +41,7 @@ public class mobWorld : MonoBehaviour {
 	}
 
 	void moveTo(Vector2 position){
-        transform.position = Vector3.MoveTowards(transform.position, position, step);
+        transform.position = Vector3.MoveTowards(transform.position, position, speed * Time.deltaTime);
         Vector2 p = new Vector2(transform.position.x, transform.position.y);
 		animator.SetInteger("state", 1);	//State 1 is walking
         if(p == position){

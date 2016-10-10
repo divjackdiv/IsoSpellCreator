@@ -1,21 +1,35 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
+using UnityEngine.UI; // Required when Using UI elements.
 
 public class playerStats : MonoBehaviour {
 
+	public static playerStats instance;
+    
+    public int level;
 	public int lifePoints;
 	public int mana;
 	public int resistance;
 	public int reflex;
-	public int mouvement;
+	public int movement;
 	public int spellPoints; //How many different spells can be created per turn;
-	// Use this for initialization
-	void Start () {
-	
+
+
+	public playerData save(){
+		playerData p = new playerData(transform.position, level, lifePoints, mana, resistance, reflex, movement, spellPoints);
+		return p;
 	}
 	
-	// Update is called once per frame
-	void Update () {
-	
+	public void load(){
+		transform.position = Game.current.playerData.getLastSavedPos();
+		Dictionary<string, int> d = Game.current.playerData.getStats();
+		level = d["level"];
+		lifePoints = d["lifePoints"];
+		mana = d["mana"];
+		resistance = d["resistance"];
+		reflex = d["reflex"];
+		movement = d["movement"];
+		spellPoints = d["spellPoints"];
 	}
 }

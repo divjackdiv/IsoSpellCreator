@@ -10,6 +10,12 @@ public class camera : MonoBehaviour {
     public float maxZoom;
     public float minZoom;
 
+    void Awake(){
+    	if (target)
+        {
+            transform.position = new Vector3 (target.position.x, target.position.y, transform.position.z);
+        }
+    }
     void Start(){
     	currentZoom = Camera.main.orthographicSize;
     }
@@ -23,7 +29,7 @@ public class camera : MonoBehaviour {
              transform.position = Vector3.SmoothDamp(transform.position, destination, ref velocity, dampTime);
         }
 
-		if(Input.GetAxis("Mouse ScrollWheel") != 0  )
+		if(Input.GetAxis("Mouse ScrollWheel") != 0)
 		{
 
 			if (Input.GetAxis("Mouse ScrollWheel") > 0)

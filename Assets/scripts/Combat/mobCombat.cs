@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
-
+[System.Serializable]
 public class mobCombat : MonoBehaviour {
 
 	public int mobType;
@@ -12,11 +12,11 @@ public class mobCombat : MonoBehaviour {
 		3 = 1 and 2
 	*/
 	//Following are the mobs' stats
-	public float lifePoints;
-	public int damage;
-	public int range;
-	public int movementPoints;
 	int currentMovementPoints;
+	int currentLifePoints;
+	int damage;
+	int range;
+
 	public GameObject target;
     public float walkingSpeed; //PURELY COSMETIC
 	public GameObject spellCreator;
@@ -28,18 +28,16 @@ public class mobCombat : MonoBehaviour {
     Animator animator;
     int state;
     bool playing;
-    float step;
     float animCounter;
 	// Use this for initialization
 	void Start () {		
 		animCounter = 0;
-		step = walkingSpeed * Time.deltaTime;
         animator = GetComponent<Animator>();
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if(lifePoints <= 0){
+		if(currentLifePoints <= 0){
 			animCounter += Time.deltaTime;
 			animator.SetInteger("state", 3);	 //animator State 3 is dying 
 			if (animCounter >= animator.GetCurrentAnimatorStateInfo(0).length * 2){
@@ -65,8 +63,8 @@ public class mobCombat : MonoBehaviour {
 			}
 		}
 	} 
-	public void takeDamage(float damage){
-		lifePoints -= damage;
+	public void takeDamage(int dmg){
+		currentLifePoints -= dmg;
 	}
 
 	public void die(){
@@ -77,6 +75,10 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	public void startCombat(){
+		currentLifePoints = gameObject.GetComponent<mobStats>().lifePoints;
+		currentMovementPoints = gameObject.GetComponent<mobStats>().movementPoints;
+		damage = gameObject.GetComponent<mobStats>().damage;
+		range = gameObject.GetComponent<mobStats>().range;
 		GetComponent<mobWorld>().enabled = false;
 		currentTile = StaticFunctions.getTileAt(transform.position);
 		currentTile.GetComponent<tile>().takeTile(gameObject);
@@ -86,12 +88,10 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	public void play(){
-		currentMovementPoints = movementPoints;
 		playing = true;
 		currentTile = StaticFunctions.getTileAt(transform.position);
 		currentTile.GetComponent<tile>().takeTile(gameObject);
         state = 0;
-		//changePos(new Vector2(transform.position.x - 0.5f, transform.position.y -0.25f));
 		playMovement();
 	}
 
@@ -126,7 +126,7 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	public void moveTo(Vector2 pos){
-        transform.position = Vector2.MoveTowards(transform.position, pos, step);
+        transform.position = Vector2.MoveTowards(transform.position, pos, walkingSpeed * Time.deltaTime);
         Vector2 currentPos = transform.position;
         if(currentPos == pos){
         	state = 0;
@@ -146,7 +146,7 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	bool walkTo(Vector2 position){
-        transform.position = Vector3.MoveTowards(transform.position, position, step);
+        transform.position = Vector3.MoveTowards(transform.position, position, walkingSpeed * Time.deltaTime);
         Vector2 p = new Vector2(transform.position.x, transform.position.y);
         if(p == position){
         	return true;

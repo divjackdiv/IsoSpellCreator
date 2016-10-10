@@ -6,43 +6,90 @@ using System.Collections.Generic;
 
 public class SpellPoint : MonoBehaviour { 
     public int duration;
-    public float damage;
+    public int damage;
     public float movementSpeed = 1;
     public int cost;
     bool moving;
     bool playing;
     Vector2 target;
-
+    Animator animator;
     GameObject branch;
+    GameObject currentTile;
+    int state;
+    bool appearing;
+    float animCounter;
+    int s;
+
+    void Start(){
+        state = 0;
+        s = -4;
+        animator = GetComponent<Animator>();
+    }
 
     void Update(){
+        if(s != state ){
+            s = state ;
+            print(s);
+        } 
         if(moving){
             if(moveTo(target)){
                 moving = false;
+                appearing = true;
+            }
+            else {
+                gameObject.GetComponent<SpriteRenderer>().enabled = false;
+                //state = 2;
+                // animator.SetInteger("state", 2);    // 2 is moving
+                GameObject tile = StaticFunctions.getTileAt(transform.position);
+                if (tile != currentTile){
+                    currentTile = tile;
+                    currentTile.GetComponent<tile>().changeAnim(1,true,0);
+                }
+            }
+        }
+        else if(appearing){
+            if(state != 1){
+                animCounter = 0;
+                state = 1;
+                gameObject.GetComponent<SpriteRenderer>().enabled = true;
+                animator.SetInteger("state", 1);    
+            }
+
+            animCounter += Time.deltaTime;
+            if (animCounter >= animator.GetCurrentAnimatorStateInfo(0).length){
+                appearing = false;
             }
         }
         else if(playing){
+            state = 0;
+            animator.SetInteger("state", 0);    // 0 is idle
             burn();
-            finished();  
+            finished();
         }
     }
 
     public void updatePoint(GameObject b){
+        print("update point");
+        animator = GetComponent<Animator>();
+        state = 0;
         branch = b;
         b.GetComponent<SpellBranch>().currentPoints.Add(transform);
         target = transform.position;
+        appearing = false;
         if(!gameObject.activeSelf){
             transform.position = transform.parent.GetComponent<SpellPoint>().target;
             transform.parent = b.transform;
             gameObject.active = true;
             moving = true; 
+            appearing = true;
+            currentTile = StaticFunctions.getTileAt(transform.position);
         } 
         playing = true;
         duration--;
     }
 
     void burn(){
-        GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+        currentTile = StaticFunctions.getTileAt(transform.position);
         if(currentTile.GetComponent<tile>().taken){
             GameObject takenBy = currentTile.GetComponent<tile>().takenBy;
             if(takenBy.tag == "mob"){

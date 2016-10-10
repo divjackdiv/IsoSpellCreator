@@ -36,7 +36,7 @@ public class playerCombat : MonoBehaviour {
     int currentLifePoints;
     int currentSpellPoints;
 
-	// Use this for initialization
+
 	void Start () {
 		spells = new List<GameObject>();
 		p = new List<GameObject>();
@@ -44,7 +44,7 @@ public class playerCombat : MonoBehaviour {
         step = transform.GetComponent<playerWorld>().walkSpeed * Time.deltaTime;
 
 		currentMana = transform.GetComponent<playerStats>().mana;
-		currentMovementPoints = transform.GetComponent<playerStats>().mouvement;
+		currentMovementPoints = transform.GetComponent<playerStats>().movement;
         currentLifePoints = transform.GetComponent<playerStats>().lifePoints;
 		currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
 		spellCanvasObject = spellCreator.GetComponent<SpellCreator>().spellCanvasObject;
@@ -70,7 +70,7 @@ public class playerCombat : MonoBehaviour {
 	        			currentMovementPoints -= movementCost;
 	        			canWalk = false;
 	        			shouldWalk = true;
-	        			updateMouvementPoints();
+	        			updateMovementPoints();
 	        		}
         		}
         	}
@@ -101,7 +101,7 @@ public class playerCombat : MonoBehaviour {
 		whiteOut(mvmtPointsUi, true);
         updateHealth();
         updateMana();
-        updateMouvementPoints();
+        updateMovementPoints();
         updateSpellPoints();
 	}
 
@@ -110,13 +110,13 @@ public class playerCombat : MonoBehaviour {
 			if(walkPhase){
 				walkPhase = false;
 				attackPhase = true;
-				currentMovementPoints = transform.GetComponent<playerStats>().mouvement;
+				currentMovementPoints = transform.GetComponent<playerStats>().movement;
 				greyOut(mvmtPointsUi, true);
 				whiteOut(spellPointsUi, true);
 				foreach(Transform child in spellCanvasObject.transform){
 					whiteOut(child.gameObject, true);
 				}
-				updateMouvementPoints();
+				updateMovementPoints();
 			}
 			else {
 				currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
@@ -218,7 +218,7 @@ public class playerCombat : MonoBehaviour {
 	void updateMana(){
 		manaUi.transform.GetChild(0).GetComponent<Text>().text = currentMana + "";
 	}
-	void updateMouvementPoints(){
+	void updateMovementPoints(){
 		mvmtPointsUi.transform.GetChild(0).GetComponent<Text>().text = currentMovementPoints + "";
 	}
 	void updateHealth(){
