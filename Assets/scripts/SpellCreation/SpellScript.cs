@@ -9,21 +9,14 @@ public class SpellScript : MonoBehaviour {
 	public GameObject player;
 	public bool shouldDelete = true;
 	bool updating;
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
+
 	// Update is called once per frame
 	void Update () {
 		if(updating && currentBranches.Count <= 0){
-			print("spell has no more points");
 			updating = false;
 			player.GetComponent<playerCombat>().spellFinished();
-			if(shouldDelete){
-				player.GetComponent<playerCombat>().removeSpell(gameObject);
-				Destroy(gameObject);
-			}
+			player.GetComponent<playerCombat>().removeSpell(gameObject);
+			if(shouldDelete) Destroy(gameObject);
 		}
 	}
 

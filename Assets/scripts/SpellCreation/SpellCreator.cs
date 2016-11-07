@@ -23,14 +23,26 @@ public class SpellCreator : MonoBehaviour {
     private GameObject currentGameObject;
     private int layerMask;
     private int turn;
-    
-	void Start () {
+
+    private bool shouldOpen;
+
+    void Start () {
         layerMask = 1<<groundLayer;
         spellIndex = 0;
 	}
-
-    public void open(){        
-        spell = (GameObject) Instantiate(spellGameObject, player.transform.position, Quaternion.identity);
+    void Update()
+    {
+        if (shouldOpen)
+        {
+            if (!player.GetComponent<playerOverall>().isMoving())
+            {
+                spell = (GameObject)Instantiate(spellGameObject, player.transform.position, Quaternion.identity);
+                shouldOpen = false;
+            } 
+        }
+    }
+    public void open(){
+        shouldOpen = true;
     }
 
 	public void OnDragSpell(int i){

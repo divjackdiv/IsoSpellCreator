@@ -126,6 +126,7 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	public void moveTo(Vector2 pos){
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         transform.position = Vector2.MoveTowards(transform.position, pos, walkingSpeed * Time.deltaTime);
         Vector2 currentPos = transform.position;
         if(currentPos == pos){

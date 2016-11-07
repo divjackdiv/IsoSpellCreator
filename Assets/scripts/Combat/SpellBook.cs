@@ -16,7 +16,7 @@ public class SpellBook : MonoBehaviour {
 		if (index < Spells.Count){
 			GameObject s = Spells[index];
 			s = (GameObject) Instantiate(s);
-			s.active = true;
+			s.SetActive(true);
 			foreach(Transform branch in s.transform){
 				setupSpell(branch.transform.GetChild(0).gameObject, true);
 			}
@@ -36,10 +36,15 @@ public class SpellBook : MonoBehaviour {
 	}
 
 	void setupSpell(GameObject spell, bool isRoot){
-		if(isRoot) spell.active = true;
-		else {
-			spell.active = false;
-		}
+        if (isRoot)
+        {
+            spell.SetActive(true);
+            spell.GetComponent<SpellPoint>().initPoint();
+        }
+        else
+        {
+            spell.SetActive(false);
+        }
 		foreach(Transform child in spell.transform){
 			setupSpell(child.gameObject, false);
 		}

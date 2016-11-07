@@ -23,9 +23,9 @@ public class mobWorld : MonoBehaviour {
 		state = 0;
         groundLayer = spellCreator.GetComponent<SpellCreator>().groundLayer;
         groundLayerMask = 1<<groundLayer;
-	}
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+    }
 	
-	// Update is called once per frame
 	void Update () {
 		if(ennemyDetected()){
     		startCombat();
@@ -36,7 +36,8 @@ public class mobWorld : MonoBehaviour {
 			}
 			else if(state == 1){
 				moveTo(roamingTargets[targetIndex].transform.position);
-			}
+                GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+            }
 		}
 	}
 

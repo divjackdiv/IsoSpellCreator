@@ -22,10 +22,6 @@ public class mobStats : MonoBehaviour {
 
 	public void load(){
 		index = Game.current.mobCount++;
-		foreach (int key in Game.current.mobs.Keys)
-	    {
-	        print(key);
-	    }
 		if(Game.current.mobs[index].isDestroyed()) gameObject.GetComponent<mobCombat>().die();
 		transform.position = Game.current.mobs[index].getLastSavedPos();
 		Dictionary<string, int> d = Game.current.mobs[index].getStats();

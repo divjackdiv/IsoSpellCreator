@@ -21,13 +21,9 @@ public class playerCombat : MonoBehaviour {
 	int spellsStillRunning;
 	bool waitingForSpells;
 
-	GameObject spellCanvasObject;
+    GameObject spellCanvasObject;
 	bool playing;
-	float step;
-   	List<GameObject> path;
    	List<GameObject> p; //List used to show possible paths
-    bool shouldWalk;
-    bool canWalk;
     bool walkPhase;
     bool attackPhase;
 
@@ -40,8 +36,6 @@ public class playerCombat : MonoBehaviour {
 	void Start () {
 		spells = new List<GameObject>();
 		p = new List<GameObject>();
-		canWalk = true;
-        step = transform.GetComponent<playerWorld>().walkSpeed * Time.deltaTime;
 
 		currentMana = transform.GetComponent<playerStats>().mana;
 		currentMovementPoints = transform.GetComponent<playerStats>().movement;
@@ -58,30 +52,25 @@ public class playerCombat : MonoBehaviour {
 			return;
 		}
 		if(walkPhase) drawPath();
-		if (Input.GetButton("Fire1") && playing && walkPhase){
-        	if (!EventSystem.current.IsPointerOverGameObject()){
+		if (Input.GetButtonDown("Fire1") && playing && walkPhase){
+        	if (!EventSystem.current.IsPointerOverGameObject() && !GetComponent<playerOverall>().isMoving()){
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = StaticFunctions.getTileAt(mousePos);
         		if(g != null){
         			Vector3 target = g.transform.position;
 	        		int movementCost = StaticFunctions.movementCost(StaticFunctions.getTileAt(transform.transform.position),g);
-	        		if(movementCost <= currentMovementPoints && moveTo(target)){
-	        			path = StaticFunctions.getPath(StaticFunctions.getTileAt(transform.transform.position), g);
-	        			currentMovementPoints -= movementCost;
-	        			canWalk = false;
-	        			shouldWalk = true;
-	        			updateMovementPoints();
+	        		if(movementCost <= currentMovementPoints){
+                        bool canMove = GetComponent<playerOverall>().takeTile(target);
+                        if (canMove)
+                        {
+                            GetComponent<playerOverall>().updatePath(StaticFunctions.getPath(StaticFunctions.getTileAt(transform.transform.position), g));
+                            currentMovementPoints -= movementCost;
+                            updateMovementPoints();
+                        }
 	        		}
         		}
         	}
         }
-        if(shouldWalk){
-        	walkAlongPath();
-        }
-        else{
-        	canWalk = true;
-        }
-
         if(waitingForSpells && spellsStillRunning <= 0){
         	waitingForSpells = false;
 			combatManager.GetComponent<CombatManager>().finishedPlaying();
@@ -149,34 +138,6 @@ public class playerCombat : MonoBehaviour {
 			}
 		}	
 	}
-	void walkAlongPath(){
-		if(path.Count <= 0){
-			shouldWalk = false;
-			return;
-		}
-		if(walkTo(path[0].transform.position)){
-			path.RemoveAt(0);
-		}
-	}
-	bool moveTo(Vector2 pos){
-		GameObject newTile = StaticFunctions.getTileAt(pos);
-		bool moved = newTile.GetComponent<tile>().takeTile(gameObject);
-		if (moved){
-			GameObject currentTile = StaticFunctions.getTileAt(transform.position);
-			currentTile.GetComponent<tile>().leaveTile();
-			return true;
-		}
-		return false;
-	}
-
-	bool walkTo(Vector2 position){
-        transform.position = Vector3.MoveTowards(transform.position, position, step);
-        Vector2 p = new Vector2(transform.position.x, transform.position.y);
-        if(p == position){
-        	return true;
-        }
-        return false;
-	}
 
 	public void addSpell(GameObject spell){
 		spells.Add(spell);
@@ -207,13 +168,8 @@ public class playerCombat : MonoBehaviour {
 	}
 	
 	public void startCombat(){
-		GameObject tile = StaticFunctions.getTileAt(transform.position);
-		tile.GetComponent<tile>().takeTile(gameObject);
-		path = new List<GameObject>();
-		path.Add(tile);
-		shouldWalk = true;
+        GetComponent<playerOverall>().moveToNearestTile();
 	}
-
 	// ui stuff
 	void updateMana(){
 		manaUi.transform.GetChild(0).GetComponent<Text>().text = currentMana + "";
@@ -255,6 +211,7 @@ public class playerCombat : MonoBehaviour {
 		}
 	}
 
+    //shows possible paths to the user
 	void drawPath(){
 		GameObject t = StaticFunctions.getTileAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		if(t != null){

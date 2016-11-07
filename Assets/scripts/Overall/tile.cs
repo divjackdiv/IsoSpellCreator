@@ -13,7 +13,8 @@ public class tile : MonoBehaviour {
 	bool shouldPlayAnim;
 
 	void Start(){
-		animator = gameObject.GetComponent<Animator>();
+        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        animator = gameObject.GetComponent<Animator>();
 	}
 	void Update(){
 		if(shouldPlayAnim){
@@ -41,17 +42,17 @@ public class tile : MonoBehaviour {
 		return takenBy;
 	}
 
-	public void changeAnim(int state, bool playOnlyOnce, int nextState){
-		animator.SetInteger("state", state);
+	public void changeAnim(int s, bool playOnlyOnce, int nS){
+		animator.SetInteger("state", s);
 		if(playOnlyOnce){
 			animCounter = 0;
 			shouldPlayAnim = true;
-			state = state;
-			nextState = nextState;
+			state = s;
+			nextState = nS;
 		}
 	}
 
-	public void playAnimOnce (int state, int nextState){
+    public void playAnimOnce (int state, int nextState){
 		animCounter += Time.deltaTime;
 	    if (animCounter >= animator.GetCurrentAnimatorStateInfo(0).length){
 	        animCounter = 0;

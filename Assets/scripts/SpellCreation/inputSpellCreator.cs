@@ -33,7 +33,7 @@ public class inputSpellCreator : MonoBehaviour {
         for (int i = 0; i < durationGameObjects.Count; i++){
             GameObject dur = (GameObject) Instantiate (durationGameObjects[i], new Vector3(0,0,0), Quaternion.identity);
             dur.GetComponent<durationOfPoint>().inputSpellCreator = gameObject;
-            dur.active = false;
+            dur.SetActive(false);
             dur.transform.localScale = new Vector3(0.07F, 0.07F, 0.07F);
             durations.Add(dur);
         }
@@ -110,7 +110,7 @@ public class inputSpellCreator : MonoBehaviour {
             if (tile != null)
             {
                 GameObject p = tile.GetComponent<tile>().getTakenBy();
-                if(p != null){
+                if(p != null && p.tag == "Spell"){
                     extending = true;
                     currentGameObject = (GameObject) Instantiate(p, mousePos, Quaternion.identity);
                     foreach(Transform child in currentGameObject.transform){

@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI; // Required when Using UI elements.
 
 public class playerStats : MonoBehaviour {
 
@@ -14,7 +12,6 @@ public class playerStats : MonoBehaviour {
 	public int reflex;
 	public int movement;
 	public int spellPoints; //How many different spells can be created per turn;
-
 
 	public playerData save(){
 		playerData p = new playerData(transform.position, level, lifePoints, mana, resistance, reflex, movement, spellPoints);
@@ -32,4 +29,5 @@ public class playerStats : MonoBehaviour {
 		movement = d["movement"];
 		spellPoints = d["spellPoints"];
 	}
+
 }

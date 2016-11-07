@@ -17,13 +17,12 @@ public class SaveManager : MonoBehaviour {
 	    DontDestroyOnLoad(gameObject);
 	}
 
-	public static void Save(string name) {
-		Game.current.fileName = name;
-	    SaveManager.savedGames.Add(Game.current);
+	public static void Save(Game g) {
+	    SaveManager.savedGames.Add(g);
 	    BinaryFormatter bf = new BinaryFormatter();
-	    FileStream file = File.Create(Application.persistentDataPath + "/" + name);
-        Application.CaptureScreenshot(Application.persistentDataPath + "/" + name + ".png");
-	    bf.Serialize(file, Game.current);
+	    FileStream file = File.Create(Application.persistentDataPath + "/" + g.fileName);
+        Application.CaptureScreenshot(Application.persistentDataPath + "/" + g.fileName + ".png");
+	    bf.Serialize(file, g);
 	    file.Close();
 	}
 
