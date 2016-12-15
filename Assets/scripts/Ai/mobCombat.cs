@@ -78,7 +78,7 @@ public class mobCombat : MonoBehaviour {
 	}
 
 	public void die(){
-		currentTile.GetComponent<tile>().leaveTile();
+		if(currentTile != null) currentTile.GetComponent<tile>().leaveTile();
 		combatManager.GetComponent<CombatManager>().characters.Remove(gameObject);
 		if(playing)combatManager.GetComponent<CombatManager>().finishedPlaying();
 		Destroy(gameObject);

@@ -12,6 +12,7 @@ public class SpellPoint : MonoBehaviour {
     public int cost;
     public int spriteIndex;
     public int gameObjectIndex;
+    public GameObject tileOverlay;
     bool moving;
     bool playing;
     Vector2 target;
@@ -47,7 +48,12 @@ public class SpellPoint : MonoBehaviour {
                 GameObject tile = StaticFunctions.getTileAt(transform.position);
                 if (tile != currentTile){
                     currentTile = tile;
-                    currentTile.GetComponent<tile>().changeAnim(1,true,0);
+                    GameObject tileOvl = (GameObject) Instantiate(tileOverlay);
+                    tileOvl.transform.parent = currentTile.transform;
+                    tileOvl.transform.localPosition = new Vector3(0, 0, 0);
+                    List<int> animationStates = new List<int>();
+                    animationStates.Add(1);
+                    tileOvl.GetComponent<tileOverlay>().changeAnim(animationStates,true);
                 }
             }
             GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1; 
