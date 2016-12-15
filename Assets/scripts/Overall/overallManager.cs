@@ -18,6 +18,7 @@ public class overallManager : MonoBehaviour
     public GameObject worldCanvas;
     public GameObject escMenuCanvas;
     public GameObject escMenuArroww;
+    public GameObject spellBook;
     public GameObject saves;
     public GameObject load;
 
@@ -28,34 +29,36 @@ public class overallManager : MonoBehaviour
     public GameObject mobs;
 
     public GameObject player;
+    public GameObject defaultSpellGameObject;
+    public GameObject defaultBranchGameObject;
     bool isEscMenuOpened;
     List<bool> menus;
+
+    GameObject spellCanvasObject;
     // Use this for initialization
     void Awake()
     {
         print(Application.persistentDataPath);
+        spellCanvasObject = spellCreator.GetComponent<SpellCreator>().spellCanvasObject;
         if (Game.current != null)
         {
             if (player != null) player.GetComponent<playerStats>().load();
-            if (mobs != null) loadMobs(mobs.transform);
+            if (Game.current.mobs != null) loadMobs(mobs.transform);
+            if (Game.current.spells != null) loadSpells(spellBook.transform);
         }
         menus = new List<bool>();
         if (escMenuCanvas != null) isEscMenuOpened = escMenuCanvas.activeSelf;
         if (combatCanvas != null) menus.Add(combatCanvas.activeSelf);
         if (spellCreationCanvas != null) menus.Add(spellCreationCanvas.activeSelf);
         if (worldCanvas != null) menus.Add(worldCanvas.activeSelf);
+        Time.timeScale = 1;
     }
     void Start()
     {
-        Time.timeScale = 1;
     }
 
     public void escMenuArrow()
     {
-        foreach (Game g in SaveManager.savedGames)
-        {
-            print("    HEyoo " + g.fileName);
-        }
         if (isEscMenuOpened) closeEscMenu();
         else openEscMenu();
     }
@@ -159,7 +162,7 @@ public class overallManager : MonoBehaviour
 
 
     public void Save(InputField saveField)
-    {   //this is weird, I'm pretty sure a string should do
+    {   // this is weird, I'm pretty sure a string should do
         string saveName = saveField.text;
         if (saveName == null || saveName == "") return;
         //	if(SaveManager.savedGames.ContainsKey(saveName)) return;
@@ -180,6 +183,7 @@ public class overallManager : MonoBehaviour
         g.sceneIndex = SceneManager.GetActiveScene().buildIndex;
         g.playerData = player.GetComponent<playerStats>().save();
         saveMobs(mobs.transform, g);
+        saveSpells(spellBook.transform, g);
         SaveManager.Save(g);
         StartCoroutine(GetComponent<MainMenu>().updateButtons(g));
         closeEscMenu();
@@ -211,6 +215,68 @@ public class overallManager : MonoBehaviour
             loadMobs(child);
         }
         if (g.gameObject.GetComponent<mobStats>() != null) g.gameObject.GetComponent<mobStats>().load();
+    }
+
+    void saveSpells(Transform g, Game game)
+    {
+        foreach (Transform child in g)
+        {
+            if (child.gameObject.GetComponent<SpellScript>() != null)
+            {
+                SpellData s = child.GetComponent<SpellScript>().getSpellData();
+                game.spells.Add(s);
+            }
+        }
+    }
+    void loadSpells(Transform g)
+    {
+        foreach (SpellData s in Game.current.spells)
+        {
+            int cost = s.getCost();
+            int spellIndex = s.getUiIndex();
+            Sprite sprite = spellCreator.GetComponent<SpellCreator>().spellSprites[s.getUiSpriteIndex()];
+            GameObject spell = (GameObject) Instantiate(defaultSpellGameObject, s.getPos(), Quaternion.identity);
+            spell.GetComponent<SpellScript>().player = player;
+            foreach (BranchData b in s.getBranches())
+            {
+                GameObject branch = (GameObject)Instantiate(defaultBranchGameObject);
+                List<PointData> points = b.getPoints();
+                List<Transform> pointsGO = new List<Transform>();
+                foreach (PointData p in points)
+                {
+                    //first Create the right default spell point
+                    GameObject point = (GameObject)Instantiate(spellCreator.GetComponent<SpellCreator>().spellsGameObjects[p.getGameObjectIndex()], p.getPosition(), Quaternion.identity);
+                    //then update the value
+                    point.GetComponent<SpellPoint>().duration = p.getDuration();
+                    point.GetComponent<SpellPoint>().damage = p.getDamage();
+                    point.GetComponent<SpellPoint>().cost = p.getCost();
+                    point.GetComponent<SpellPoint>().movementSpeed = p.getMovementSpeed();
+                    point.GetComponent<SpellPoint>().spriteIndex = p.getSpriteIndex();
+                    //actually change the sprite
+                    point.GetComponent<SpriteRenderer>().sprite = spellCreator.GetComponent<SpellCreator>().spellSprites[p.getSpriteIndex()];
+                    if (p.getParentIndex() == -1)
+                    {
+                        point.transform.parent = branch.transform;
+                    }
+                    else
+                    {
+                        point.transform.parent = pointsGO[p.getParentIndex()];
+                    }
+                    pointsGO.Add(point.transform);
+                }
+                branch.transform.parent = spell.transform;
+            }
+            spell.transform.parent = g;
+            spell.SetActive(false);
+            //Now that the spell has been reloaded, we should "update" the Ui
+            if (spellIndex >= 0)
+            {// This is what will be used to set the ui buttons' image and function
+                spellCanvasObject.transform.GetChild(spellIndex).GetChild(0).GetComponent<Text>().text = cost + "";
+                print("cost is " + cost);
+                spellCanvasObject.transform.GetChild(spellIndex).GetComponent<Image>().sprite = sprite;
+            }
+            spellBook.GetComponent<SpellBook>().addSpell(spell);
+        }
     }
 }
 

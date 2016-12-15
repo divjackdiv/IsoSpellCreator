@@ -15,6 +15,7 @@ public class Game {
 	public int playerLevel;
 	public string areaName;
 	public playerData playerData;
+    public List<SpellData> spells = new List<SpellData>();
 	public int mobCount = 1;
 	public Dictionary<int, mobData> mobs = new Dictionary<int, mobData>();
 

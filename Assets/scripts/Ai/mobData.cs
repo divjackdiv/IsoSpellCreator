@@ -9,18 +9,16 @@ public class mobData {
 	float yPosition;
 	bool hasBeenDestroyed;
 	Dictionary<string, int> stats = new Dictionary<string, int>();
-	int lifePoints;
-	int damage;
-	int range;
-	int movementPoints;
 
-	public mobData(Vector2 pos, bool destroyed,int lifePoints, int damage, int range, int movementPoints){
+	public mobData(Vector2 pos, bool destroyed,int lifePoints, int damage, int range, int movementPoints, int detectionRange)
+    {
 		hasBeenDestroyed = destroyed;
 		stats.Add("lifePoints", lifePoints);
 		stats.Add("damage", damage);
 		stats.Add("range", range);
 		stats.Add("movementPoints", movementPoints);
-		xPosition = pos.x;
+        stats.Add("detectionRange", detectionRange);
+        xPosition = pos.x;
 		yPosition = pos.y;
 	}
 

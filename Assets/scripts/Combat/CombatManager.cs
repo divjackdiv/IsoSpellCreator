@@ -47,13 +47,14 @@ public class CombatManager : MonoBehaviour {
 			child.GetComponent<mobWorld>().enabled = false;
 			child.GetComponent<mobCombat>().enabled  = true;
 			child.GetComponent<mobCombat>().target = player;
+            child.GetComponent<mobOverall>().moveToNearestTile();
 			child.GetComponent<mobCombat>().startCombat();
 		}
 		characterPlayed = true;
 		combatStarted = true;
 	}
 
-	//permissionToPlay method tells a mob or the player it is his turn to play. This allows it to take action
+	//permissionToPlay method tells a mob or the player it is his turn to play. This allows it to take an action
 	public void permissionToPlay(GameObject character){
 		characterPlayed = false;
 		if(character == player){

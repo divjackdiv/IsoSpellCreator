@@ -3,11 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellScript : MonoBehaviour {
-
+    //children
 	public int cost;
 	public List<Transform> currentBranches;
 	public GameObject player;
-	public bool shouldDelete = true;
+    public int spriteIndex;
+    public bool shouldDelete = true;
+    SpellData spell; //Saved parameters
 	bool updating;
 
 	// Update is called once per frame
@@ -31,4 +33,12 @@ public class SpellScript : MonoBehaviour {
 			child.GetComponent<SpellBranch>().updateBranch();
 		}
 	}
+    public SpellData getSpellData()
+    {
+        return spell;
+    }
+    public void setSpellData(SpellData s)
+    {
+        spell = s;
+    }
 }

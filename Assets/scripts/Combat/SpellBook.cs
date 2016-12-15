@@ -6,13 +6,13 @@ public class SpellBook : MonoBehaviour {
 	public GameObject player;
 	public GameObject combatManager;
 	List<GameObject> Spells;
-	// Use this for initialization
-	void Start () {
-		Spells = new List<GameObject>();
-	}
 
 	public void instantiateSpell(int index){
-		if (index < 0) return;
+        if (Spells == null)
+        {
+            Spells = new List<GameObject>();
+        }
+        if (index < 0) return;
 		if (index < Spells.Count){
 			GameObject s = Spells[index];
 			s = (GameObject) Instantiate(s);
@@ -51,6 +51,7 @@ public class SpellBook : MonoBehaviour {
 	}
 
 	public void addSpell(GameObject spell){
-		Spells.Add(spell);
+        if (Spells == null) Spells = new List<GameObject>();
+        Spells.Add(spell);
 	}
 }

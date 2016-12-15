@@ -257,13 +257,13 @@ public class inputSpellCreator : MonoBehaviour {
             Vector3 pos = new Vector3(x, y, 0) + center;
 
             durations[i].transform.position = pos;
-            durations[i].active = true;
+            durations[i].SetActive(true);
             durationsAreShown = true;
         }
     }
     public void hideOptions(){
         for (int i = 0; i < durations.Count; i++){
-            durations[i].active = false;
+            durations[i].SetActive(false);
         }
         durationsAreShown = false;
     }

@@ -19,12 +19,12 @@ public class playerWorld : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if (Input.GetButtonDown("Fire1")){
-        	if (!EventSystem.current.IsPointerOverGameObject()){
+        if (Input.GetButtonDown("Fire1")) { 
+            if (!EventSystem.current.IsPointerOverGameObject()){
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = StaticFunctions.getTileAt(mousePos);
         		if(g != null){
-                    transform.GetComponent<playerOverall>().updatePath(StaticFunctions.getPath(StaticFunctions.getTileAt(transform.position), g));
+                    transform.GetComponent<playerOverall>().updatePath(StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), g));
         		}
         	}
         }

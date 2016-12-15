@@ -53,80 +53,111 @@ public class StaticFunctions {
         return null;
     }
 
-
-    public static int movementCost(GameObject currentTile, GameObject target){
-        float xCost = Mathf.Abs(currentTile.transform.position.x - target.transform.position.x); 
-        float yCost = Mathf.Abs(currentTile.transform.position.y - target.transform.position.y); 
-        xCost *= 2;
-        yCost *= 4;
-        int totalCost = (int) xCost;
-        if (totalCost < yCost) totalCost = (int) yCost;
-        return totalCost;
-    }
-    public static List<GameObject> getPath(GameObject currentTile, GameObject target){
-        List<GameObject> path = new List<GameObject>();
-        Vector2 currentPos = currentTile.transform.position;
-        Vector2 targetPos = target.transform.position;
-        float xDifference = currentPos.x - targetPos.x;
-        float yDifference = currentPos.y - targetPos.y;
-        int max = 100;
-        while (xDifference != 0 || yDifference != 0){
-            max--;
-            if(max <= 0 ) return new List<GameObject>(); //If anything goes wrong this returns an empty list
-            if(xDifference == 0){
-                if(yDifference > 0){
-                    currentPos.x -= 0.5f;
-                    currentPos.y -= 0.25f;
-                }
-                //if y is negative and x does not matter
-                else{
-                    currentPos.x -= 0.5f;
-                    currentPos.y += 0.25f;
-                }
-            }
-            else if(yDifference == 0){
-                //if x is positive and y does not matter
-                if(xDifference > 0){
-                    currentPos.x -= 0.5f;
-                    currentPos.y -= 0.25f;
-                }
-                //if x is negative and y does not matter
-                else{
-                    currentPos.x += 0.5f;
-                    currentPos.y -= 0.25f;
-                }
-            }
-            else{
-                if(xDifference > 0){
-                    //if both x and y are positive
-                    if(yDifference > 0){
-                        currentPos.x -= 0.5f;
-                        currentPos.y -= 0.25f;
-                    }
-                    //if x is positive and y is negative
-                    else{
-                        currentPos.x -= 0.5f;
-                        currentPos.y += 0.25f;
-                    }
-                }
-                else {
-                    //if x is negative but y is positive
-                    if(yDifference > 0){
-                        currentPos.x += 0.5f;
-                        currentPos.y -= 0.25f;
-                    }
-
-                    //if x and y are negative
-                    else{
-                        currentPos.x += 0.5f;
-                        currentPos.y += 0.25f;
-                    }
-                }
-            }
-            xDifference = currentPos.x - targetPos.x;
-            yDifference = currentPos.y - targetPos.y;
-            path.Add(StaticFunctions.getTileAt(currentPos));
+    public static List<GameObject> getNeighbours(GameObject current)
+    {
+        List<GameObject> neighbours = new List<GameObject>();
+        List<Vector2> directions = new List<Vector2>();
+        directions.Add(new Vector2(0.5f, -0.25f));
+        directions.Add(new Vector2(-0.5f, 0.25f));
+        directions.Add(new Vector2(-0.5f, -0.25f));
+        directions.Add(new Vector2(0.5f, 0.25f));
+        foreach (Vector3 neighbour in directions)
+        {
+            Vector2 pos = new Vector2();
+            pos = current.transform.position + neighbour;
+            GameObject neighbourTile = StaticFunctions.getTileAt(pos);
+            if (neighbourTile != null)
+                neighbours.Add(neighbourTile);
         }
-        return path;
+        return neighbours;
+    }
+    public static float heuristic_cost_estimate(Transform start, Transform goal)
+    {
+        return Vector3.Distance(start.position, goal.position);
+    }
+
+    public static List<GameObject> aStarPathFinding(GameObject currentTile, GameObject targetTile)
+    {
+        if (currentTile == targetTile)
+        {
+            List<GameObject> l = new List<GameObject>();
+            l.Add(targetTile);
+            return l;
+        }
+        if (StaticFunctions.getNeighbours(currentTile).Contains(targetTile))
+        {
+            return new List<GameObject>();
+        }
+        List<GameObject> visited = new List<GameObject>();
+        List<GameObject> unvisited = new List<GameObject>();
+        unvisited.Add(currentTile);
+        Dictionary<GameObject, GameObject> path = new Dictionary<GameObject, GameObject>();
+        Dictionary<GameObject, int> graphScores = new Dictionary<GameObject, int>();
+        graphScores.Add(currentTile, 0);
+        Dictionary<GameObject, float> heuristicScores = new Dictionary<GameObject, float>();
+        heuristicScores.Add(currentTile, StaticFunctions.heuristic_cost_estimate(currentTile.transform, targetTile.transform));
+
+        while (unvisited.Count > 0)
+        {
+            float currentScore = 9999f;
+            GameObject current = currentTile;
+            foreach (GameObject i in unvisited)
+            {
+                if (heuristicScores[i] < currentScore)
+                {
+                    current = i;
+                    currentScore = heuristicScores[i];
+                }
+            }
+            if (current == targetTile)
+            {
+                List<GameObject> actualPath = new List<GameObject>();
+                while (path.ContainsKey(current))
+                {
+                    current = path[current];
+                    actualPath.Insert(0, current);
+                }
+                actualPath.RemoveAt(0); //take off the current tile 
+                actualPath.Add(targetTile); //add the goal tile
+                return actualPath;
+            }
+            unvisited.Remove(current);
+            visited.Add(current);
+            foreach (GameObject neighbour in StaticFunctions.getNeighbours(current))
+            {
+                if (visited.Contains(neighbour) || (neighbour.GetInstanceID() != targetTile.GetInstanceID() && neighbour.GetComponent<tile>().taken))
+                {
+                    continue;
+                }
+
+                int gScore = graphScores[current] + 1;
+                if (!unvisited.Contains(neighbour))
+                {
+                    unvisited.Add(neighbour);
+                }
+                else if (gScore >= graphScores[neighbour])
+                {
+                    continue;
+                }
+                path[neighbour] = current;
+                graphScores[neighbour] = gScore;
+                heuristicScores[neighbour] = gScore + StaticFunctions.heuristic_cost_estimate(neighbour.transform, targetTile.transform);
+            }
+        }
+        return new List<GameObject>();
+    }
+
+    //should maybe add a limiter in case the nearest free tile is very far away
+    public static GameObject findNearestFreeTile(GameObject tile)
+    {
+        if (! tile.GetComponent<tile>().taken) return tile;
+        foreach (GameObject neighbourTile in StaticFunctions.getNeighbours(tile))
+        {
+            if (! neighbourTile.GetComponent<tile>().taken)
+            {
+                return neighbourTile;
+            }
+        }
+        return null;
     }
 }

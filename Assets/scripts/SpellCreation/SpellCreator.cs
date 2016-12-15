@@ -6,9 +6,9 @@ using System.Collections.Generic;
 
 public class SpellCreator : MonoBehaviour {
 
-    public GameObject defaultBranch;
+
     public List<GameObject> spellsGameObjects;
-    public GameObject spellGameObject;
+    public List<Sprite> spellSprites;
     public GameObject spellBook;
     public GameObject player;
 
@@ -17,19 +17,23 @@ public class SpellCreator : MonoBehaviour {
     public int groundLayer;
 
     private GameObject spell;
-    //TEMPORARY
     private int spellIndex;
 
     private GameObject currentGameObject;
     private int layerMask;
     private int turn;
+    private GameObject defaultBranch;
+    private GameObject spellGameObject;
 
     private bool shouldOpen;
 
     void Start () {
+        spellGameObject = overallManager.GetComponent<overallManager>().defaultSpellGameObject;
+        defaultBranch = overallManager.GetComponent<overallManager>().defaultBranchGameObject;
         layerMask = 1<<groundLayer;
         spellIndex = 0;
-	}
+
+    }
     void Update()
     {
         if (shouldOpen)
@@ -48,9 +52,9 @@ public class SpellCreator : MonoBehaviour {
 	public void OnDragSpell(int i){
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         if (currentGameObject == null ){
-                currentGameObject = (GameObject) Instantiate(spellsGameObjects[i], mousePosition, Quaternion.identity);
-                MonoBehaviour[] scripts = currentGameObject.GetComponents<MonoBehaviour>();
-                foreach (MonoBehaviour script in scripts) script.enabled = false;
+            currentGameObject = (GameObject) Instantiate(spellsGameObjects[i], mousePosition, Quaternion.identity);
+            MonoBehaviour[] scripts = currentGameObject.GetComponents<MonoBehaviour>();
+            foreach (MonoBehaviour script in scripts) script.enabled = false;
         }
         else currentGameObject.transform.position = mousePosition;
     }
@@ -63,7 +67,8 @@ public class SpellCreator : MonoBehaviour {
                 Destroy(currentGameObject);
             } 
         }
-        else{
+        else
+        {
             RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, layerMask);
             if (hit){
                 if (hit.collider != null){
@@ -72,13 +77,13 @@ public class SpellCreator : MonoBehaviour {
                     if (take){
                         MonoBehaviour[] scripts = currentGameObject.GetComponents<MonoBehaviour>();
                         foreach (MonoBehaviour script in scripts) script.enabled = true;
-
                         Vector2 pos =  tile.transform.position;
                         currentGameObject.transform.position = pos;  
 
                         GameObject branch = (GameObject) Instantiate(defaultBranch);
                         branch.transform.parent = spell.transform;
                         currentGameObject.transform.parent = branch.transform;
+                        spell.GetComponent<SpellScript>().spriteIndex = currentGameObject.GetComponent<SpellPoint>().spriteIndex;
                         currentGameObject = null;
                         return;
                     }
@@ -89,21 +94,84 @@ public class SpellCreator : MonoBehaviour {
         }
     }
 
-    public void saveSpell(){
-        if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0  && spellIndex < 4){
+    public void saveSpell()
+    {
+        if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0  && spellIndex < 4)
+        {
             enableChildrenLineRenderers(spell, false);
-            spell.active = false;
+            spell.SetActive(false);
             int cost = calculateSpellCost(spell);
             spell.GetComponent<SpellScript>().player = player;
             spell.GetComponent<SpellScript>().cost = cost;
             spellBook.GetComponent<SpellBook>().addSpell(spell);
             Sprite sprite = spell.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;
             spellCanvasObject.transform.GetChild(spellIndex).GetChild(0).GetComponent<Text>().text = cost + "";
-            spellCanvasObject.transform.GetChild(spellIndex++).GetComponent<Image>().sprite = sprite;
+            spellCanvasObject.transform.GetChild(spellIndex).GetComponent<Image>().sprite = sprite;
             spell.transform.parent = spellBook.transform;
+            saveSpellData(spell.transform);
+            spellIndex++;
         }
         else Destroy(spell);
         overallManager.GetComponent<overallManager>().closeSpellCreator(true);
+    }
+
+    public void saveSpellData(Transform s)
+    {
+
+        if (s.GetComponent<SpellScript>())
+        {
+            int spriteIndex = 0;
+            List<BranchData> branches = new List<BranchData>();
+            foreach (Transform branch in s.transform)
+            {
+                if (branch.GetComponent<SpellBranch>())
+                {
+                    List<PointData> points = new List<PointData>();
+                    int index = -1;
+                    foreach (Transform point in branch)
+                    {
+                        spriteIndex = point.GetComponent<SpellPoint>().spriteIndex;
+                        recursiveSaveSpellPoint(point, index, points);
+                    }
+                    BranchData b = new BranchData(points);
+                    branches.Add(b);
+                }
+            }
+            SpellData spellData = new SpellData(s.transform.position, branches, s.GetComponent<SpellScript>().cost, spellIndex, spriteIndex);
+            s.GetComponent<SpellScript>().setSpellData(spellData);
+        }
+    }
+    void recursiveSaveSpellPoint(Transform point, int parentIndex, List<PointData> points)
+    {
+        int index = -1;
+        if (point.GetComponent<SpellPoint>())
+        {
+            int duration = point.GetComponent<SpellPoint>().duration;
+            int damage = point.GetComponent<SpellPoint>().damage;
+            float movementSpeed = point.GetComponent<SpellPoint>().movementSpeed;
+            int cost = point.GetComponent<SpellPoint>().cost;
+            index = points.Count;
+            int spriteIndex = point.GetComponent<SpellPoint>().spriteIndex;
+            PointData p = new PointData(duration, damage, movementSpeed, cost, point.position, parentIndex, point.GetComponent<SpellPoint>().gameObjectIndex, spriteIndex);
+            points.Add(p);
+        }
+        foreach (Transform child in point)
+        {
+            recursiveSaveSpellPoint(child, index, points);
+        }
+
+    }
+    void saveSpells(Transform g, Game game)
+    {
+        foreach (Transform child in g)
+        {
+            saveSpells(child, game);
+        }
+        if (g.gameObject.GetComponent<SpellScript>() != null)
+        {
+            SpellData s = g.GetComponent<SpellScript>().getSpellData();
+            game.spells.Add(s);
+        }
     }
 
     public int calculateSpellCost(GameObject s){

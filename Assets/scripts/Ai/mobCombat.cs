@@ -23,17 +23,20 @@ public class mobCombat : MonoBehaviour {
 	public GameObject combatManager;
 
 	GameObject currentTile;
-	List<GameObject> path;
+    GameObject nextTile;
+	//List<GameObject> path;
+    //GameObject currentGoal;
 	bool shouldAttack;
     Animator animator;
     int state;
     bool playing;
     float animCounter;
 	// Use this for initialization
-	void Start () {		
-		animCounter = 0;
+    void Awake()
+    {
+        animCounter = 0;
         animator = GetComponent<Animator>();
-	}
+    }
 	
 	// Update is called once per frame
 	void Update () {
@@ -46,18 +49,25 @@ public class mobCombat : MonoBehaviour {
 			}
 		}
 		else {
-			if (state == 0){
+            if (state == -1) ;
+			else if (state == 0){
 				animator.SetInteger("state", 0); 	//State 0 is Idle
 			}
 			else if(state == 1){
-				animator.SetInteger("state", 1);	//State 1 is walking
-				walkAlongPath();
+                currentTile = StaticFunctions.getTileAt(transform.position);
+                List<GameObject> path = StaticFunctions.aStarPathFinding(currentTile, nextTile);
+                int howMuchShouldIWalk = currentMovementPoints;
+                if (howMuchShouldIWalk > path.Count - range ) howMuchShouldIWalk = path.Count - range;
+                if (howMuchShouldIWalk < 0) howMuchShouldIWalk = 0;
+                path = path.GetRange(0, howMuchShouldIWalk);
+                GetComponent<mobOverall>().updatePath(path);
+                state = -1;
 			}
 			else if(state == 2){
 				attack();
 			}
 			else if(state == 4){	//To avoid any confusion between the animation states and the states used for this AI i will not use the value 3 for state
-									// as it is the value for the animation state of dying (see line 41)
+									// as it is the value for the animation state of dying (see line 45)
 				if(playing) endPlay();		   		//State 4 is finishing your turn
 				else state = 0;
 			}
@@ -76,28 +86,22 @@ public class mobCombat : MonoBehaviour {
 
 	public void startCombat(){
 		currentLifePoints = gameObject.GetComponent<mobStats>().lifePoints;
-		currentMovementPoints = gameObject.GetComponent<mobStats>().movementPoints;
 		damage = gameObject.GetComponent<mobStats>().damage;
 		range = gameObject.GetComponent<mobStats>().range;
-		GetComponent<mobWorld>().enabled = false;
-		currentTile = StaticFunctions.getTileAt(transform.position);
-		currentTile.GetComponent<tile>().takeTile(gameObject);
-		path = new List<GameObject>();
-		path.Add(currentTile);
-		state = 1;
 	}
 
 	public void play(){
 		playing = true;
 		currentTile = StaticFunctions.getTileAt(transform.position);
-		currentTile.GetComponent<tile>().takeTile(gameObject);
         state = 0;
 		playMovement();
 	}
 
-	void playMovement(){
-		path = new List<GameObject>();
-        path = StaticFunctions.getPath(StaticFunctions.getTileAt(transform.position), target);
+	void playMovement()
+    {
+        nextTile = StaticFunctions.getTileAt(target.transform.position);
+        currentMovementPoints = gameObject.GetComponent<mobStats>().movementPoints;
+        currentTile = StaticFunctions.getTileAt(transform.position);
         state = 1;
         if(mobType > 0) shouldAttack = true;
 	}
@@ -114,50 +118,14 @@ public class mobCombat : MonoBehaviour {
 		}
 		else state = 4;
 	}
-
-	public void changePos(Vector2 pos){
-		GameObject newTile = StaticFunctions.getTileAt(pos);
-		bool moved = newTile.GetComponent<tile>().takeTile(gameObject);
-		if (moved){
-			currentTile.GetComponent<tile>().leaveTile();
-			currentTile = newTile;
-			state = 1;
-		}
-	}
-
-	public void moveTo(Vector2 pos){
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        transform.position = Vector2.MoveTowards(transform.position, pos, walkingSpeed * Time.deltaTime);
-        Vector2 currentPos = transform.position;
-        if(currentPos == pos){
-        	state = 0;
-        	if (playing) endPlay();
-        }
-	}
-
-	void walkAlongPath(){
-		if(playing && currentMovementPoints <= 0 || playing && path.Count <= 1 || path.Count <= 0){
-			if(playing)	state = 2;
-			else state = 0;
-		}
-		else if(walkTo(path[0].transform.position)){
-			path.RemoveAt(0);
-			if(playing) currentMovementPoints--;
-		}
-	}
-
-	bool walkTo(Vector2 position){
-        transform.position = Vector3.MoveTowards(transform.position, position, walkingSpeed * Time.deltaTime);
-        Vector2 p = new Vector2(transform.position.x, transform.position.y);
-        if(p == position){
-        	return true;
-        }
-        return false;
-	}
+    public void finishedWalking()
+    {
+        state = 2;
+    }
 
 	bool isInRange(){
-		int cost = StaticFunctions.movementCost(StaticFunctions.getTileAt(transform.position),StaticFunctions.getTileAt(target.transform.position));
-		if(cost > range) return false;
+        List<GameObject> pathToTarget = StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), StaticFunctions.getTileAt(target.transform.position));
+		if(pathToTarget.Count > range) return false;
 		return true;
 	}
 
@@ -166,5 +134,5 @@ public class mobCombat : MonoBehaviour {
 		animator.SetInteger("state", 0); 	//State 0 is Idle
 		combatManager.GetComponent<CombatManager>().finishedPlaying();
 	}
-}
 
+}

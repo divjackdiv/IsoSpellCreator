@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class SpellBranch : MonoBehaviour {
-
+    //children
 	public List<Transform> currentPoints;
 	public bool shouldDelete = true;
 	bool updating = false;

@@ -23,19 +23,20 @@ public class playerCombat : MonoBehaviour {
 
     GameObject spellCanvasObject;
 	bool playing;
-   	List<GameObject> p; //List used to show possible paths
+   	List<GameObject> drawnPaths; //List used to show possible paths
     bool walkPhase;
     bool attackPhase;
+    bool stillDrawn; //are paths still drawn and need to be cleaned up?
 
     int currentMana;
     int currentMovementPoints;
     int currentLifePoints;
     int currentSpellPoints;
-
+    
 
 	void Start () {
 		spells = new List<GameObject>();
-		p = new List<GameObject>();
+        drawnPaths = new List<GameObject>();
 
 		currentMana = transform.GetComponent<playerStats>().mana;
 		currentMovementPoints = transform.GetComponent<playerStats>().movement;
@@ -52,19 +53,27 @@ public class playerCombat : MonoBehaviour {
 			return;
 		}
 		if(walkPhase) drawPath();
+        else if (stillDrawn)
+        {
+            foreach (GameObject tile in drawnPaths)
+            {
+                whiteOut(tile, false);
+            }
+        }
 		if (Input.GetButtonDown("Fire1") && playing && walkPhase){
         	if (!EventSystem.current.IsPointerOverGameObject() && !GetComponent<playerOverall>().isMoving()){
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = StaticFunctions.getTileAt(mousePos);
         		if(g != null){
         			Vector3 target = g.transform.position;
-	        		int movementCost = StaticFunctions.movementCost(StaticFunctions.getTileAt(transform.transform.position),g);
-	        		if(movementCost <= currentMovementPoints){
+                    List<GameObject> path = StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.transform.position), g);
+
+                    if (path.Count <= currentMovementPoints){
                         bool canMove = GetComponent<playerOverall>().takeTile(target);
                         if (canMove)
                         {
-                            GetComponent<playerOverall>().updatePath(StaticFunctions.getPath(StaticFunctions.getTileAt(transform.transform.position), g));
-                            currentMovementPoints -= movementCost;
+                            GetComponent<playerOverall>().updatePath(path);
+                            currentMovementPoints -= path.Count;
                             updateMovementPoints();
                         }
 	        		}
@@ -95,7 +104,7 @@ public class playerCombat : MonoBehaviour {
 	}
 
 	public void finishedPhase(){
-		if (playing){
+		if (playing &&  !GetComponent<playerOverall>().isWalking()){
 			if(walkPhase){
 				walkPhase = false;
 				attackPhase = true;
@@ -213,23 +222,27 @@ public class playerCombat : MonoBehaviour {
 
     //shows possible paths to the user
 	void drawPath(){
+        stillDrawn = true;
 		GameObject t = StaticFunctions.getTileAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		if(t != null){
 			GameObject currentTile = StaticFunctions.getTileAt(transform.position);
 			if(currentTile != null){
-				if(p != null){
-					foreach (GameObject tile in p){
-						whiteOut(tile, false);
-					}
-				}
-
+				foreach (GameObject tile in drawnPaths)
+                {
+				    whiteOut(tile, false);
+			    }
         		if (!EventSystem.current.IsPointerOverGameObject()){
-					p = StaticFunctions.getPath(currentTile, t);
-					for (int i = 0; i < currentMovementPoints && i < p.Count; i++){
-						greyOut(p[i], false);
+                    drawnPaths = StaticFunctions.aStarPathFinding(currentTile, t);
+					for (int i = 0; i < currentMovementPoints && i < drawnPaths.Count; i++){
+                        if (i == drawnPaths.Count - 1 && drawnPaths[i].GetComponent<tile>().taken) {  //if the last item in path is taken then do not draw it
+                        }
+                        else {
+                            greyOut(drawnPaths[i], false);
+                        }
 					}
 				}
 			}
 		}
 	}
+  
 }

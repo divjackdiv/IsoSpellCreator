@@ -5,10 +5,13 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 
 public class SpellPoint : MonoBehaviour { 
+
     public int duration;
     public int damage;
     public float movementSpeed = 1;
     public int cost;
+    public int spriteIndex;
+    public int gameObjectIndex;
     bool moving;
     bool playing;
     Vector2 target;
@@ -55,7 +58,7 @@ public class SpellPoint : MonoBehaviour {
                 animCounter = 0;
                 state = 1;
                 gameObject.GetComponent<SpriteRenderer>().enabled = true;
-                animator.SetInteger("state", 1);
+                if (animator != null) animator.SetInteger("state", 1);
             }
             else
             {
@@ -67,7 +70,7 @@ public class SpellPoint : MonoBehaviour {
         }
         else if(playing){
             state = 0;
-            animator.SetInteger("state", 0);    // 0 is idle
+            if (animator != null) animator.SetInteger("state", 0);    // 0 is idle
             burn();
             finished();
         }

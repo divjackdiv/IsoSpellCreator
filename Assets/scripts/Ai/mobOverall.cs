@@ -2,30 +2,33 @@
 using System.Collections;
 using System.Collections.Generic;
 
-//Any and all code which the player should be able to use at any time
-public class playerOverall : MonoBehaviour {
+//Any and all code which the mob should be able to access at any time
+public class mobOverall : MonoBehaviour
+{
 
     //Movement Management
     public float walkSpeed;
     List<GameObject> path;
     bool shouldWalk;
+    GameObject currentGoal; //next tile normally
+    GameObject currentTile;
+    int range;
 
     void Start()
     {
+        currentTile = StaticFunctions.getTileAt(transform.position);
         shouldWalk = false;
         path = new List<GameObject>();
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        range = GetComponent<mobStats>().range;
     }
-    public bool isWalking()
-    {
-        return shouldWalk;
-    }
+
     void Update()
     {
         if (shouldWalk)
         {
             walkAlongPath();
-            GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+            GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1; 
         }
     }
 
@@ -34,24 +37,42 @@ public class playerOverall : MonoBehaviour {
         if (path.Count <= 0)
         {
             shouldWalk = false;
+            if (GetComponent<mobCombat>().enabled)
+            {
+                GetComponent<mobCombat>().finishedWalking();
+            }
+            else
+            {
+                GetComponent<mobWorld>().finishedWalking();
+            }
             return;
         }
-        if (walkTo(path[0].transform.position))
+        else if (currentGoal == null)
         {
-            path.RemoveAt(0);
+            currentGoal = path[0];
+            GameObject goalTile = StaticFunctions.getTileAt(currentGoal.transform.position);
+            if (goalTile.GetComponent<tile>().takeTile(gameObject))
+            {
+                if (currentTile != goalTile) currentTile.GetComponent<tile>().leaveTile();
+            }
+            else
+            {
+                path.Clear();
+                currentGoal = null;
+            }
+        }
+        else
+        {
+            transform.position = Vector3.MoveTowards(transform.position, currentGoal.transform.position, walkSpeed * Time.deltaTime);
+            if (transform.position == currentGoal.transform.position)
+            {
+                currentTile = currentGoal;
+                path.RemoveAt(0);
+                currentGoal = null;
+            }
         }
     }
 
-    bool walkTo(Vector2 position)
-    {
-        transform.position = Vector3.MoveTowards(transform.position, position, walkSpeed * Time.deltaTime);
-        Vector2 p = new Vector2(transform.position.x, transform.position.y);
-        if (p == position)
-        {
-            return true;
-        }
-        return false;
-    }
     public void updatePath(List<GameObject> newPath)
     {
         path = newPath;
@@ -69,11 +90,11 @@ public class playerOverall : MonoBehaviour {
         if (currentTile.GetComponent<tile>().taken && !currentTile.GetComponent<tile>().takenBy == gameObject)
         {
             nearestTile = StaticFunctions.findNearestFreeTile(currentTile);
-        }
+        }           
         path = StaticFunctions.aStarPathFinding(currentTile, nearestTile);
         shouldWalk = true;
     }
-
+    
     public bool takeTile(Vector2 pos)
     {
         GameObject newTile = StaticFunctions.getTileAt(pos);
