@@ -18,7 +18,7 @@ public class MainMenu : MonoBehaviour {
 	public Transform loads;
 
 	public void Awake(){
-		if(SceneManager.GetActiveScene().buildIndex == 0) isSceneMainMenu = true;
+        if (SceneManager.GetActiveScene().buildIndex == 0) isSceneMainMenu = true;
 		else isSceneMainMenu = false;
 		if(Game.current == null){
 			//LOAD ALL SAVES INFO
@@ -46,12 +46,7 @@ public class MainMenu : MonoBehaviour {
 		if(!MainMenu.isSceneMainMenu) loadAllSaveButtons(saves, false);
 		loadAllSaveButtons(loads, true);
 	}
-	// Use this for initialization
 	
-	// Update is called once per frame
-	public void loadScene(int scene){
-    	SceneManager.LoadScene(scene);
-    }
     public void Continue(){
     	string name = getLastSaveName();
     	if (name == null) return;

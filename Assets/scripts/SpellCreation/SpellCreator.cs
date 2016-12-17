@@ -11,42 +11,22 @@ public class SpellCreator : MonoBehaviour {
     public List<Sprite> spellSprites;
     public GameObject spellBook;
     public GameObject player;
-
-    public GameObject spellCanvasObject;
-    public GameObject overallManager;
+    
     public int groundLayer;
 
     private GameObject spell;
-    private int spellIndex;
 
     private GameObject currentGameObject;
     private int layerMask;
     private int turn;
-    private GameObject defaultBranch;
-    private GameObject spellGameObject;
+    public GameObject defaultBranch;
+    public GameObject spellGameObject;
 
     private bool shouldOpen;
 
     void Start () {
-        spellGameObject = overallManager.GetComponent<overallManager>().defaultSpellGameObject;
-        defaultBranch = overallManager.GetComponent<overallManager>().defaultBranchGameObject;
         layerMask = 1<<groundLayer;
-        spellIndex = 0;
-
-    }
-    void Update()
-    {
-        if (shouldOpen)
-        {
-            if (!player.GetComponent<playerOverall>().isMoving())
-            {
-                spell = (GameObject)Instantiate(spellGameObject, player.transform.position, Quaternion.identity);
-                shouldOpen = false;
-            } 
-        }
-    }
-    public void open(){
-        shouldOpen = true;
+        spell = (GameObject)Instantiate(spellGameObject, player.transform.position, Quaternion.identity);
     }
 
 	public void OnDragSpell(int i){
@@ -96,26 +76,22 @@ public class SpellCreator : MonoBehaviour {
 
     public void saveSpell()
     {
-        if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0  && spellIndex < 4)
+        if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0)
         {
             enableChildrenLineRenderers(spell, false);
             spell.SetActive(false);
             int cost = calculateSpellCost(spell);
             spell.GetComponent<SpellScript>().player = player;
             spell.GetComponent<SpellScript>().cost = cost;
-            spellBook.GetComponent<SpellBook>().addSpell(spell);
-            Sprite sprite = spell.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;
-            spellCanvasObject.transform.GetChild(spellIndex).GetChild(0).GetComponent<Text>().text = cost + "";
-            spellCanvasObject.transform.GetChild(spellIndex).GetComponent<Image>().sprite = sprite;
             spell.transform.parent = spellBook.transform;
-            saveSpellData(spell.transform);
-            spellIndex++;
+            SpellData s = saveSpellData(spell.transform);
+            if (s != null) Game.current.spells.Add(s);
         }
         else Destroy(spell);
-        overallManager.GetComponent<overallManager>().closeSpellCreator(true);
+        closeSpellCreator();
     }
 
-    public void saveSpellData(Transform s)
+    public SpellData saveSpellData(Transform s)
     {
 
         if (s.GetComponent<SpellScript>())
@@ -137,9 +113,10 @@ public class SpellCreator : MonoBehaviour {
                     branches.Add(b);
                 }
             }
-            SpellData spellData = new SpellData(s.transform.position, branches, s.GetComponent<SpellScript>().cost, spellIndex, spriteIndex);
-            s.GetComponent<SpellScript>().setSpellData(spellData);
+            SpellData spellData = new SpellData(s.transform.position, branches, s.GetComponent<SpellScript>().cost, spriteIndex);
+            return spellData;
         }
+        return null;
     }
     void recursiveSaveSpellPoint(Transform point, int parentIndex, List<PointData> points)
     {
@@ -160,18 +137,6 @@ public class SpellCreator : MonoBehaviour {
             recursiveSaveSpellPoint(child, index, points);
         }
 
-    }
-    void saveSpells(Transform g, Game game)
-    {
-        foreach (Transform child in g)
-        {
-            saveSpells(child, game);
-        }
-        if (g.gameObject.GetComponent<SpellScript>() != null)
-        {
-            SpellData s = g.GetComponent<SpellScript>().getSpellData();
-            game.spells.Add(s);
-        }
     }
 
     public int calculateSpellCost(GameObject s){
@@ -194,10 +159,10 @@ public class SpellCreator : MonoBehaviour {
         return cost;
     }
 
-    public void close(){
-        Destroy(spell);
+    public void closeSpellCreator()
+    {
+        StaticFunctions.loadScene(1);
     }
-
 
     void enableChildrenLineRenderers(GameObject g, bool enable){
         LineRenderer[] lrs = g.GetComponentsInChildren<LineRenderer>(true);

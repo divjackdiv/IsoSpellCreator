@@ -9,7 +9,7 @@ public class playerCombat : MonoBehaviour {
 
 	public GameObject combatManager;
 	public GameObject spellBook;
-	public GameObject spellCreator;
+	public GameObject overallManager;
 
 	public GameObject manaUi;
 	public GameObject mvmtPointsUi;
@@ -42,7 +42,7 @@ public class playerCombat : MonoBehaviour {
 		currentMovementPoints = transform.GetComponent<playerStats>().movement;
         currentLifePoints = transform.GetComponent<playerStats>().lifePoints;
 		currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
-		spellCanvasObject = spellCreator.GetComponent<SpellCreator>().spellCanvasObject;
+		spellCanvasObject = overallManager.GetComponent<overallManager>().spellCanvasObject;
 	}
 	
 	

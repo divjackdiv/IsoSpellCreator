@@ -2,9 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 
+using UnityEngine.SceneManagement;
 public class StaticFunctions {
 
- 	public static Vector2 getMousePosition(int groundLayer){ 
+    public static void loadScene(int scene)
+    {
+        SceneManager.LoadScene(scene);
+    }
+
+    public static Vector2 getMousePosition(int groundLayer){ 
  		int layerMask = 1<<groundLayer;
         Vector2 mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -83,10 +89,6 @@ public class StaticFunctions {
             List<GameObject> l = new List<GameObject>();
             l.Add(targetTile);
             return l;
-        }
-        if (StaticFunctions.getNeighbours(currentTile).Contains(targetTile))
-        {
-            return new List<GameObject>();
         }
         List<GameObject> visited = new List<GameObject>();
         List<GameObject> unvisited = new List<GameObject>();

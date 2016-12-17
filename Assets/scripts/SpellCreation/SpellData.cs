@@ -16,16 +16,14 @@ public class SpellData {
     float xPos;
     float yPos;
     int cost;
-    int uiIndex;
     int spriteIndex;
     List<BranchData> branches;
-    public SpellData(Vector2 pos, List<BranchData> b, int c, int index, int sIndex)
+    public SpellData(Vector2 pos, List<BranchData> b, int c, int sIndex)
     {
         xPos = pos.x;
         yPos = pos.y;
         branches = b;
         cost = c;
-        uiIndex = index;
         spriteIndex = sIndex;
     }
     public Vector2 getPos()
@@ -39,10 +37,6 @@ public class SpellData {
     public int getCost()
     {
         return cost;
-    }
-    public int getUiIndex()
-    {
-        return uiIndex;
     }
     public int getUiSpriteIndex() //use to get which sprite to use on the ui
     {

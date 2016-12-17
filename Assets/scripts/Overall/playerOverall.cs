@@ -70,6 +70,7 @@ public class playerOverall : MonoBehaviour {
         {
             nearestTile = StaticFunctions.findNearestFreeTile(currentTile);
         }
+        nearestTile.GetComponent<tile>().takeTile(gameObject);
         path = StaticFunctions.aStarPathFinding(currentTile, nearestTile);
         shouldWalk = true;
     }

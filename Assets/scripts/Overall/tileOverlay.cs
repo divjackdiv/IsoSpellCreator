@@ -30,8 +30,6 @@ public class tileOverlay : MonoBehaviour {
     {
         if (animationStates != null && animationStates.Count != 0)
         {
-            
-            print(" int " + animationStates[0]);
             animator.SetInteger("state", animationStates[0]);
             destroyAfterAnimation = destroyAfterAnim;
             animCounter = 0;
@@ -44,12 +42,10 @@ public class tileOverlay : MonoBehaviour {
     public void playAnimOnce(List<int> states)
     {
         animCounter += Time.deltaTime;
-        print(" leng " + animator.GetCurrentAnimatorStateInfo(0).length);
         if (animCounter >= animator.GetCurrentAnimatorStateInfo(0).length)
         {
             if (destroyAfterAnimation) Destroy(gameObject);
             animCounter = 0;
-            print("breah");
             states.RemoveAt(0);
             if (states.Count > 0) animator.SetInteger("state", states[0]); //If anim is only played once, define which anim is to be played next,      										
             else shouldPlayAnim = false; 

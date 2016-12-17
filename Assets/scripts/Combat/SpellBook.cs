@@ -5,7 +5,7 @@ public class SpellBook : MonoBehaviour {
 
 	public GameObject player;
 	public GameObject combatManager;
-	List<GameObject> Spells;
+	public List<GameObject> Spells;
 
 	public void instantiateSpell(int index){
         if (Spells == null)
@@ -26,13 +26,19 @@ public class SpellBook : MonoBehaviour {
 			s.transform.parent = combatManager.transform;
 		}
 	}
+    public List<GameObject> getAllSpells()
+    {
+        if (Spells == null) return new List<GameObject>();
+        return Spells;
+    }
 	public GameObject getSpell(int index){
 		if (index < 0 || index >= Spells.Count) return null;
 		return Spells[index];
 	}
 
 	public int getSpellCount(){
-		return Spells.Count;
+        if (Spells == null) return 0;
+        return Spells.Count;
 	}
 
 	void setupSpell(GameObject spell, bool isRoot){

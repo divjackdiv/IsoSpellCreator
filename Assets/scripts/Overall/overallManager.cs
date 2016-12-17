@@ -23,28 +23,30 @@ public class overallManager : MonoBehaviour
     public GameObject load;
 
     public GameObject gridManager;
-    public GameObject inputSpellCreator;
     public GameObject spellCreator;
     public GameObject combatManager;
     public GameObject mobs;
 
     public GameObject player;
-    public GameObject defaultSpellGameObject;
-    public GameObject defaultBranchGameObject;
+    private GameObject defaultSpellGameObject;
+    private GameObject defaultBranchGameObject;
     bool isEscMenuOpened;
     List<bool> menus;
 
-    GameObject spellCanvasObject;
+    public GameObject spellCanvasObject;
     // Use this for initialization
     void Awake()
     {
-        print(Application.persistentDataPath);
-        spellCanvasObject = spellCreator.GetComponent<SpellCreator>().spellCanvasObject;
+        if(spellCreator != null) defaultBranchGameObject = spellCreator.GetComponent<SpellCreator>().defaultBranch;
+        if(spellCreator != null) defaultSpellGameObject = spellCreator.GetComponent<SpellCreator>().spellGameObject;
         if (Game.current != null)
         {
-            if (player != null) player.GetComponent<playerStats>().load();
-            if (Game.current.mobs != null) loadMobs(mobs.transform);
-            if (Game.current.spells != null) loadSpells(spellBook.transform);
+            if (player != null && Game.current.playerData != null) player.GetComponent<playerStats>().load();
+            if (Game.current.mobs != null && Game.current.mobs.Count > 0) loadMobs(mobs.transform);
+            if (Game.current.spells != null)
+            {
+                loadSpells(spellBook.transform);
+            }
         }
         menus = new List<bool>();
         if (escMenuCanvas != null) isEscMenuOpened = escMenuCanvas.activeSelf;
@@ -108,34 +110,14 @@ public class overallManager : MonoBehaviour
             worldCanvas.SetActive(menus[2]);
         }
     }
-
     public void openSpellCreator()
     {
-        Time.timeScale = 0;
-        combatScripts.SetActive(false);
-        combatCanvas.SetActive(false);
-        spellCreationCanvas.SetActive(true);
-        spellCreationScripts.SetActive(true);
-        worldScripts.SetActive(false);
-        worldCanvas.SetActive(false);
-        player.transform.GetComponent<playerWorld>().enabled = false;
-        player.transform.GetComponent<playerOverall>().moveToNearestTile();
-        spellCreator.GetComponent<SpellCreator>().open();
+        saveScene(Game.current);
+        StaticFunctions.loadScene(2);
     }
-
-    public void closeSpellCreator(bool saved)
+    public void loadScene(int i)
     {
-        inputSpellCreator.GetComponent<inputSpellCreator>().hideOptions();
-        combatScripts.SetActive(false);
-        combatCanvas.SetActive(false);
-        spellCreationCanvas.SetActive(false);
-        spellCreationScripts.SetActive(false);
-        worldScripts.SetActive(true);
-        worldCanvas.SetActive(true);
-        gridManager.GetComponent<gridManager>().clearGrid();
-        if (!saved) spellCreator.GetComponent<SpellCreator>().close();
-        Time.timeScale = 1;
-        player.transform.GetComponent<playerWorld>().enabled = true;
+        StaticFunctions.loadScene(i);
     }
 
     public void startCombat(GameObject enemies)
@@ -177,18 +159,21 @@ public class overallManager : MonoBehaviour
         g.yearDate = words[2];
         g.savedHour = words[3];
         g.savedMinute = words[4];
-
+        saveScene(g);
+        SaveManager.Save(g); //this save func writes all the info to a file
+        StartCoroutine(GetComponent<MainMenu>().updateButtons(g));
+        closeEscMenu();
+    }
+    //saves all info about the scene into the game instance
+    void saveScene(Game g)
+    {
         g.playerLevel = player.GetComponent<playerStats>().level;
         g.areaName = EditorApplication.currentScene;
         g.sceneIndex = SceneManager.GetActiveScene().buildIndex;
         g.playerData = player.GetComponent<playerStats>().save();
         saveMobs(mobs.transform, g);
         saveSpells(spellBook.transform, g);
-        SaveManager.Save(g);
-        StartCoroutine(GetComponent<MainMenu>().updateButtons(g));
-        closeEscMenu();
     }
-
     void saveMobs(Transform g, Game game)
     {
         foreach (Transform child in g)
@@ -197,14 +182,14 @@ public class overallManager : MonoBehaviour
         }
         if (g.gameObject.GetComponent<mobStats>() != null)
         {
-            int index = g.gameObject.GetComponent<mobStats>().getIndex();
-            if (game.mobs.ContainsKey(index))
+            int id = g.gameObject.GetComponent<mobStats>().getUniqueId();
+            if (game.mobs.ContainsKey(id))
             {
-                game.mobs[index] = g.gameObject.GetComponent<mobStats>().save();
+                game.mobs[id] = g.gameObject.GetComponent<mobStats>().save();
             }
             else
             {
-                game.mobs.Add(index, g.gameObject.GetComponent<mobStats>().save());
+                game.mobs.Add(id, g.gameObject.GetComponent<mobStats>().save());
             }
         }
     }
@@ -217,8 +202,9 @@ public class overallManager : MonoBehaviour
         if (g.gameObject.GetComponent<mobStats>() != null) g.gameObject.GetComponent<mobStats>().load();
     }
 
-    void saveSpells(Transform g, Game game)
+    public static void saveSpells(Transform g, Game game)
     {
+        game.spells = new List<SpellData>();
         foreach (Transform child in g)
         {
             if (child.gameObject.GetComponent<SpellScript>() != null)
@@ -230,13 +216,15 @@ public class overallManager : MonoBehaviour
     }
     void loadSpells(Transform g)
     {
+        int counter = 0;
         foreach (SpellData s in Game.current.spells)
         {
             int cost = s.getCost();
-            int spellIndex = s.getUiIndex();
             Sprite sprite = spellCreator.GetComponent<SpellCreator>().spellSprites[s.getUiSpriteIndex()];
             GameObject spell = (GameObject) Instantiate(defaultSpellGameObject, s.getPos(), Quaternion.identity);
             spell.GetComponent<SpellScript>().player = player;
+            spell.GetComponent<SpellScript>().cost = cost;
+            spell.GetComponent<SpellScript>().setSpellData(s);
             foreach (BranchData b in s.getBranches())
             {
                 GameObject branch = (GameObject)Instantiate(defaultBranchGameObject);
@@ -269,11 +257,11 @@ public class overallManager : MonoBehaviour
             spell.transform.parent = g;
             spell.SetActive(false);
             //Now that the spell has been reloaded, we should "update" the Ui
-            if (spellIndex >= 0)
+            if (spellCanvasObject.transform.GetChild(counter))
             {// This is what will be used to set the ui buttons' image and function
-                spellCanvasObject.transform.GetChild(spellIndex).GetChild(0).GetComponent<Text>().text = cost + "";
-                print("cost is " + cost);
-                spellCanvasObject.transform.GetChild(spellIndex).GetComponent<Image>().sprite = sprite;
+                spellCanvasObject.transform.GetChild(counter).GetChild(0).GetComponent<Text>().text = cost + "";
+                spellCanvasObject.transform.GetChild(counter).GetComponent<Image>().sprite = sprite;
+                counter++;
             }
             spellBook.GetComponent<SpellBook>().addSpell(spell);
         }
