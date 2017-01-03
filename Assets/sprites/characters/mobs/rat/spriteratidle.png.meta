@@ -1,0 +1,339 @@
+fileFormatVersion: 2
+guid: 61d46dff2b006aa4da4b950d16e344d0
+timeCreated: 1483320165
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: spriteratidle_0
+    21300002: spriteratidle_1
+    21300004: spriteratidle_2
+    21300006: spriteratidle_3
+    21300008: spriteratidle_4
+    21300010: spriteratidle_5
+    21300012: spriteratidle_6
+    21300014: spriteratidle_7
+    21300016: spriteratidle_8
+    21300018: spriteratidle_9
+    21300020: spriteratidle_10
+    21300022: spriteratidle_11
+    21300024: spriteratidle_12
+    21300026: spriteratidle_13
+    21300028: spriteratidle_14
+    21300030: spriteratidle_15
+    21300032: spriteratidle_16
+    21300034: spriteratidle_17
+    21300036: spriteratidle_18
+    21300038: spriteratidle_19
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: spriteratidle_0
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 2595
+        width: 232
+        height: 126
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_1
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 2595
+        width: 231
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_2
+      rect:
+        serializedVersion: 2
+        x: 1168
+        y: 2595
+        width: 230
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_3
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 2595
+        width: 231
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_4
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 2013
+        width: 230
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_5
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 2013
+        width: 230
+        height: 131
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_6
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 2012
+        width: 230
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_7
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 2015
+        width: 230
+        height: 133
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_8
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 1432
+        width: 221
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_9
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 1433
+        width: 220
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_10
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 1433
+        width: 219
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_11
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 1432
+        width: 218
+        height: 136
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_12
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 853
+        width: 219
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_13
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 853
+        width: 219
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_14
+      rect:
+        serializedVersion: 2
+        x: 1166
+        y: 853
+        width: 221
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_15
+      rect:
+        serializedVersion: 2
+        x: 1666
+        y: 853
+        width: 219
+        height: 132
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_16
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 283
+        width: 221
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_17
+      rect:
+        serializedVersion: 2
+        x: 667
+        y: 283
+        width: 222
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_18
+      rect:
+        serializedVersion: 2
+        x: 1167
+        y: 283
+        width: 222
+        height: 126
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratidle_19
+      rect:
+        serializedVersion: 2
+        x: 1664
+        y: 283
+        width: 229
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

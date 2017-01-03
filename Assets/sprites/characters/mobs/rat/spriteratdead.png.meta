@@ -1,0 +1,325 @@
+fileFormatVersion: 2
+guid: 2c5a1fde8c55d0645b1d533ab7244cad
+timeCreated: 1483141604
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: spriteratdead_0
+    21300002: spriteratdead_1
+    21300004: spriteratdead_2
+    21300006: spriteratdead_3
+    21300008: spriteratdead_4
+    21300010: spriteratdead_5
+    21300012: spriteratdead_6
+    21300014: spriteratdead_7
+    21300016: spriteratdead_8
+    21300018: spriteratdead_9
+    21300020: spriteratdead_10
+    21300022: spriteratdead_11
+    21300024: spriteratdead_12
+    21300026: spriteratdead_13
+    21300028: spriteratdead_14
+    21300030: spriteratdead_15
+    21300032: spriteratdead_16
+    21300034: spriteratdead_17
+    21300036: spriteratdead_18
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: spriteratdead_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2382.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_1
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 2382.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_2
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 2382.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_3
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 2382.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_4
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1787.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_5
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 1787.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_6
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 1787.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_7
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 1787.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_8
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 1192.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_9
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 1192.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_10
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 1192.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_11
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 1192.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_12
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 597.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_13
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 597.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_14
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 597.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_15
+      rect:
+        serializedVersion: 2
+        x: 1488
+        y: 597.4
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_16
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2.4000244
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_17
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 2.4000244
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratdead_18
+      rect:
+        serializedVersion: 2
+        x: 992
+        y: 2.4000244
+        width: 496.25
+        height: 595.6
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

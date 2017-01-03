@@ -78,7 +78,7 @@ public class mobOverall : MonoBehaviour
         path = newPath;
         shouldWalk = true;
     }
-    public bool isMoving()
+    public bool isWalking()
     {
         return shouldWalk;
     }

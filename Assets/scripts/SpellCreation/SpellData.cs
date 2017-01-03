@@ -18,13 +18,15 @@ public class SpellData {
     int cost;
     int spriteIndex;
     List<BranchData> branches;
-    public SpellData(Vector2 pos, List<BranchData> b, int c, int sIndex)
+    string spellName;
+    public SpellData(Vector2 pos, List<BranchData> b, int c, int sIndex, string name)
     {
         xPos = pos.x;
         yPos = pos.y;
         branches = b;
         cost = c;
         spriteIndex = sIndex;
+        spellName = name;
     }
     public Vector2 getPos()
     {
@@ -41,6 +43,10 @@ public class SpellData {
     public int getUiSpriteIndex() //use to get which sprite to use on the ui
     {
         return spriteIndex;
+    }
+    public string getSpellName()
+    {
+        return spellName;
     }
 }
 [System.Serializable]

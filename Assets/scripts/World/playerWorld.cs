@@ -4,16 +4,16 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class playerWorld : MonoBehaviour {
-
-	// Use this for initialization
-	public GameObject spellCreator;
+    
 	int groundLayer;
     int groundLayerMask;
     bool creatingSpell;
+    List<GameObject> path;
 
 
-	void Start () {
-        groundLayer = spellCreator.GetComponent<SpellCreator>().groundLayer;
+    void Start () {
+        path = new List<GameObject>();
+        groundLayer = overallManager.groundLayerS;
         groundLayerMask = 1<<groundLayer;
 	}
 	
@@ -24,7 +24,17 @@ public class playerWorld : MonoBehaviour {
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = StaticFunctions.getTileAt(mousePos);
         		if(g != null){
-                    transform.GetComponent<playerOverall>().updatePath(StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), g));
+                    GameObject nextTile = null;
+                    if (path.Count > 0)
+                    {
+                        nextTile = path[0];
+                    }
+                    path =  StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), g);
+                    if (nextTile != null)
+                    {
+                        path.Insert(0,nextTile);
+                    }
+                    transform.GetComponent<playerOverall>().updatePath(path);
         		}
         	}
         }

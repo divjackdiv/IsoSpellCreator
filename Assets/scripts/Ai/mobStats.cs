@@ -21,9 +21,9 @@ public class mobStats : MonoBehaviour {
 	}
 
 	public void load(){        
-        if (Game.current.mobs[uniqueId].isDestroyed()) gameObject.GetComponent<mobCombat>().die();
-		transform.position = Game.current.mobs[uniqueId].getLastSavedPos();
-		Dictionary<string, int> d = Game.current.mobs[uniqueId].getStats();
+        if (Game.current.sceneSpecificMobs[Game.current.areaName][uniqueId].isDestroyed()) gameObject.GetComponent<mobCombat>().die();
+		transform.position = Game.current.sceneSpecificMobs[Game.current.areaName][uniqueId].getLastSavedPos();
+		Dictionary<string, int> d = Game.current.sceneSpecificMobs[Game.current.areaName][uniqueId].getStats();
 		lifePoints = d["lifePoints"];
 		damage = d["damage"];
 		range = d["range"];

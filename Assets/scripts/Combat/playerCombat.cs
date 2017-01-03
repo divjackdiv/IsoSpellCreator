@@ -27,7 +27,7 @@ public class playerCombat : MonoBehaviour {
     bool walkPhase;
     bool attackPhase;
     bool stillDrawn; //are paths still drawn and need to be cleaned up?
-
+    bool isWalking;
     int currentMana;
     int currentMovementPoints;
     int currentLifePoints;
@@ -52,7 +52,10 @@ public class playerCombat : MonoBehaviour {
 			die();
 			return;
 		}
-		if(walkPhase) drawPath();
+        if (walkPhase && ! isWalking)
+        {
+            drawPath();
+        }
         else if (stillDrawn)
         {
             foreach (GameObject tile in drawnPaths)
@@ -61,7 +64,9 @@ public class playerCombat : MonoBehaviour {
             }
         }
 		if (Input.GetButtonDown("Fire1") && playing && walkPhase){
-        	if (!EventSystem.current.IsPointerOverGameObject() && !GetComponent<playerOverall>().isMoving()){
+
+        	if (!EventSystem.current.IsPointerOverGameObject() && !isWalking)
+            {
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = StaticFunctions.getTileAt(mousePos);
         		if(g != null){
@@ -72,6 +77,7 @@ public class playerCombat : MonoBehaviour {
                         bool canMove = GetComponent<playerOverall>().takeTile(target);
                         if (canMove)
                         {
+                            isWalking = true;
                             GetComponent<playerOverall>().updatePath(path);
                             currentMovementPoints -= path.Count;
                             updateMovementPoints();
@@ -104,7 +110,7 @@ public class playerCombat : MonoBehaviour {
 	}
 
 	public void finishedPhase(){
-		if (playing &&  !GetComponent<playerOverall>().isWalking()){
+		if (playing &&  !isWalking){
 			if(walkPhase){
 				walkPhase = false;
 				attackPhase = true;
@@ -147,7 +153,10 @@ public class playerCombat : MonoBehaviour {
 			}
 		}	
 	}
-
+    public void finishedWalking()
+    {
+        isWalking = false;
+    }
 	public void addSpell(GameObject spell){
 		spells.Add(spell);
 	}
@@ -161,6 +170,8 @@ public class playerCombat : MonoBehaviour {
 		foreach(GameObject spell in spells){
 			Destroy(spell);
 		}
+        GetComponent<playerWorld>().enabled = true;
+        this.enabled = false;
 	}
 	public void takeDamage(int damage){
 		currentLifePoints -= damage;

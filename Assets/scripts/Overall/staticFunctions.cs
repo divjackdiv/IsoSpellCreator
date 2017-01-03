@@ -10,8 +10,8 @@ public class StaticFunctions {
         SceneManager.LoadScene(scene);
     }
 
-    public static Vector2 getMousePosition(int groundLayer){ 
- 		int layerMask = 1<<groundLayer;
+    public static Vector2 getMousePosition(){ 
+ 		int layerMask = 1 << SpellBook.groundLayer;
         Vector2 mousePosition;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         RaycastHit hit;
@@ -25,7 +25,8 @@ public class StaticFunctions {
         return mousePosition;
     }
 
-    public static GameObject getObjectAtMousePos(int layerMask){
+    public static GameObject getObjectAtMousePos(){
+        int layerMask = 1 << SpellBook.groundLayer;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, layerMask);
         if (hit){
@@ -37,7 +38,8 @@ public class StaticFunctions {
         return null;
     }
 
-    public static GameObject getObjectAt(Vector2 pos, int layerMask){
+    public static GameObject getObjectAt(Vector2 pos){
+        int layerMask = 1 << SpellBook.groundLayer;
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, layerMask);
         if (hit){
             if (hit.collider != null){
@@ -47,8 +49,9 @@ public class StaticFunctions {
         }
         return null;
     }
-    public static GameObject getTileAt(Vector2 pos){
-        int groundLayerMask = 1<<9;
+    public static GameObject getTileAt(Vector2 pos)
+    {
+        int groundLayerMask = 1 << SpellBook.groundLayer;
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, groundLayerMask);
         if (hit){
             if (hit.collider != null){

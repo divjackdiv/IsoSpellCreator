@@ -1,0 +1,6 @@
+DONE   
+-save mobs to their scene, so that there are no conflicts between multiple scenes
+-repair walking bug, ie when you walk if you change direction you can go in unwanted directions
+
+TO BE DONE
+-create the spell book

@@ -1,0 +1,1363 @@
+fileFormatVersion: 2
+guid: 1e232eabfcddbbf4dbe945260f53a5ac
+timeCreated: 1483319875
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: spriteratattaque_0
+    21300002: spriteratattaque_1
+    21300004: spriteratattaque_2
+    21300006: spriteratattaque_3
+    21300008: spriteratattaque_4
+    21300010: spriteratattaque_5
+    21300012: spriteratattaque_6
+    21300014: spriteratattaque_7
+    21300016: spriteratattaque_8
+    21300018: spriteratattaque_9
+    21300020: spriteratattaque_10
+    21300022: spriteratattaque_11
+    21300024: spriteratattaque_12
+    21300026: spriteratattaque_13
+    21300028: spriteratattaque_14
+    21300030: spriteratattaque_15
+    21300032: spriteratattaque_16
+    21300034: spriteratattaque_17
+    21300036: spriteratattaque_18
+    21300038: spriteratattaque_19
+    21300040: spriteratattaque_20
+    21300042: spriteratattaque_21
+    21300044: spriteratattaque_22
+    21300046: spriteratattaque_23
+    21300048: spriteratattaque_24
+    21300050: spriteratattaque_25
+    21300052: spriteratattaque_26
+    21300054: spriteratattaque_27
+    21300056: spriteratattaque_28
+    21300058: spriteratattaque_29
+    21300060: spriteratattaque_30
+    21300062: spriteratattaque_31
+    21300064: spriteratattaque_32
+    21300066: spriteratattaque_33
+    21300068: spriteratattaque_34
+    21300070: spriteratattaque_35
+    21300072: spriteratattaque_36
+    21300074: spriteratattaque_37
+    21300076: spriteratattaque_38
+    21300078: spriteratattaque_39
+    21300080: spriteratattaque_40
+    21300082: spriteratattaque_41
+    21300084: spriteratattaque_42
+    21300086: spriteratattaque_43
+    21300088: spriteratattaque_44
+    21300090: spriteratattaque_45
+    21300092: spriteratattaque_46
+    21300094: spriteratattaque_47
+    21300096: spriteratattaque_48
+    21300098: spriteratattaque_49
+    21300100: spriteratattaque_50
+    21300102: spriteratattaque_51
+    21300104: spriteratattaque_52
+    21300106: spriteratattaque_53
+    21300108: spriteratattaque_54
+    21300110: spriteratattaque_55
+    21300112: spriteratattaque_56
+    21300114: spriteratattaque_57
+    21300116: spriteratattaque_58
+    21300118: spriteratattaque_59
+    21300120: spriteratattaque_60
+    21300122: spriteratattaque_61
+    21300124: spriteratattaque_62
+    21300126: spriteratattaque_63
+    21300128: spriteratattaque_64
+    21300130: spriteratattaque_65
+    21300132: spriteratattaque_66
+    21300134: spriteratattaque_67
+    21300136: spriteratattaque_68
+    21300138: spriteratattaque_69
+    21300140: spriteratattaque_70
+    21300142: spriteratattaque_71
+    21300144: spriteratattaque_72
+    21300146: spriteratattaque_73
+    21300148: spriteratattaque_74
+    21300150: spriteratattaque_75
+    21300152: spriteratattaque_76
+    21300154: spriteratattaque_77
+    21300156: spriteratattaque_78
+    21300158: spriteratattaque_79
+    21300160: spriteratattaque_80
+    21300162: spriteratattaque_81
+    21300164: spriteratattaque_82
+    21300166: spriteratattaque_83
+    21300168: spriteratattaque_84
+    21300170: spriteratattaque_85
+    21300172: spriteratattaque_86
+    21300174: spriteratattaque_87
+    21300176: spriteratattaque_88
+    21300178: spriteratattaque_89
+    21300180: spriteratattaque_90
+    21300182: spriteratattaque_91
+    21300184: spriteratattaque_92
+    21300186: spriteratattaque_93
+    21300188: spriteratattaque_94
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 7
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: spriteratattaque_0
+      rect:
+        serializedVersion: 2
+        x: 171
+        y: 3760
+        width: 233
+        height: 127
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_1
+      rect:
+        serializedVersion: 2
+        x: 671
+        y: 3762
+        width: 230
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_2
+      rect:
+        serializedVersion: 2
+        x: 1164
+        y: 3762
+        width: 230
+        height: 129
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_3
+      rect:
+        serializedVersion: 2
+        x: 1658
+        y: 3777
+        width: 231
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_4
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 3199
+        width: 205
+        height: 110
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_5
+      rect:
+        serializedVersion: 2
+        x: 697
+        y: 3202
+        width: 188
+        height: 113
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_6
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 3201
+        width: 168
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_7
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 3195
+        width: 155
+        height: 150
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_8
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 2617
+        width: 138
+        height: 147
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_9
+      rect:
+        serializedVersion: 2
+        x: 709
+        y: 2619
+        width: 144
+        height: 145
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_10
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 2623
+        width: 144
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_11
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 2623
+        width: 144
+        height: 141
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_12
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 2041
+        width: 144
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_13
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 2041
+        width: 144
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_14
+      rect:
+        serializedVersion: 2
+        x: 1203
+        y: 2041
+        width: 146
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_15
+      rect:
+        serializedVersion: 2
+        x: 1703
+        y: 2041
+        width: 144
+        height: 137
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_16
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 1472
+        width: 148
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_17
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 1472
+        width: 150
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_18
+      rect:
+        serializedVersion: 2
+        x: 1197
+        y: 1472
+        width: 150
+        height: 135
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_19
+      rect:
+        serializedVersion: 2
+        x: 1696
+        y: 1472
+        width: 150
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_20
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 891
+        width: 152
+        height: 146
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_21
+      rect:
+        serializedVersion: 2
+        x: 701
+        y: 891
+        width: 152
+        height: 139
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_22
+      rect:
+        serializedVersion: 2
+        x: 1195
+        y: 891
+        width: 152
+        height: 140
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_23
+      rect:
+        serializedVersion: 2
+        x: 1691
+        y: 996
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_24
+      rect:
+        serializedVersion: 2
+        x: 1695
+        y: 891
+        width: 151
+        height: 174
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_25
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 495
+        width: 14
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_26
+      rect:
+        serializedVersion: 2
+        x: 683
+        y: 509
+        width: 12
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_27
+      rect:
+        serializedVersion: 2
+        x: 715
+        y: 515
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_28
+      rect:
+        serializedVersion: 2
+        x: 756
+        y: 497
+        width: 16
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_29
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 508
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_30
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 499
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_31
+      rect:
+        serializedVersion: 2
+        x: 230
+        y: 501
+        width: 12
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_32
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 504
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_33
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 491
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_34
+      rect:
+        serializedVersion: 2
+        x: 717
+        y: 499
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_35
+      rect:
+        serializedVersion: 2
+        x: 740
+        y: 493
+        width: 12
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_36
+      rect:
+        serializedVersion: 2
+        x: 191
+        y: 486
+        width: 9
+        height: 11
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_37
+      rect:
+        serializedVersion: 2
+        x: 195
+        y: 311
+        width: 158
+        height: 180
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_38
+      rect:
+        serializedVersion: 2
+        x: 226
+        y: 489
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_39
+      rect:
+        serializedVersion: 2
+        x: 639
+        y: 480
+        width: 18
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_40
+      rect:
+        serializedVersion: 2
+        x: 692
+        y: 490
+        width: 5
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_41
+      rect:
+        serializedVersion: 2
+        x: 1116
+        y: 489
+        width: 7
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_42
+      rect:
+        serializedVersion: 2
+        x: 1146
+        y: 485
+        width: 8
+        height: 6
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_43
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 485
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_44
+      rect:
+        serializedVersion: 2
+        x: 1191
+        y: 483
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_45
+      rect:
+        serializedVersion: 2
+        x: 632
+        y: 470
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_46
+      rect:
+        serializedVersion: 2
+        x: 659
+        y: 478
+        width: 9
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_47
+      rect:
+        serializedVersion: 2
+        x: 679
+        y: 466
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_48
+      rect:
+        serializedVersion: 2
+        x: 693
+        y: 472
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_49
+      rect:
+        serializedVersion: 2
+        x: 723
+        y: 472
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_50
+      rect:
+        serializedVersion: 2
+        x: 744
+        y: 472
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_51
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 461
+        width: 10
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_52
+      rect:
+        serializedVersion: 2
+        x: 170
+        y: 466
+        width: 9
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_53
+      rect:
+        serializedVersion: 2
+        x: 187
+        y: 456
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_54
+      rect:
+        serializedVersion: 2
+        x: 700
+        y: 311
+        width: 153
+        height: 163
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_55
+      rect:
+        serializedVersion: 2
+        x: 703
+        y: 470
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_56
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 463
+        width: 8
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_57
+      rect:
+        serializedVersion: 2
+        x: 1136
+        y: 458
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_58
+      rect:
+        serializedVersion: 2
+        x: 1179
+        y: 456
+        width: 9
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_59
+      rect:
+        serializedVersion: 2
+        x: 1197
+        y: 456
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_60
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 436
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_61
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 446
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_62
+      rect:
+        serializedVersion: 2
+        x: 657
+        y: 440
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_63
+      rect:
+        serializedVersion: 2
+        x: 695
+        y: 442
+        width: 10
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_64
+      rect:
+        serializedVersion: 2
+        x: 1104
+        y: 444
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_65
+      rect:
+        serializedVersion: 2
+        x: 1160
+        y: 444
+        width: 11
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_66
+      rect:
+        serializedVersion: 2
+        x: 654
+        y: 432
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_67
+      rect:
+        serializedVersion: 2
+        x: 690
+        y: 432
+        width: 7
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_68
+      rect:
+        serializedVersion: 2
+        x: 1126
+        y: 434
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_69
+      rect:
+        serializedVersion: 2
+        x: 1199
+        y: 430
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_70
+      rect:
+        serializedVersion: 2
+        x: 173
+        y: 418
+        width: 6
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_71
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 424
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_72
+      rect:
+        serializedVersion: 2
+        x: 649
+        y: 412
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_73
+      rect:
+        serializedVersion: 2
+        x: 1094
+        y: 418
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_74
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 425
+        width: 8
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_75
+      rect:
+        serializedVersion: 2
+        x: 1163
+        y: 420
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_76
+      rect:
+        serializedVersion: 2
+        x: 161
+        y: 406
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_77
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 408
+        width: 8
+        height: 12
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_78
+      rect:
+        serializedVersion: 2
+        x: 661
+        y: 404
+        width: 13
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_79
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 406
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_80
+      rect:
+        serializedVersion: 2
+        x: 1134
+        y: 404
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_81
+      rect:
+        serializedVersion: 2
+        x: 1165
+        y: 284
+        width: 232
+        height: 128
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_82
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 387
+        width: 8
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_83
+      rect:
+        serializedVersion: 2
+        x: 1086
+        y: 378
+        width: 10
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_84
+      rect:
+        serializedVersion: 2
+        x: 1112
+        y: 400
+        width: 10
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_85
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 396
+        width: 10
+        height: 9
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_86
+      rect:
+        serializedVersion: 2
+        x: 691
+        y: 387
+        width: 8
+        height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_87
+      rect:
+        serializedVersion: 2
+        x: 1110
+        y: 375
+        width: 8
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_88
+      rect:
+        serializedVersion: 2
+        x: 151
+        y: 363
+        width: 8
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_89
+      rect:
+        serializedVersion: 2
+        x: 181
+        y: 369
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_90
+      rect:
+        serializedVersion: 2
+        x: 663
+        y: 369
+        width: 8
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_91
+      rect:
+        serializedVersion: 2
+        x: 1138
+        y: 377
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: spriteratattaque_92
+      rect:
+        serializedVersion: 2
+        x: 1090
+        y: 339
+        width: 8
+        height: 8
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

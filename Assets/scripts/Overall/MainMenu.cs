@@ -17,7 +17,12 @@ public class MainMenu : MonoBehaviour {
 	public Transform saves;
 	public Transform loads;
 
+    private bool canLoad;
+    public GameObject loadBr;
+    public GameObject continueBr;
+
 	public void Awake(){
+        canLoad = false;
         if (SceneManager.GetActiveScene().buildIndex == 0) isSceneMainMenu = true;
 		else isSceneMainMenu = false;
 		if(Game.current == null){
@@ -28,6 +33,7 @@ public class MainMenu : MonoBehaviour {
 				string filename = Path.GetFileName(f.Name);
 				if(!filename.Contains(".png")){
 					SaveManager.Load(f.FullName);
+                    canLoad = true;
 				}
 			}
 			//LOAD SAVE BUTTONS
@@ -41,6 +47,13 @@ public class MainMenu : MonoBehaviour {
 						g.transform.GetChild(0).GetComponent<Text>().color = c;
 					}
 				}
+                if(canLoad == false)
+                {
+                    continueBr.GetComponent<Button>().enabled = false;
+                    continueBr.transform.GetChild(0).GetComponent<Text>().color = Color.gray;
+                    loadBr.GetComponent<Button>().enabled = false;
+                    loadBr.transform.GetChild(0).GetComponent<Text>().color = Color.gray;
+                }
 			}
 		}
 		if(!MainMenu.isSceneMainMenu) loadAllSaveButtons(saves, false);
@@ -51,7 +64,6 @@ public class MainMenu : MonoBehaviour {
     	string name = getLastSaveName();
     	if (name == null) return;
     	Game.current = SaveManager.savedGames[SaveManager.savedGames.Count - 1];
-		Game.current.mobCount = 1; 
     	SceneManager.LoadScene(Game.current.sceneIndex); 
     }
     public void Quit(){
@@ -94,7 +106,6 @@ public class MainMenu : MonoBehaviour {
 
     public void Load(int i){
     	Game.current = SaveManager.savedGames[i];
-		Game.current.mobCount = 1; 
     	SceneManager.LoadScene(Game.current.sceneIndex); 
     }
 

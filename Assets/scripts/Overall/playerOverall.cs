@@ -34,6 +34,7 @@ public class playerOverall : MonoBehaviour {
         if (path.Count <= 0)
         {
             shouldWalk = false;
+            GetComponent<playerCombat>().finishedWalking();
             return;
         }
         if (walkTo(path[0].transform.position))
@@ -56,10 +57,6 @@ public class playerOverall : MonoBehaviour {
     {
         path = newPath;
         shouldWalk = true;
-    }
-    public bool isMoving()
-    {
-        return shouldWalk;
     }
 
     public void moveToNearestTile()

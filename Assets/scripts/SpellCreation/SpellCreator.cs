@@ -6,27 +6,41 @@ using System.Collections.Generic;
 
 public class SpellCreator : MonoBehaviour {
 
+    private List<GameObject> spellsGameObjects;
+    private List<Sprite> spellsSprites;
 
-    public List<GameObject> spellsGameObjects;
-    public List<Sprite> spellSprites;
     public GameObject spellBook;
     public GameObject player;
-    
-    public int groundLayer;
-
+    public GameObject spellNameField;
+    public GameObject spellsAndSaveButtons;
+    public GameObject spellCreation;
     private GameObject spell;
 
     private GameObject currentGameObject;
+    private int groundLayer;
     private int layerMask;
     private int turn;
-    public GameObject defaultBranch;
-    public GameObject spellGameObject;
 
+    private GameObject defaultBranch;//static copies of above variables
+    private GameObject defaultSpell;
+    private string spellName;
     private bool shouldOpen;
 
     void Start () {
-        layerMask = 1<<groundLayer;
-        spell = (GameObject)Instantiate(spellGameObject, player.transform.position, Quaternion.identity);
+        spellsGameObjects = SpellBook.spellGameObjects;
+        spellsSprites = spellBook.GetComponent<SpellBook>().spellsSprites;
+        groundLayer = SpellBook.groundLayer; 
+        defaultBranch = spellBook.GetComponent<SpellBook>().defaultBranch;
+        defaultSpell = spellBook.GetComponent<SpellBook>().defaultSpell;
+        layerMask = 1<< groundLayer;
+        print(" index " + Game.current.editingSpell);
+        print("spell count  " + Game.current.spells.Count);
+        if (Game.current.editingSpell >= 0 && Game.current.editingSpell < Game.current.spells.Count) {
+            spell = SpellBook.loadSpell(Game.current.spells[Game.current.editingSpell], true, spellsSprites, spellsGameObjects, defaultSpell, defaultBranch, player);
+        }
+        else {
+            spell = (GameObject)Instantiate(defaultSpell, player.transform.position, Quaternion.identity);
+        }
     }
 
 	public void OnDragSpell(int i){
@@ -73,10 +87,16 @@ public class SpellCreator : MonoBehaviour {
             currentGameObject = null;
         }
     }
-
-    public void saveSpell()
+    public void setSpellName()
     {
-        if(spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0)
+        spellNameField.SetActive(true);
+        spellsAndSaveButtons.SetActive(false);
+        spellCreation.SetActive(false);
+    }
+    public void saveSpell(InputField saveField)
+    {
+        spellName = saveField.text;
+        if (spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0)
         {
             enableChildrenLineRenderers(spell, false);
             spell.SetActive(false);
@@ -85,7 +105,11 @@ public class SpellCreator : MonoBehaviour {
             spell.GetComponent<SpellScript>().cost = cost;
             spell.transform.parent = spellBook.transform;
             SpellData s = saveSpellData(spell.transform);
-            if (s != null) Game.current.spells.Add(s);
+            if(Game.current != null)
+            {
+                if (Game.current.spells == null) Game.current.spells = new List<SpellData>();
+                if (s != null) Game.current.spells.Add(s);
+            }
         }
         else Destroy(spell);
         closeSpellCreator();
@@ -113,7 +137,7 @@ public class SpellCreator : MonoBehaviour {
                     branches.Add(b);
                 }
             }
-            SpellData spellData = new SpellData(s.transform.position, branches, s.GetComponent<SpellScript>().cost, spriteIndex);
+            SpellData spellData = new SpellData(s.transform.position, branches, s.GetComponent<SpellScript>().cost, spriteIndex, spellName);
             return spellData;
         }
         return null;
@@ -138,7 +162,7 @@ public class SpellCreator : MonoBehaviour {
         }
 
     }
-
+ 
     public int calculateSpellCost(GameObject s){
         int cost = 0;
         foreach(Transform branch in s.transform){

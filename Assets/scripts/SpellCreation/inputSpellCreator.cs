@@ -6,7 +6,7 @@ using System.Collections.Generic;
 public class inputSpellCreator : MonoBehaviour {
 
 	// Use this for initialization
-    public GameObject spellCreator;
+    public GameObject spellbook;
     public List<GameObject> durationGameObjects;
     public float hoverDist; 
     //gameobjects that will be seen when hovering above a point, when pressed they change that point's duration
@@ -27,7 +27,7 @@ public class inputSpellCreator : MonoBehaviour {
     List<GameObject> currentChildren;
 
 	void Start () {
-        groundLayer = spellCreator.GetComponent<SpellCreator>().groundLayer;
+        groundLayer = SpellBook.groundLayer;
         groundLayerMask = 1<<groundLayer;
         durations = new List<GameObject>();
         for (int i = 0; i < durationGameObjects.Count; i++){
@@ -54,6 +54,7 @@ public class inputSpellCreator : MonoBehaviour {
         }
         //if you were previously dragging, but not anymore DROP
         else if(isDragging){
+            print("dropping");
             dropPoint();  
         }
         //Create new point in the branch
@@ -106,7 +107,7 @@ public class inputSpellCreator : MonoBehaviour {
                 currentGameObject.transform.position = mousePos;
         } 
         else{
-            GameObject tile = StaticFunctions.getObjectAtMousePos(groundLayerMask);
+            GameObject tile = StaticFunctions.getObjectAtMousePos();
             if (tile != null)
             {
                 GameObject p = tile.GetComponent<tile>().getTakenBy();
@@ -142,7 +143,7 @@ public class inputSpellCreator : MonoBehaviour {
 
     void extendLineRenderer(LineRenderer lineRenderer, GameObject currentObj){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  
-        GameObject tile = StaticFunctions.getObjectAtMousePos(groundLayerMask);
+        GameObject tile = StaticFunctions.getObjectAtMousePos();
         bool take = false;
         if (tile !=null) take = tile.GetComponent<tile>().takeTile(currentGameObject);
         if(!take){
@@ -158,7 +159,8 @@ public class inputSpellCreator : MonoBehaviour {
     }
 
     void lineFollow (GameObject currentObj, Vector2 pos, int index){
-        LineRenderer lr = currentObj.GetComponent<LineRenderer>(); 
+        LineRenderer lr = currentObj.GetComponent<LineRenderer>();
+        lr.sortingOrder = currentObj.GetComponent<SpriteRenderer>().sortingOrder;
         lr.SetPosition(index, pos);
     }
 
@@ -179,7 +181,7 @@ public class inputSpellCreator : MonoBehaviour {
     void movePoint(){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  
         if(!isDragging){
-            GameObject tile = StaticFunctions.getObjectAtMousePos(groundLayerMask);
+            GameObject tile = StaticFunctions.getObjectAtMousePos();
             if (tile != null)
             {
                 GameObject p = tile.GetComponent<tile>().getTakenBy();
@@ -211,7 +213,7 @@ public class inputSpellCreator : MonoBehaviour {
     }
 
     void dropPoint(){
-        GameObject tile = StaticFunctions.getObjectAtMousePos(groundLayerMask); 
+        GameObject tile = StaticFunctions.getObjectAtMousePos(); 
         if(tile == null){
             oldTile.GetComponent<tile>().leaveTile();
             Destroy(currentGameObject);
