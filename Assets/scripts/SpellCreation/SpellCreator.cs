@@ -25,6 +25,7 @@ public class SpellCreator : MonoBehaviour {
     private GameObject defaultSpell;
     private string spellName;
     private bool shouldOpen;
+    private bool editingExistingSpell;
 
     void Start () {
         spellsGameObjects = SpellBook.spellGameObjects;
@@ -33,9 +34,8 @@ public class SpellCreator : MonoBehaviour {
         defaultBranch = spellBook.GetComponent<SpellBook>().defaultBranch;
         defaultSpell = spellBook.GetComponent<SpellBook>().defaultSpell;
         layerMask = 1<< groundLayer;
-        print(" index " + Game.current.editingSpell);
-        print("spell count  " + Game.current.spells.Count);
         if (Game.current.editingSpell >= 0 && Game.current.editingSpell < Game.current.spells.Count) {
+            editingExistingSpell = true;
             spell = SpellBook.loadSpell(Game.current.spells[Game.current.editingSpell], true, spellsSprites, spellsGameObjects, defaultSpell, defaultBranch, player);
         }
         else {
@@ -108,7 +108,11 @@ public class SpellCreator : MonoBehaviour {
             if(Game.current != null)
             {
                 if (Game.current.spells == null) Game.current.spells = new List<SpellData>();
-                if (s != null) Game.current.spells.Add(s);
+                if (s != null)
+                {
+                    if (editingExistingSpell) Game.current.spells[Game.current.editingSpell] = s;
+                    else Game.current.spells.Add(s);
+                }
             }
         }
         else Destroy(spell);

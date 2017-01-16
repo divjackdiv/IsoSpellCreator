@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: a3c027a73e4c6374b96f92f2fafbf10e
-timeCreated: 1483577322
+guid: dfbad055f31499042b145d703b077c52
+timeCreated: 1483578171
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: spriteratcourrir_0
-    21300002: spriteratcourrir_1
-    21300004: spriteratcourrir_2
-    21300006: spriteratcourrir_3
-    21300008: spriteratcourrir_4
-    21300010: spriteratcourrir_5
-    21300012: spriteratcourrir_6
-    21300014: spriteratcourrir_7
-    21300016: spriteratcourrir_8
-    21300018: spriteratcourrir_9
+    21300000: spriteRatRun_0
+    21300002: spriteRatRun_1
+    21300004: spriteRatRun_2
+    21300006: spriteRatRun_3
+    21300008: spriteRatRun_4
+    21300010: spriteRatRun_5
+    21300012: spriteRatRun_6
+    21300014: spriteRatRun_7
+    21300016: spriteRatRun_8
+    21300018: spriteRatRun_9
   serializedVersion: 2
   mipmaps:
     mipMapMode: 0
@@ -63,130 +63,130 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: spriteratcourrir_0
+      name: spriteRatRun_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 1220
-        width: 496.25
-        height: 610
+        x: 300
+        y: 3262
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_1
+      name: spriteRatRun_1
       rect:
         serializedVersion: 2
-        x: 496
-        y: 1220
-        width: 496.25
-        height: 610
+        x: 1390
+        y: 3262
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_2
+      name: spriteRatRun_2
       rect:
         serializedVersion: 2
-        x: 992
-        y: 1220
-        width: 496.25
-        height: 610
+        x: 2480
+        y: 3262
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_3
+      name: spriteRatRun_3
       rect:
         serializedVersion: 2
-        x: 1488
-        y: 1220
-        width: 496.25
-        height: 610
+        x: 300
+        y: 2284
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_4
+      name: spriteRatRun_4
       rect:
         serializedVersion: 2
-        x: 0
-        y: 610
-        width: 496
-        height: 610
+        x: 1390
+        y: 2284
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_5
+      name: spriteRatRun_5
       rect:
         serializedVersion: 2
-        x: 496
-        y: 610
-        width: 496.25
-        height: 610
+        x: 2480
+        y: 2284
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_6
+      name: spriteRatRun_6
       rect:
         serializedVersion: 2
-        x: 992
-        y: 610
-        width: 496.25
-        height: 610
+        x: 300
+        y: 1306
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_7
+      name: spriteRatRun_7
       rect:
         serializedVersion: 2
-        x: 1488
-        y: 610
-        width: 496.25
-        height: 610
+        x: 1390
+        y: 1306
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_8
+      name: spriteRatRun_8
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 496.25
-        height: 610
+        x: 2480
+        y: 1306
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: spriteratcourrir_9
+      name: spriteRatRun_9
       rect:
         serializedVersion: 2
-        x: 496
-        y: 0
-        width: 496.25
-        height: 610
+        x: 300
+        y: 328
+        width: 640
+        height: 350
       alignment: 7
       pivot: {x: 0.5, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}

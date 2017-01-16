@@ -13,9 +13,11 @@ public class mobOverall : MonoBehaviour
     GameObject currentGoal; //next tile normally
     GameObject currentTile;
     int range;
+    Animator animator;
 
     void Start()
     {
+        animator = GetComponent<Animator>();
         currentTile = StaticFunctions.getTileAt(transform.position);
         shouldWalk = false;
         path = new List<GameObject>();
@@ -77,6 +79,7 @@ public class mobOverall : MonoBehaviour
     {
         path = newPath;
         shouldWalk = true;
+        animator.SetInteger("state", 1);
     }
     public bool isWalking()
     {

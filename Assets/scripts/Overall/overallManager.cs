@@ -19,6 +19,7 @@ public class overallManager : MonoBehaviour
     public GameObject spellBook;
     public GameObject spellBookCanvas;
     public GameObject spellTemplateUI;
+    public GameObject warningTooManySpells;
     public GameObject saves;
     public GameObject load;
 
@@ -108,9 +109,21 @@ public class overallManager : MonoBehaviour
     }
     public void loadSpellCreationScene(int spellIndex)
     {
-        Game.current.editingSpell = spellIndex;
-        saveScene(Game.current);
-        StaticFunctions.loadScene(2);
+        if (Game.current.spells.Count < 4) //4 will have to be changed to the character's spell ability
+        {
+            Game.current.editingSpell = spellIndex;
+            saveScene(Game.current);
+            StaticFunctions.loadScene(2);
+        }
+        else
+        {
+            warningTooManySpells.SetActive(true);
+        }
+    }
+    public void dismissWarning()
+    {
+        print("dismissing");
+        warningTooManySpells.SetActive(false);
     }
     public void loadScene(int i)
     {
@@ -212,6 +225,14 @@ public class overallManager : MonoBehaviour
             }
         }
     }
+    void deleteSpell(int i, Transform spellBook)
+    {
+        spellCanvasObject.transform.GetChild(i).GetChild(0).GetComponent<Text>().text = "";
+        spellCanvasObject.transform.GetChild(i).GetComponent<Image>().sprite = null;
+        Destroy(spellBookCanvas.transform.GetChild(0).GetChild(0).GetChild(i+1).gameObject);
+        Game.current.spells.RemoveAt(i);
+        Destroy(spellBook.GetChild(i).gameObject);
+    }
     void loadSpells(Transform g)
     {
         int counter = 0;
@@ -233,6 +254,7 @@ public class overallManager : MonoBehaviour
                 spellTemplate.transform.GetChild(2).GetChild(0).GetComponent<Text>().text = cost + "";
                 int i = counter;
                 spellTemplate.transform.GetChild(3).GetComponent<Button>().onClick.AddListener(() => loadSpellCreationScene(i));
+                spellTemplate.transform.GetChild(4).GetComponent<Button>().onClick.AddListener(() => deleteSpell(i, spellBook.transform));
 
                 spellCanvasObject.transform.GetChild(counter).GetChild(0).GetComponent<Text>().text = cost + "";
                 spellCanvasObject.transform.GetChild(counter).GetComponent<Image>().sprite = spell.transform.GetChild(0).GetChild(0).GetComponent<SpriteRenderer>().sprite;
