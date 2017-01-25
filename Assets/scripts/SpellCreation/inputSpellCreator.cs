@@ -5,29 +5,32 @@ using System.Collections.Generic;
 
 public class inputSpellCreator : MonoBehaviour {
 
-	// Use this for initialization
-    public GameObject spellbook;
     public List<GameObject> durationGameObjects;
+    public GameObject overallManager;
     public float hoverDist; 
-    //gameobjects that will be seen when hovering above a point, when pressed they change that point's duration
-    List<GameObject> durations;
-    bool durationsAreShown;
 
-    int groundLayer;
-    int groundLayerMask;
-	bool isDragging;
-    GameObject oldTile;
-	bool draggingFromBar;
-    bool extending;
-    GameObject takenBy;
-    int currentVertex;
+    
+    List<GameObject> durations; //gameobjects that will be seen when hovering above a point, when pressed they change that point's duration
+    List<GameObject> currentChildren;
+    GameObject spellbook;
     GameObject currentGameObject;
     GameObject hoveredPoint;
+    GameObject takenBy;
+    GameObject oldTile;
+    int groundLayer;
+    int groundLayerMask;
+    int currentVertex;
+    bool durationsAreShown;
+	bool isDragging;
+	bool draggingFromBar;
+    bool extending;
 
-    List<GameObject> currentChildren;
-
+    void Awake()
+    {
+        spellbook = overallManager.GetComponent<overallManager>().spellBook;
+    }
 	void Start () {
-        groundLayer = SpellBook.groundLayer;
+        groundLayer = gridManager.groundLayerS;
         groundLayerMask = 1<<groundLayer;
         durations = new List<GameObject>();
         for (int i = 0; i < durationGameObjects.Count; i++){
@@ -107,7 +110,7 @@ public class inputSpellCreator : MonoBehaviour {
                 currentGameObject.transform.position = mousePos;
         } 
         else{
-            GameObject tile = StaticFunctions.getObjectAtMousePos();
+            GameObject tile = PathFinding.getObjectAtMousePos();
             if (tile != null)
             {
                 GameObject p = tile.GetComponent<tile>().getTakenBy();
@@ -143,7 +146,7 @@ public class inputSpellCreator : MonoBehaviour {
 
     void extendLineRenderer(LineRenderer lineRenderer, GameObject currentObj){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  
-        GameObject tile = StaticFunctions.getObjectAtMousePos();
+        GameObject tile = PathFinding.getObjectAtMousePos();
         bool take = false;
         if (tile !=null) take = tile.GetComponent<tile>().takeTile(currentGameObject);
         if(!take){
@@ -181,7 +184,7 @@ public class inputSpellCreator : MonoBehaviour {
     void movePoint(){
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);  
         if(!isDragging){
-            GameObject tile = StaticFunctions.getObjectAtMousePos();
+            GameObject tile = PathFinding.getObjectAtMousePos();
             if (tile != null)
             {
                 GameObject p = tile.GetComponent<tile>().getTakenBy();
@@ -213,7 +216,7 @@ public class inputSpellCreator : MonoBehaviour {
     }
 
     void dropPoint(){
-        GameObject tile = StaticFunctions.getObjectAtMousePos(); 
+        GameObject tile = PathFinding.getObjectAtMousePos(); 
         if(tile == null){
             oldTile.GetComponent<tile>().leaveTile();
             Destroy(currentGameObject);

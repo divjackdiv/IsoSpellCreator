@@ -7,42 +7,46 @@ using UnityEngine.UI;
 
 public class playerCombat : MonoBehaviour {
 
-	public GameObject combatManager;
-	public GameObject spellBook;
-	public GameObject overallManager;
-
+    public GameObject overallManager;
 	public GameObject manaUi;
 	public GameObject mvmtPointsUi;
 	public GameObject lifePointsUi;
 	public GameObject spellPointsUi;
 
 
-	List<GameObject> spells;
-	int spellsStillRunning;
-	bool waitingForSpells;
-
+    GameObject combatManager; //derived from overallManager
+    GameObject spellBook;   //derived from overallManager
+    GameObject uiManager;   //derived from overallManager
     GameObject spellCanvasObject;
-	bool playing;
-   	List<GameObject> drawnPaths; //List used to show possible paths
-    bool walkPhase;
-    bool attackPhase;
-    bool stillDrawn; //are paths still drawn and need to be cleaned up?
-    bool isWalking;
+    List<GameObject> spells;
+    List<GameObject> drawnPaths; //List used to show possible paths
+    int spellsStillRunning;
     int currentMana;
     int currentMovementPoints;
     int currentLifePoints;
     int currentSpellPoints;
-    
+    bool playing;
+    bool waitingForSpells;
+    bool walkPhase;
+    bool attackPhase;
+    bool stillDrawn; //are paths still drawn and need to be cleaned up?
+    bool isWalking;
 
+    void Awake()
+    {
+        combatManager = overallManager.GetComponent<overallManager>().combatManager;
+        spellBook = overallManager.GetComponent<overallManager>().spellBook;
+        uiManager = overallManager.GetComponent<overallManager>().uiManager;
+    }
+    
 	void Start () {
-		spells = new List<GameObject>();
+        spells = new List<GameObject>();
         drawnPaths = new List<GameObject>();
 
 		currentMana = transform.GetComponent<playerStats>().mana;
 		currentMovementPoints = transform.GetComponent<playerStats>().movement;
         currentLifePoints = transform.GetComponent<playerStats>().lifePoints;
 		currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
-		spellCanvasObject = overallManager.GetComponent<overallManager>().spellCanvasObject;
 	}
 	
 	
@@ -60,7 +64,7 @@ public class playerCombat : MonoBehaviour {
         {
             foreach (GameObject tile in drawnPaths)
             {
-                whiteOut(tile, false);
+                UiManager.changeAlpha(tile, false, 1f);
             }
         }
 		if (Input.GetButtonDown("Fire1") && playing && walkPhase){
@@ -68,10 +72,10 @@ public class playerCombat : MonoBehaviour {
         	if (!EventSystem.current.IsPointerOverGameObject() && !isWalking)
             {
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        		GameObject g = StaticFunctions.getTileAt(mousePos);
+        		GameObject g = PathFinding.getTileAt(mousePos);
         		if(g != null){
         			Vector3 target = g.transform.position;
-                    List<GameObject> path = StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.transform.position), g);
+                    List<GameObject> path = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.transform.position), g);
 
                     if (path.Count <= currentMovementPoints){
                         bool canMove = GetComponent<playerOverall>().takeTile(target);
@@ -98,11 +102,9 @@ public class playerCombat : MonoBehaviour {
 		attackPhase = false;
 		playing = true;
 
-		greyOut(spellPointsUi, true);
-		foreach(Transform child in spellCanvasObject.transform){
-			greyOut(child.gameObject, true);
-		}
-		whiteOut(mvmtPointsUi, true);
+        UiManager.changeAlpha(spellPointsUi, true, 0.5f);
+        UiManager.changeAlpha(mvmtPointsUi, true, 1f);
+        uiManager.GetComponent<UiManager>().changeAlphaSpells(0.5f);
         updateHealth();
         updateMana();
         updateMovementPoints();
@@ -115,18 +117,16 @@ public class playerCombat : MonoBehaviour {
 				walkPhase = false;
 				attackPhase = true;
 				currentMovementPoints = transform.GetComponent<playerStats>().movement;
-				greyOut(mvmtPointsUi, true);
-				whiteOut(spellPointsUi, true);
-				foreach(Transform child in spellCanvasObject.transform){
-					whiteOut(child.gameObject, true);
-				}
-				updateMovementPoints();
+                UiManager.changeAlpha(mvmtPointsUi, true, 0.5f);
+                UiManager.changeAlpha(spellPointsUi, true, 1f);
+                uiManager.GetComponent<UiManager>().changeAlphaSpells(1f);
+                updateMovementPoints();
 			}
 			else {
 				currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
 				updateSpellPoints();
-				greyOut(spellPointsUi, true);
-				whiteOut(mvmtPointsUi, true);
+                UiManager.changeAlpha(spellPointsUi, true, 0.5f);
+                UiManager.changeAlpha(mvmtPointsUi, true, 1f);
 
 				//Update spell durations and move spells
 				spellsStillRunning = 0;
@@ -182,7 +182,7 @@ public class playerCombat : MonoBehaviour {
 	}
 
 	public void die(){
-		print("you died, you little shit, you're lucky I didnt have time to actually programme your death yet");
+		print("you died, you little shit, you're lucky I didnt have time to actually program your death yet");
 		//play death animation;
 		//menu appears;
 	}
@@ -204,51 +204,25 @@ public class playerCombat : MonoBehaviour {
 		spellPointsUi.transform.GetChild(0).GetComponent<Text>().text = currentSpellPoints + "";
 	}
 
-	//Greys out a ui element
-	void greyOut(GameObject obj, bool isUiElement){
-		if(isUiElement){
-			Color c = obj.GetComponent<Image>().color;
-			c.a = 0.5f;
-			obj.GetComponent<Image>().color = c;
-		}
-		else{
-			Color c = obj.GetComponent<SpriteRenderer>().color;
-			c.a = 0.5f;
-			obj.GetComponent<SpriteRenderer>().color = c;
-		}
-	}
-
-	void whiteOut(GameObject obj, bool isUiElement){
-		if(isUiElement){
-			Color c = obj.GetComponent<Image>().color;
-			c.a = 1f;
-			obj.GetComponent<Image>().color = c;
-		}
-		else{
-			Color c = obj.GetComponent<SpriteRenderer>().color;
-			c.a = 1f;
-			obj.GetComponent<SpriteRenderer>().color = c;
-		}
-	}
 
     //shows possible paths to the user
 	void drawPath(){
         stillDrawn = true;
-		GameObject t = StaticFunctions.getTileAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
+		GameObject t = PathFinding.getTileAt(Camera.main.ScreenToWorldPoint(Input.mousePosition));
 		if(t != null){
-			GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+			GameObject currentTile = PathFinding.getTileAt(transform.position);
 			if(currentTile != null){
 				foreach (GameObject tile in drawnPaths)
                 {
-				    whiteOut(tile, false);
+				    UiManager.changeAlpha(tile, false, 1f);
 			    }
         		if (!EventSystem.current.IsPointerOverGameObject()){
-                    drawnPaths = StaticFunctions.aStarPathFinding(currentTile, t);
+                    drawnPaths = PathFinding.aStarPathFinding(currentTile, t);
 					for (int i = 0; i < currentMovementPoints && i < drawnPaths.Count; i++){
                         if (i == drawnPaths.Count - 1 && drawnPaths[i].GetComponent<tile>().taken) {  //if the last item in path is taken then do not draw it
                         }
                         else {
-                            greyOut(drawnPaths[i], false);
+                            UiManager.changeAlpha(drawnPaths[i], false, 0.5f);
                         }
 					}
 				}

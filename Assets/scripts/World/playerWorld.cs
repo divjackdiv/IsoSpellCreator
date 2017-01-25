@@ -4,17 +4,15 @@ using UnityEngine.EventSystems;
 using System.Collections.Generic;
 
 public class playerWorld : MonoBehaviour {
-    
-	int groundLayer;
+
+    List<GameObject> path;
     int groundLayerMask;
     bool creatingSpell;
-    List<GameObject> path;
 
 
     void Start () {
         path = new List<GameObject>();
-        groundLayer = overallManager.groundLayerS;
-        groundLayerMask = 1<<groundLayer;
+        groundLayerMask = 1<<gridManager.groundLayerS;
 	}
 	
 	// Update is called once per frame
@@ -22,14 +20,14 @@ public class playerWorld : MonoBehaviour {
         if (Input.GetButtonDown("Fire1")) { 
             if (!EventSystem.current.IsPointerOverGameObject()){
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        		GameObject g = StaticFunctions.getTileAt(mousePos);
+        		GameObject g = PathFinding.getTileAt(mousePos);
         		if(g != null){
                     GameObject nextTile = null;
                     if (path.Count > 0)
                     {
                         nextTile = path[0];
                     }
-                    path =  StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), g);
+                    path = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.position), g);
                     if (nextTile != null)
                     {
                         path.Insert(0,nextTile);

@@ -3,15 +3,19 @@ using System.Collections;
 using System.Collections.Generic;
 public class CombatManager : MonoBehaviour {
 
-    public GameObject spellCreator;
+    public List<GameObject> characters;
     public GameObject overallManager;
-    public GameObject player;
-	public int turn;
-	public List<GameObject> characters;
-	int index;
+    public int turn;
+
+    GameObject player;
+    int index;
 	bool characterPlayed;
 	bool combatStarted;
 	// Use this for initialization
+    void Awake()
+    {
+        player = overallManager.GetComponent<overallManager>().player;
+    }
 	void Start () {
 		index = 0;
 	}

@@ -3,21 +3,22 @@ using System.Collections;
 using System.Collections.Generic;
 public class SpellBook : MonoBehaviour {
 
-	public GameObject player;
-	public GameObject combatManager;
+    public List<GameObject> spellGameObjects;
+    public List<Sprite> spellsSprites;
+    public GameObject overallManager;
     public GameObject defaultSpell;
     public GameObject defaultBranch;
-    public List<GameObject> spellsGameObjects;
-    public static List<GameObject> spellGameObjects;
-    public List<Sprite> spellsSprites;
-    public int groundLayerIndex;
-    public static int groundLayer;
 
     List<GameObject> Spells;
+    GameObject player;
+    GameObject combatManager;
+    GameObject uiManager;
+
     public void Awake()
     {
-        SpellBook.groundLayer = groundLayerIndex;
-        SpellBook.spellGameObjects = spellsGameObjects;
+        combatManager = overallManager.GetComponent<overallManager>().combatManager;
+        player = overallManager.GetComponent<overallManager>().player;
+        uiManager = overallManager.GetComponent<overallManager>().uiManager;
     }
 
 	public void instantiateSpell(int index){
@@ -69,6 +70,7 @@ public class SpellBook : MonoBehaviour {
         if (Spells == null) Spells = new List<GameObject>();
         Spells.Add(spell);
 	}
+
     static public GameObject loadSpell(SpellData s, bool editing, List<Sprite> spellsSprites, List<GameObject> spellsGameObjects, GameObject defaultSpell, GameObject defaultBranch, GameObject player)
     {
         int cost = s.getCost();
@@ -97,7 +99,7 @@ public class SpellBook : MonoBehaviour {
                 point.GetComponent<SpriteRenderer>().sprite = spellsSprites[p.getSpriteIndex()];
                 if (editing)
                 {
-                    GameObject tile = StaticFunctions.getTileAt(p.getPosition());
+                    GameObject tile = PathFinding.getTileAt(p.getPosition());
                     tile.GetComponent<tile>().takeTile(point);
                 }
                 if (p.getParentIndex() == -1)
@@ -120,5 +122,12 @@ public class SpellBook : MonoBehaviour {
             branch.transform.parent = spell.transform;
         }
         return spell;
+    }
+
+    public void deleteSpell(int i)
+    {
+        uiManager.GetComponent<UiManager>().deleteSpell(i);
+        Game.current.spells.RemoveAt(i);
+        Destroy(transform.GetChild(i).gameObject);
     }
 }

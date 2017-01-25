@@ -4,15 +4,21 @@ using System.Collections.Generic;
 
 public class mobWorld : MonoBehaviour {
 
-	// Use this for initialization
-	public GameObject spellCreator;
-	public GameObject overallManager;
-	public GameObject player;
-	private float detectionRange;
-    int state;
     public List<GameObject> roamingTargets;
+    public GameObject overallManager;
+    public GameObject spellCreator;
     public int targetIndex = 0;
+
+
+    GameObject player;
+    float detectionRange;
+    int state;
     bool waiting;
+
+    void Awake()
+    { 
+        player = overallManager.GetComponent<overallManager>().player;
+    }
 
     void Start () {
         detectionRange = GetComponent<mobStats>().detectionRange;
@@ -31,8 +37,8 @@ public class mobWorld : MonoBehaviour {
 			else if(state == 1){
                 state = 0;
                 waiting = true;
-                GameObject currentTile = StaticFunctions.getTileAt(transform.position);
-                List<GameObject> path = StaticFunctions.aStarPathFinding(currentTile, roamingTargets[targetIndex++]); //Can be stored for more efficiency //
+                GameObject currentTile = PathFinding.getTileAt(transform.position);
+                List<GameObject> path = PathFinding.aStarPathFinding(currentTile, roamingTargets[targetIndex++]); //Can be stored for more efficiency //
                 if (targetIndex >= roamingTargets.Count) targetIndex = 0;
                 GetComponent<mobOverall>().updatePath(path);                
             }

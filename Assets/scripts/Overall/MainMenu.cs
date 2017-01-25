@@ -9,17 +9,17 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour {
 
 
-	public static bool isSceneMainMenu;
-	public GameObject SaveTemplate; 
-	public List<GameObject> greyOutIfNoSaves;
-	public Vector2 startPos;
-	public float displacement;
-	public Transform saves;
-	public Transform loads;
-
-    private bool canLoad;
+    public Transform saves;
+    public Transform loads;
     public GameObject loadBr;
     public GameObject continueBr;
+    public GameObject SaveTemplate;
+    public List<GameObject> greyOutIfNoSaves;
+    public Vector2 startPos;
+    public float displacement;
+    public static bool isSceneMainMenu;
+
+    bool canLoad;
 
 	public void Awake(){
         canLoad = false;
@@ -94,9 +94,9 @@ public class MainMenu : MonoBehaviour {
 		s.transform.GetChild(1).GetComponent<Text>().text = g.dayDate + "/" + g.monthDate + "/" + g.yearDate;
 		s.transform.GetChild(2).GetComponent<Text>().text = g.savedHour + ":" + g.savedMinute;
 		s.transform.GetChild(3).GetComponent<Text>().text = "" + g.playerLevel;
-		char[] delimiters = new char[] { '.', '/' };
-		string[] parsed = g.areaName.Split(delimiters);
-		s.transform.GetChild(4).GetComponent<Text>().text = "" + parsed[parsed.Length - 2];
+		//char[] delimiters = new char[] { '.', '/' };
+		//string[] parsed = g.areaName.Split(delimiters);
+		s.transform.GetChild(4).GetComponent<Text>().text = "" + g.areaName;
 		StartCoroutine(loadImage("file:///"+ Application.persistentDataPath + "/" + g.fileName + ".png", s));
 		if(interactive) {
 			s.GetComponent<Button>().onClick.AddListener(() => Load(index));

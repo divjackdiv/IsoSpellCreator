@@ -3,10 +3,10 @@ using System.Collections;
 
 public class camera : MonoBehaviour {
     public Transform target;
-
-  	private float currentZoom;
     public float maxZoom;
     public float minZoom;
+
+    float currentZoom;
 
     void Awake(){
     	if (target)

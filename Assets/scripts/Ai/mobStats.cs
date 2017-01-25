@@ -12,9 +12,8 @@ public class mobStats : MonoBehaviour {
 	public int range;
 	public int movementPoints;
     public int detectionRange;
-    public void Start()
-    {
-    }
+
+
 	public mobData save(){
 		mobData p = new mobData(transform.position, hasBeenDestroyed, lifePoints, damage, range, movementPoints, detectionRange);
 		return p;

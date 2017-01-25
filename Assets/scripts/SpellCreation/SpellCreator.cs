@@ -3,37 +3,41 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class SpellCreator : MonoBehaviour {
 
-    private List<GameObject> spellsGameObjects;
-    private List<Sprite> spellsSprites;
 
-    public GameObject spellBook;
-    public GameObject player;
+    public GameObject overallManager;
     public GameObject spellNameField;
     public GameObject spellsAndSaveButtons;
     public GameObject spellCreation;
-    private GameObject spell;
 
-    private GameObject currentGameObject;
-    private int groundLayer;
-    private int layerMask;
-    private int turn;
+    List<GameObject> spellsGameObjects;
+    List<Sprite> spellsSprites;
+    GameObject spellBook;
+    GameObject player;
+    GameObject spell;
+    GameObject currentGameObject;
+    GameObject defaultBranch;//static copies of above variables
+    GameObject defaultSpell;
+    string spellName;
+    int layerMask;
+    int turn;
+    bool shouldOpen;
+    bool editingExistingSpell;
 
-    private GameObject defaultBranch;//static copies of above variables
-    private GameObject defaultSpell;
-    private string spellName;
-    private bool shouldOpen;
-    private bool editingExistingSpell;
-
+    void Awake()
+    {
+        spellBook = overallManager.GetComponent<overallManager>().spellBook;
+        player = overallManager.GetComponent<overallManager>().player;
+    }
     void Start () {
-        spellsGameObjects = SpellBook.spellGameObjects;
+        spellsGameObjects = spellBook.GetComponent<SpellBook>().spellGameObjects;
         spellsSprites = spellBook.GetComponent<SpellBook>().spellsSprites;
-        groundLayer = SpellBook.groundLayer; 
         defaultBranch = spellBook.GetComponent<SpellBook>().defaultBranch;
         defaultSpell = spellBook.GetComponent<SpellBook>().defaultSpell;
-        layerMask = 1<< groundLayer;
+        layerMask = 1<< gridManager.groundLayerS;
         if (Game.current.editingSpell >= 0 && Game.current.editingSpell < Game.current.spells.Count) {
             editingExistingSpell = true;
             spell = SpellBook.loadSpell(Game.current.spells[Game.current.editingSpell], true, spellsSprites, spellsGameObjects, defaultSpell, defaultBranch, player);
@@ -189,7 +193,7 @@ public class SpellCreator : MonoBehaviour {
 
     public void closeSpellCreator()
     {
-        StaticFunctions.loadScene(1);
+        SceneManager.LoadScene(1);
     }
 
     void enableChildrenLineRenderers(GameObject g, bool enable){

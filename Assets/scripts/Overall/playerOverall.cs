@@ -61,24 +61,24 @@ public class playerOverall : MonoBehaviour {
 
     public void moveToNearestTile()
     {
-        GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+        GameObject currentTile = PathFinding.getTileAt(transform.position);
         GameObject nearestTile = currentTile;
         if (currentTile.GetComponent<tile>().taken && !currentTile.GetComponent<tile>().takenBy == gameObject)
         {
-            nearestTile = StaticFunctions.findNearestFreeTile(currentTile);
+            nearestTile = PathFinding.findNearestFreeTile(currentTile);
         }
         nearestTile.GetComponent<tile>().takeTile(gameObject);
-        path = StaticFunctions.aStarPathFinding(currentTile, nearestTile);
+        path = PathFinding.aStarPathFinding(currentTile, nearestTile);
         shouldWalk = true;
     }
 
     public bool takeTile(Vector2 pos)
     {
-        GameObject newTile = StaticFunctions.getTileAt(pos);
+        GameObject newTile = PathFinding.getTileAt(pos);
         bool moved = newTile.GetComponent<tile>().takeTile(gameObject);
         if (moved)
         {
-            GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+            GameObject currentTile = PathFinding.getTileAt(transform.position);
             currentTile.GetComponent<tile>().leaveTile();
             return true;
         }

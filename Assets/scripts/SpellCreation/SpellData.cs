@@ -12,13 +12,15 @@ using System.Collections.Generic;
 //position
 
 [System.Serializable]
-public class SpellData {
+public class SpellData
+{
+    List<BranchData> branches;
+    string spellName;
     float xPos;
     float yPos;
     int cost;
     int spriteIndex;
-    List<BranchData> branches;
-    string spellName;
+
     public SpellData(Vector2 pos, List<BranchData> b, int c, int sIndex, string name)
     {
         xPos = pos.x;

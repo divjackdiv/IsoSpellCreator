@@ -4,10 +4,9 @@ using System.Collections.Generic;
 //Class which contains functions relating to tile overlays, for example when a tile is enflamed
 public class tileOverlay : MonoBehaviour {
 
-
-    float animCounter;
     Animator animator;
     List<int> states;
+    float animCounter;
     bool shouldPlayAnim;
     bool destroyAfterAnimation;
     // Use this for initialization

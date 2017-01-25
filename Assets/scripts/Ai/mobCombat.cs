@@ -4,34 +4,36 @@ using System.Collections.Generic;
 [System.Serializable]
 public class mobCombat : MonoBehaviour {
 
-	public int mobType;
-	/*Mob types are : 
+    public GameObject target;
+    public GameObject spellCreator;
+    public GameObject combatManager;
+    public float walkingSpeed; //PURELY COSMETIC
+    public int mobType;
+    /*Mob types are : 
 		0 = passive
 		1 = CAC
 		2 = purely ranged attacker
 		3 = 1 and 2
 	*/
-	//Following are the mobs' stats
-	int currentMovementPoints;
+
+
+    Animator animator;
+    GameObject currentTile;
+    GameObject nextTile;
+    float animCounter;
+    int currentMovementPoints;
 	int currentLifePoints;
 	int damage;
 	int range;
-
-	public GameObject target;
-    public float walkingSpeed; //PURELY COSMETIC
-	public GameObject spellCreator;
-	public GameObject combatManager;
-
-	GameObject currentTile;
-    GameObject nextTile;
-	//List<GameObject> path;
-    //GameObject currentGoal;
-	bool shouldAttack;
-    Animator animator;
     int state;
+    bool shouldAttack;
     bool playing;
-    float animCounter;
-	// Use this for initialization
+
+
+    //List<GameObject> path;
+    //GameObject currentGoal;
+
+    // Use this for initialization
     void Awake()
     {
         animCounter = 0;
@@ -54,8 +56,8 @@ public class mobCombat : MonoBehaviour {
 				animator.SetInteger("state", 0); 	//State 0 is Idle
 			}
 			else if(state == 1){
-                currentTile = StaticFunctions.getTileAt(transform.position);
-                List<GameObject> path = StaticFunctions.aStarPathFinding(currentTile, nextTile);
+                currentTile = PathFinding.getTileAt(transform.position);
+                List<GameObject> path = PathFinding.aStarPathFinding(currentTile, nextTile);
                 int howMuchShouldIWalk = currentMovementPoints;
                 if (howMuchShouldIWalk > path.Count - range ) howMuchShouldIWalk = path.Count - range;
                 if (howMuchShouldIWalk < 0) howMuchShouldIWalk = 0;
@@ -92,16 +94,16 @@ public class mobCombat : MonoBehaviour {
 
 	public void play(){
 		playing = true;
-		currentTile = StaticFunctions.getTileAt(transform.position);
+		currentTile = PathFinding.getTileAt(transform.position);
         state = 0;
 		playMovement();
 	}
 
 	void playMovement()
     {
-        nextTile = StaticFunctions.getTileAt(target.transform.position);
+        nextTile = PathFinding.getTileAt(target.transform.position);
         currentMovementPoints = gameObject.GetComponent<mobStats>().movementPoints;
-        currentTile = StaticFunctions.getTileAt(transform.position);
+        currentTile = PathFinding.getTileAt(transform.position);
         state = 1;
         if(mobType > 0) shouldAttack = true;
 	}
@@ -124,7 +126,7 @@ public class mobCombat : MonoBehaviour {
     }
 
 	bool isInRange(){
-        List<GameObject> pathToTarget = StaticFunctions.aStarPathFinding(StaticFunctions.getTileAt(transform.position), StaticFunctions.getTileAt(target.transform.position));
+        List<GameObject> pathToTarget = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.position), PathFinding.getTileAt(target.transform.position));
 		if(pathToTarget.Count > range) return false;
 		return true;
 	}

@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 
 public class SaveManager : MonoBehaviour {
+
 	public static SaveManager instance = null;
 	public static List<Game> savedGames = new List<Game>();
 

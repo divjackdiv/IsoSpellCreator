@@ -5,20 +5,20 @@ using System.Collections.Generic;
 //Any and all code which the mob should be able to access at any time
 public class mobOverall : MonoBehaviour
 {
-
-    //Movement Management
+    
     public float walkSpeed;
+
+    Animator animator;
     List<GameObject> path;
-    bool shouldWalk;
     GameObject currentGoal; //next tile normally
     GameObject currentTile;
     int range;
-    Animator animator;
+    bool shouldWalk;
 
     void Start()
     {
         animator = GetComponent<Animator>();
-        currentTile = StaticFunctions.getTileAt(transform.position);
+        currentTile = PathFinding.getTileAt(transform.position);
         shouldWalk = false;
         path = new List<GameObject>();
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
@@ -52,7 +52,7 @@ public class mobOverall : MonoBehaviour
         else if (currentGoal == null)
         {
             currentGoal = path[0];
-            GameObject goalTile = StaticFunctions.getTileAt(currentGoal.transform.position);
+            GameObject goalTile = PathFinding.getTileAt(currentGoal.transform.position);
             if (goalTile.GetComponent<tile>().takeTile(gameObject))
             {
                 if (currentTile != goalTile) currentTile.GetComponent<tile>().leaveTile();
@@ -88,23 +88,23 @@ public class mobOverall : MonoBehaviour
 
     public void moveToNearestTile()
     {
-        GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+        GameObject currentTile = PathFinding.getTileAt(transform.position);
         GameObject nearestTile = currentTile;
         if (currentTile.GetComponent<tile>().taken && !currentTile.GetComponent<tile>().takenBy == gameObject)
         {
-            nearestTile = StaticFunctions.findNearestFreeTile(currentTile);
+            nearestTile = PathFinding.findNearestFreeTile(currentTile);
         }           
-        path = StaticFunctions.aStarPathFinding(currentTile, nearestTile);
+        path = PathFinding.aStarPathFinding(currentTile, nearestTile);
         shouldWalk = true;
     }
     
     public bool takeTile(Vector2 pos)
     {
-        GameObject newTile = StaticFunctions.getTileAt(pos);
+        GameObject newTile = PathFinding.getTileAt(pos);
         bool moved = newTile.GetComponent<tile>().takeTile(gameObject);
         if (moved)
         {
-            GameObject currentTile = StaticFunctions.getTileAt(transform.position);
+            GameObject currentTile = PathFinding.getTileAt(transform.position);
             currentTile.GetComponent<tile>().leaveTile();
             return true;
         }

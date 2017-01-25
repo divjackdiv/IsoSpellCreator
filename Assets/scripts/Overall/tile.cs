@@ -3,8 +3,9 @@ using System.Collections;
 
 public class tile : MonoBehaviour {
 
-	public bool taken;
-	public GameObject takenBy;
+
+    public GameObject takenBy;
+    public bool taken;
 
 	void Start(){
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;

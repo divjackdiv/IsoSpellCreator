@@ -5,10 +5,11 @@ using System.Collections.Generic;
 [System.Serializable] 
 public class mobData {
 
-	float xPosition;
+
+    Dictionary<string, int> stats = new Dictionary<string, int>();
+    float xPosition;
 	float yPosition;
 	bool hasBeenDestroyed;
-	Dictionary<string, int> stats = new Dictionary<string, int>();
 
 	public mobData(Vector2 pos, bool destroyed,int lifePoints, int damage, int range, int movementPoints, int detectionRange)
     {

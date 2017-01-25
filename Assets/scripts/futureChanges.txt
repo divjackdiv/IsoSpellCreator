@@ -1,6 +1,13 @@
-DONE   
--save mobs to their scene, so that there are no conflicts between multiple scenes
--repair walking bug, ie when you walk if you change direction you can go in unwanted directions
-
 TO BE DONE
--create the spell book
+- Fix walking diagonally bug
+- Repair graphical problems when deleting parts of spell
+- Add delete Button and delete on press Esc when creating/editing spell
+- Change save names to be automated
+- make better ai for attacking from a distance
+- pause game whenever opening any ui
+- resize ui spell template
+- create a map of the tiles at start
+- add cancel button on  spell creation ui
+- Better way of keeping whether a Ui element is on or off
+- look at a possible conversion of sceneStateManager functions towards more static functions
+- redo/change mainMenu script to be more in tune with the other scripts

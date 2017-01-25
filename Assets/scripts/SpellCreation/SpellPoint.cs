@@ -4,25 +4,26 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class SpellPoint : MonoBehaviour { 
+public class SpellPoint : MonoBehaviour {
 
+    public GameObject tileOverlay;
+    public float movementSpeed = 1;
     public int duration;
     public int damage;
-    public float movementSpeed = 1;
     public int cost;
     public int spriteIndex;
     public int gameObjectIndex;
-    public GameObject tileOverlay;
-    bool moving;
-    bool playing;
-    Vector2 target;
+
     Animator animator;
     GameObject branch;
     GameObject currentTile;
-    int state;
-    bool appearing;
+    Vector2 target;
     float animCounter;
     int s;
+    int state;
+    bool moving;
+    bool playing;
+    bool appearing;
 
     void Start()
     {
@@ -45,7 +46,7 @@ public class SpellPoint : MonoBehaviour {
                 gameObject.GetComponent<SpriteRenderer>().enabled = false;
                 //state = 2;
                 // animator.SetInteger("state", 2);    // 2 is moving
-                GameObject tile = StaticFunctions.getTileAt(transform.position);
+                GameObject tile = PathFinding.getTileAt(transform.position);
                 if (tile != currentTile){
                     currentTile = tile;
                     GameObject tileOvl = (GameObject) Instantiate(tileOverlay);
@@ -95,7 +96,7 @@ public class SpellPoint : MonoBehaviour {
         gameObject.SetActive(true);
         moving = true; 
         appearing = true;
-        currentTile = StaticFunctions.getTileAt(transform.position);
+        currentTile = PathFinding.getTileAt(transform.position);
         playing = true;
         duration--;
     }
@@ -110,7 +111,7 @@ public class SpellPoint : MonoBehaviour {
     }
 
     void burn(){
-        currentTile = StaticFunctions.getTileAt(transform.position);
+        currentTile = PathFinding.getTileAt(transform.position);
         if(currentTile.GetComponent<tile>().taken){
             GameObject takenBy = currentTile.GetComponent<tile>().takenBy;
             if (takenBy.tag == "mob"){

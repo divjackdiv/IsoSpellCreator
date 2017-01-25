@@ -2,31 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 
-using UnityEngine.SceneManagement;
-public class StaticFunctions {
-
-    public static void loadScene(int scene)
-    {
-        SceneManager.LoadScene(scene);
-    }
-
-    public static Vector2 getMousePosition(){ 
- 		int layerMask = 1 << SpellBook.groundLayer;
-        Vector2 mousePosition;
-        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-        RaycastHit hit;
-        if (Physics.Raycast(ray, out hit, layerMask)){
-            mousePosition  = ray.GetPoint(hit.distance);
-        }
-        else{
-            Debug.DrawRay (ray.origin, ray.direction * 10, Color.red);
-            mousePosition = new Vector2(-5,-5);
-        }
-        return mousePosition;
-    }
+public class PathFinding {
 
     public static GameObject getObjectAtMousePos(){
-        int layerMask = 1 << SpellBook.groundLayer;
+        int layerMask = 1 << gridManager.groundLayerS;
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         RaycastHit2D hit = Physics2D.Raycast(mousePos, Vector2.zero, Mathf.Infinity, layerMask);
         if (hit){
@@ -39,7 +18,7 @@ public class StaticFunctions {
     }
 
     public static GameObject getObjectAt(Vector2 pos){
-        int layerMask = 1 << SpellBook.groundLayer;
+        int layerMask = 1 << gridManager.groundLayerS;
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, layerMask);
         if (hit){
             if (hit.collider != null){
@@ -51,7 +30,7 @@ public class StaticFunctions {
     }
     public static GameObject getTileAt(Vector2 pos)
     {
-        int groundLayerMask = 1 << SpellBook.groundLayer;
+        int groundLayerMask = 1 << gridManager.groundLayerS;
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, groundLayerMask);
         if (hit){
             if (hit.collider != null){
@@ -74,7 +53,7 @@ public class StaticFunctions {
         {
             Vector2 pos = new Vector2();
             pos = current.transform.position + neighbour;
-            GameObject neighbourTile = StaticFunctions.getTileAt(pos);
+            GameObject neighbourTile = PathFinding.getTileAt(pos);
             if (neighbourTile != null)
                 neighbours.Add(neighbourTile);
         }
@@ -100,7 +79,7 @@ public class StaticFunctions {
         Dictionary<GameObject, int> graphScores = new Dictionary<GameObject, int>();
         graphScores.Add(currentTile, 0);
         Dictionary<GameObject, float> heuristicScores = new Dictionary<GameObject, float>();
-        heuristicScores.Add(currentTile, StaticFunctions.heuristic_cost_estimate(currentTile.transform, targetTile.transform));
+        heuristicScores.Add(currentTile, PathFinding.heuristic_cost_estimate(currentTile.transform, targetTile.transform));
 
         while (unvisited.Count > 0)
         {
@@ -128,7 +107,7 @@ public class StaticFunctions {
             }
             unvisited.Remove(current);
             visited.Add(current);
-            foreach (GameObject neighbour in StaticFunctions.getNeighbours(current))
+            foreach (GameObject neighbour in PathFinding.getNeighbours(current))
             {
                 if (visited.Contains(neighbour) || (neighbour.GetInstanceID() != targetTile.GetInstanceID() && neighbour.GetComponent<tile>().taken))
                 {
@@ -146,7 +125,7 @@ public class StaticFunctions {
                 }
                 path[neighbour] = current;
                 graphScores[neighbour] = gScore;
-                heuristicScores[neighbour] = gScore + StaticFunctions.heuristic_cost_estimate(neighbour.transform, targetTile.transform);
+                heuristicScores[neighbour] = gScore + PathFinding.heuristic_cost_estimate(neighbour.transform, targetTile.transform);
             }
         }
         return new List<GameObject>();
@@ -156,7 +135,7 @@ public class StaticFunctions {
     public static GameObject findNearestFreeTile(GameObject tile)
     {
         if (! tile.GetComponent<tile>().taken) return tile;
-        foreach (GameObject neighbourTile in StaticFunctions.getNeighbours(tile))
+        foreach (GameObject neighbourTile in PathFinding.getNeighbours(tile))
         {
             if (! neighbourTile.GetComponent<tile>().taken)
             {
