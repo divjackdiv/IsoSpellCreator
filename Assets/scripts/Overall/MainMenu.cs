@@ -63,7 +63,7 @@ public class MainMenu : MonoBehaviour {
     public void Continue(){
     	string name = getLastSaveName();
     	if (name == null) return;
-    	Game.current = SaveManager.savedGames[SaveManager.savedGames.Count - 1];
+    	Game.current = SaveManager.savedGames[0];
     	SceneManager.LoadScene(Game.current.sceneIndex); 
     }
     public void Quit(){

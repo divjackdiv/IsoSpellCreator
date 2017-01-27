@@ -62,7 +62,6 @@ public class SceneStateManager : MonoBehaviour {
         saveScene(g);
         SaveManager.Save(g); //this save func writes all the info to a file
         StartCoroutine(overallManager.GetComponent<MainMenu>().updateButtons(g));
-        uiManager.GetComponent<UiManager>().closeEscMenu();
     }
 
     void saveMobs(Transform mobs, Game g)
@@ -152,7 +151,7 @@ public class SceneStateManager : MonoBehaviour {
         }
         else
         {
-            uiManager.GetComponent<UiManager>().warningPopUp(true);
+            uiManager.GetComponent<UiManager>().warningPopUp();
         }
     }
 }

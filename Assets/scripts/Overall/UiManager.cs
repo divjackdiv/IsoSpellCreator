@@ -11,21 +11,16 @@ public class UiManager : MonoBehaviour {
     public GameObject worldCanvas;
     public GameObject spellBookCanvas;
     public GameObject combatCanvas;
-    public GameObject savesCanvas;
-    public GameObject loadCanvas;
 
     public GameObject combatScripts;
     public GameObject worldScripts;
 
-    public GameObject escMenu; //NOT the canvas, it's child object
-    public GameObject menuArrow;
     public GameObject warningTooManySpells;
     public GameObject spellTemplateUI;
     public GameObject combatSpells;
 
     GameObject spellBook;
     GameObject sceneStateManager;
-    Dictionary<string, bool> menus; // dictionary pointing to which menus are active/inactive
     bool isEscMenuOpened;
 
     // Use this for initialization
@@ -33,74 +28,12 @@ public class UiManager : MonoBehaviour {
     {
         sceneStateManager = overallManager.GetComponent<overallManager>().sceneStateManager;
         spellBook = overallManager.GetComponent<overallManager>().spellBook;
-        menus = new Dictionary<string, bool>();
-        if (escMenu != null) menus.Add("escMenu", escMenu.activeSelf);
-        if (combatCanvas != null) menus.Add("combatCanvas", combatCanvas.activeSelf);
-        if (worldCanvas != null) menus.Add("worldCanvas", worldCanvas.activeSelf);
         // Update is called once per frame
     }
     void Update() {
 
     }
 
-
-    public void escMenuArrow()
-    {
-        if (isEscMenuOpened) closeEscMenu();
-        else openEscMenu();
-    }
-    public void openEscMenu()
-    {
-        escMenu.SetActive(true);
-        isEscMenuOpened = true;
-        if (!MainMenu.isSceneMainMenu)
-        {
-            Time.timeScale = 0;
-            if(menus.ContainsKey("combatCanvas")) menus["combatCanvas"] = combatCanvas.activeSelf;
-            if(menus.ContainsKey("worldCanvas")) menus["worldCanvas"] = worldCanvas.activeSelf;
-            combatScripts.SetActive(false);
-            combatCanvas.SetActive(false);
-            worldScripts.SetActive(false);
-            worldCanvas.SetActive(false);
-        }
-    }
-    public void openSpellCreator()
-    {
-        Time.timeScale = 0;
-        spellBookCanvas.SetActive(true);
-    }
-    public void showSaves()
-    {
-        escMenu.SetActive(false);
-        savesCanvas.SetActive(true);
-    }
-    public void showLoad()
-    {
-        escMenu.SetActive(false);
-        loadCanvas.SetActive(true);
-    }
-
-    public void closeEscMenu()
-    {
-        escMenu.SetActive(false);
-        loadCanvas.SetActive(false);
-        isEscMenuOpened = false;
-        if (!MainMenu.isSceneMainMenu)
-        {
-            Time.timeScale = 1;
-            savesCanvas.SetActive(false);
-            if (menus.ContainsKey("combatCanvas"))
-            {
-                combatScripts.SetActive(menus["combatCanvas"]);
-                combatCanvas.SetActive(menus["combatCanvas"]);
-            }
-            if (menus.ContainsKey("worldCanvas"))
-            {
-                worldScripts.SetActive(menus["worldCanvas"]);
-                worldCanvas.SetActive(menus["worldCanvas"]);
-            }
-        }
-    }
     public void startCombat()
     {
         worldScripts.SetActive(false);
@@ -117,9 +50,34 @@ public class UiManager : MonoBehaviour {
         worldScripts.SetActive(true);
         worldCanvas.SetActive(true);
     }
-    public void warningPopUp(bool active)
+
+    //This function activates/deactivates an object and according to that puts the game in pause or not
+    //there should be a max of one call to this function per button
+    public void showOrHideMain(GameObject g)
     {
-        warningTooManySpells.SetActive(active);
+        g.SetActive(!g.activeSelf);
+        if (g.activeSelf) Time.timeScale = 0f;
+        else Time.timeScale = 1f;
+    }
+
+    public void showOrHide(GameObject g)
+    {
+        g.SetActive(!g.activeSelf);
+    }
+
+    public void hide(GameObject g)
+    {
+        g.SetActive(false);
+    }
+
+    public void show(GameObject g)
+    {
+        g.SetActive(true);
+    }
+
+    public void warningPopUp()
+    {
+        showOrHide(warningTooManySpells);
     }
 
     public void deleteSpell(int i)

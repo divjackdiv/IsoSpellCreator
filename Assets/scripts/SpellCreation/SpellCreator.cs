@@ -9,9 +9,6 @@ public class SpellCreator : MonoBehaviour {
 
 
     public GameObject overallManager;
-    public GameObject spellNameField;
-    public GameObject spellsAndSaveButtons;
-    public GameObject spellCreation;
 
     List<GameObject> spellsGameObjects;
     List<Sprite> spellsSprites;
@@ -90,12 +87,6 @@ public class SpellCreator : MonoBehaviour {
             Destroy(currentGameObject);
             currentGameObject = null;
         }
-    }
-    public void setSpellName()
-    {
-        spellNameField.SetActive(true);
-        spellsAndSaveButtons.SetActive(false);
-        spellCreation.SetActive(false);
     }
     public void saveSpell(InputField saveField)
     {

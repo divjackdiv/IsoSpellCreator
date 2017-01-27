@@ -218,11 +218,10 @@ public class inputSpellCreator : MonoBehaviour {
     void dropPoint(){
         GameObject tile = PathFinding.getObjectAtMousePos(); 
         if(tile == null){
-            oldTile.GetComponent<tile>().leaveTile();
-            Destroy(currentGameObject);
+            deletePoint(currentGameObject, currentChildren);
             isDragging = false;
-            currentGameObject = null; 
-            oldTile = null; 
+            currentGameObject = null;
+            oldTile = null;
             return;
         }
         if (tile.GetComponent<tile>().takeTile(currentGameObject)){
@@ -233,11 +232,12 @@ public class inputSpellCreator : MonoBehaviour {
             currentGameObject.transform.position = oldTile.transform.position;
         }
 
+        //reset children to be attached to the spell 
         foreach(GameObject child in currentChildren){
             child.transform.parent = currentGameObject.transform;
         }
+
         //Update line renderer pos for parent
-        
         if(currentGameObject.transform.parent != null && currentGameObject.transform.parent.GetComponent<LineRenderer>() != null)  lineFollow(currentGameObject, currentGameObject.transform.position, 1);
         //update line Renderer Positions for children
         foreach(GameObject child in currentChildren){
@@ -247,6 +247,17 @@ public class inputSpellCreator : MonoBehaviour {
         oldTile = null;
         isDragging = false;
         currentGameObject = null;   
+    }
+
+    void deletePoint(GameObject point, List<GameObject> children)
+    {
+        foreach (GameObject child in children)
+        {
+            lineFollow(child, point.transform.parent.position, 0);
+        }
+        oldTile.GetComponent<tile>().leaveTile();
+        Destroy(point);
+        return;
     }
 
     void showOptions(GameObject g){
