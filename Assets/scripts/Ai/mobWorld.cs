@@ -51,7 +51,7 @@ public class mobWorld : MonoBehaviour {
 	}
 
 	bool ennemyDetected(){
-		if(Vector2.Distance(player.transform.position,transform.position) < detectionRange) return true;
+		if(PathFinding.IsometricDistance(player.transform.position,transform.position) < detectionRange) return true;
 		else return false;
 	}
 

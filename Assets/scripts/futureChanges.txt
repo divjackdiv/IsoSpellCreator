@@ -1,17 +1,17 @@
 Done in last iteration
-- Repair graphical problems when deleting parts of spell
-- making ui functions more general (ie reusable for different scenarios)
-- add cancel button on most ui, so the user can easily rollback his decision
-- pause game whenever opening any ui
-- Better way of keeping whether a Ui element is on or off
-
+- Fix walking diagonally bug
+- Fixed issues with calcluating distances incorrectly
+- Delete on press Del when creating/editing spell
+- Cancel on press Esc when creating/editing spell
+- merged InputSpellCreator and SpellCreator
+- Cleaned up the code to create spells 
 
 TO BE DONE
-- Fix walking diagonally bug
-- Add delete Button and delete on press Esc when creating/editing spell
+- Add delete Button when creating/editing spell
 - Change save names to be automated
 - make better ai for attacking from a distance
 - resize ui spell template
 - create a map of the tiles at start
 - look at a possible conversion of sceneStateManager functions towards more static functions
 - redo/change mainMenu script to be more in tune with the other scripts
+- get rid of branch script, as all it's use is within the point

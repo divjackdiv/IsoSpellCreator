@@ -22,15 +22,15 @@ public class playerWorld : MonoBehaviour {
         		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         		GameObject g = PathFinding.getTileAt(mousePos);
         		if(g != null){
-                    GameObject nextTile = null;
-                    if (path.Count > 0)
-                    {
-                        nextTile = path[0];
-                    }
                     path = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.position), g);
-                    if (nextTile != null)
+                    GameObject currentTile = PathFinding.getTileAt(transform.position);
+                    if (path[0].transform.position != currentTile.transform.position) //make sure the palyer cannot diagonally
                     {
-                        path.Insert(0,nextTile);
+                        float tileDist = PathFinding.IsometricDistance(currentTile.transform.position, path[0].transform.position); //distance between current tile and next tile
+                        float playerToNextTileDist = PathFinding.IsometricDistance(transform.position, path[0].transform.position); //distance between player and next tile
+                        if (tileDist < playerToNextTileDist) {   //ensures that the player does not need to go back to a tile if it is not on it's way
+                            path.Insert(0, currentTile);
+                        }
                     }
                     transform.GetComponent<playerOverall>().updatePath(path);
         		}

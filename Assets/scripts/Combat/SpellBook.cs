@@ -41,6 +41,7 @@ public class SpellBook : MonoBehaviour {
         if (Spells == null) return new List<GameObject>();
         return Spells;
     }
+
 	public GameObject getSpell(int index){
 		if (index < 0 || index >= Spells.Count) return null;
 		return Spells[index];

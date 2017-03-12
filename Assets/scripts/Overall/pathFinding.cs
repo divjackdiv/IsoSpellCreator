@@ -17,6 +17,14 @@ public class PathFinding {
         return null;
     }
 
+    //different to Vector3.Distance, takes into account the isometric view
+    //to be used when comparing two objects within the scene
+    public static float IsometricDistance(Vector3 first, Vector3 second)
+    {
+        float dist = Mathf.Sqrt(Mathf.Pow((first.x - second.x),2) + Mathf.Pow((first.y - second.y)*2, 2)); 
+        return dist;
+    }
+
     public static GameObject getObjectAt(Vector2 pos){
         int layerMask = 1 << gridManager.groundLayerS;
         RaycastHit2D hit = Physics2D.Raycast(pos, Vector2.zero, Mathf.Infinity, layerMask);
@@ -61,7 +69,7 @@ public class PathFinding {
     }
     public static float heuristic_cost_estimate(Transform start, Transform goal)
     {
-        return Vector3.Distance(start.position, goal.position);
+        return IsometricDistance(start.position, goal.position);
     }
 
     public static List<GameObject> aStarPathFinding(GameObject currentTile, GameObject targetTile)
