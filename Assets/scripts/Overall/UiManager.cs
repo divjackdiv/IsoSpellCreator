@@ -122,7 +122,7 @@ public class UiManager : MonoBehaviour {
             c.a = alpha;
             obj.GetComponent<SpriteRenderer>().color = c;
         }
-    } 
+    }
 
     public void changeAlphaSpells(float alpha)
     {

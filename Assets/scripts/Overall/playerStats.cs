@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class playerStats : MonoBehaviour {
 
@@ -19,7 +20,7 @@ public class playerStats : MonoBehaviour {
 	}
 	
 	public void load(){
-		transform.position = Game.current.playerData.getLastSavedPos();
+        if(Game.current.areaName == SceneManager.GetActiveScene().name) transform.position = Game.current.playerData.getLastSavedPos();
 		Dictionary<string, int> d = Game.current.playerData.getStats();
 		level = d["level"];
 		lifePoints = d["lifePoints"];

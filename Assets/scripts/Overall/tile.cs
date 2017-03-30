@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class tile : MonoBehaviour {
 
 
     public GameObject takenBy;
     public bool taken;
+    public List<GameObject> smallProps;
 
 	void Start(){
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;

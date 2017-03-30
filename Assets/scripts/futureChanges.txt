@@ -1,13 +1,9 @@
 Done in last iteration
-- Fix walking diagonally bug
-- Fixed issues with calcluating distances incorrectly
-- Delete on press Del when creating/editing spell
-- Cancel on press Esc when creating/editing spell
-- merged InputSpellCreator and SpellCreator
-- Cleaned up the code to create spells 
+- "close" button when creating spells now functioning
+- hovered points are back
+- Level creation is made a lot easier through an editor script. We can create tiles automatically at mouse position if there is space. Objects can also automatically be created on tiles. Open the tile creation window, choose a tile or object to spawn and press 't' in the scene to spawn the object.
 
 TO BE DONE
-- Add delete Button when creating/editing spell
 - Change save names to be automated
 - make better ai for attacking from a distance
 - resize ui spell template

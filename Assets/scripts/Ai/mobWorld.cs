@@ -6,7 +6,6 @@ public class mobWorld : MonoBehaviour {
 
     public List<GameObject> roamingTargets;
     public GameObject overallManager;
-    public GameObject spellCreator;
     public int targetIndex = 0;
 
 
@@ -38,9 +37,12 @@ public class mobWorld : MonoBehaviour {
                 state = 0;
                 waiting = true;
                 GameObject currentTile = PathFinding.getTileAt(transform.position);
-                List<GameObject> path = PathFinding.aStarPathFinding(currentTile, roamingTargets[targetIndex++]); //Can be stored for more efficiency //
-                if (targetIndex >= roamingTargets.Count) targetIndex = 0;
-                GetComponent<mobOverall>().updatePath(path);                
+                if(targetIndex < roamingTargets.Count)
+                { 
+                    List<GameObject> path = PathFinding.aStarPathFinding(currentTile, roamingTargets[targetIndex++]); //Can be stored for more efficiency //
+                    if (targetIndex >= roamingTargets.Count) targetIndex = 0;
+                    GetComponent<mobOverall>().updatePath(path);
+                }         
             }
 		}
 	}

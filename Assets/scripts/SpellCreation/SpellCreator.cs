@@ -3,7 +3,6 @@ using System.Collections;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
-using UnityEngine.SceneManagement;
 
 public class SpellCreator : MonoBehaviour {
 
@@ -25,32 +24,27 @@ public class SpellCreator : MonoBehaviour {
     GameObject hoveredPoint;
     GameObject defaultBranch;//static copies of above variables
     GameObject defaultSpell;
-    GameObject takenBy;
     GameObject oldTile;
     string spellName;
-    int layerMask;
     int groundLayerMask;
     int turn;
     int currentVertex;
     bool shouldOpen;
     bool editingExistingSpell;
-    bool durationsAreShown;
     bool isDragging;
     bool extending;
 
-    void Awake()
+
+    void Start ()
     {
         spellBook = overallManager.GetComponent<overallManager>().spellBook;
         player = overallManager.GetComponent<overallManager>().player;
-    }
-
-    void Start () {
+        sceneStateManager = overallManager.GetComponent<overallManager>().sceneStateManager;
         spellsGameObjects = spellBook.GetComponent<SpellBook>().spellGameObjects;
         spellsSprites = spellBook.GetComponent<SpellBook>().spellsSprites;
         defaultBranch = spellBook.GetComponent<SpellBook>().defaultBranch;
         defaultSpell = spellBook.GetComponent<SpellBook>().defaultSpell;
-        layerMask = 1<< gridManager.groundLayerS;
-        groundLayerMask = 1 << layerMask;
+        groundLayerMask = 1 << gridManager.groundLayerS;
         if (Game.current != null && Game.current.editingSpell >= 0 && Game.current.editingSpell < Game.current.spells.Count) {
             editingExistingSpell = true;
             spell = SpellBook.loadSpell(Game.current.spells[Game.current.editingSpell], true, spellsSprites, spellsGameObjects, defaultSpell, defaultBranch, player);
@@ -69,7 +63,6 @@ public class SpellCreator : MonoBehaviour {
             dur.transform.localScale = new Vector3(0.07F, 0.07F, 0.07F);
             durations.Add(dur);
         }
-        durationsAreShown = false;
     }
 
     void Update()
@@ -100,8 +93,8 @@ public class SpellCreator : MonoBehaviour {
         }
         else
         {
-            if (currentGameObject != null) currentGameObject = null;
             onHover();
+            if (currentGameObject != null) currentGameObject = null;
         }
     }
 
@@ -246,7 +239,10 @@ public class SpellCreator : MonoBehaviour {
     //change this to scene state manager in the future
     public void closeSpellCreator()
     {
-        SceneManager.LoadScene(1);
+        int i = 1;
+        if (Game.current != null)
+            i = Game.current.sceneIndex;
+        sceneStateManager.GetComponent<SceneStateManager>().loadScene(i);
     }
 
     public int calculateSpellCost(GameObject s){
@@ -288,23 +284,20 @@ public class SpellCreator : MonoBehaviour {
             {
                 if (hit.collider.gameObject.GetComponent<tile>().taken == true)
                 {
-                    takenBy = hit.collider.gameObject.GetComponent<tile>().getTakenBy();
-                    if (takenBy.GetComponent<SpellPoint>() != null)
+                    hoveredPoint = hit.collider.gameObject.GetComponent<tile>().getTakenBy();
+                    if (hoveredPoint.GetComponent<SpellPoint>() != null)
                     {
-                        hoveredPoint = takenBy;
-                        showOptions(takenBy);
+                        showOptions(hoveredPoint);
                     }
                 }
             }
         }
-        else
+        if (hoveredPoint != null)
         {
-            if (durationsAreShown)
+            if (Vector3.Distance(hoveredPoint.transform.position, mousePos) > hoverDist)
             {
-                if (Vector3.Distance(takenBy.transform.position, mousePos) > hoverDist)
-                {
-                    hideOptions();
-                }
+                hideOptions();
+                hoveredPoint = null;
             }
         }
     }
@@ -324,7 +317,6 @@ public class SpellCreator : MonoBehaviour {
 
             durations[i].transform.position = pos;
             durations[i].SetActive(true);
-            durationsAreShown = true;
         }
     }
     public void hideOptions()
@@ -333,7 +325,6 @@ public class SpellCreator : MonoBehaviour {
         {
             durations[i].SetActive(false);
         }
-        durationsAreShown = false;
     }
       
     void lineFollow(GameObject currentObj, Vector2 pos, int index)
@@ -483,5 +474,12 @@ public class SpellCreator : MonoBehaviour {
     public void modifyPointDuration(int i)
     {
         hoveredPoint.GetComponent<SpellPoint>().duration = i;
+        for(int d = 0; d <durations.Count; d++) 
+        {
+            if(d == i)
+                durations[d].GetComponent<SpriteRenderer>().color = new Vector4(0.2f,1f,1f,1f);
+            else
+                durations[d].GetComponent<SpriteRenderer>().color = new Vector4(1f, 1f, 1f, 1f);
+        }
     }
 }
