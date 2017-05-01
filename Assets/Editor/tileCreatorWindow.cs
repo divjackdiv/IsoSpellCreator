@@ -14,23 +14,22 @@ public class tileCreatorWindow : EditorWindow
     [MenuItem("Window/tileCreatorWindow")]
     public static void ShowWindow()
     {
-        //Show existing window instance. If one doesn't exist, make one.
         EditorWindow.GetWindow(typeof(tileCreatorWindow));
         objects = new Dictionary<string, Dictionary<Object, bool>>();
         foldouts = new List<bool>();
         string[] directories = Directory.GetDirectories("Assets/prefabs/World/");
-        foreach(string name in directories)
+        foreach (string name in directories)
         {
             foldouts.Add(false);
             objects.Add(name, new Dictionary<Object, bool>());
-            System.IO.DirectoryInfo info = new DirectoryInfo(name + "/" );
+            System.IO.DirectoryInfo info = new DirectoryInfo(name + "/");
             FileInfo[] fileInfo = info.GetFiles("*.prefab");
             foreach (FileInfo file in fileInfo)
             {
                 Object t = AssetDatabase.LoadAssetAtPath(name + "/" + file.Name, typeof(GameObject));
                 objects[name].Add(t, false);
             }
-        }            
+        }
     }
 
     void OnGUI()

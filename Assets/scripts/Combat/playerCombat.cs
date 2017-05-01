@@ -18,6 +18,7 @@ public class playerCombat : MonoBehaviour {
     GameObject spellBook;   //derived from overallManager
     GameObject uiManager;   //derived from overallManager
     GameObject spellCanvasObject;
+    GameObject currentSpell; //points to the spell the player is creating, if the player creates one
     List<GameObject> spells;
     List<GameObject> drawnPaths; //List used to show possible paths
     int spellsStillRunning;
@@ -49,46 +50,47 @@ public class playerCombat : MonoBehaviour {
 		currentSpellPoints = transform.GetComponent<playerStats>().spellPoints;
 	}
 	
-	
-	// Update is called once per frame
 	void Update () {
 		if(currentLifePoints <= 0){
 			die();
 			return;
 		}
-        if (walkPhase && ! isWalking)
+        if (playing)
         {
-            drawPath();
-        }
-        else if (stillDrawn)
-        {
-            foreach (GameObject tile in drawnPaths)
+            if (walkPhase) //in Walkphase user can see possible paths, and move to nearby tiles
             {
-                UiManager.changeAlpha(tile, false, 1f);
+                if (!isWalking)
+                {
+                    drawPath(); //show possible paths with current movement points
+                }
+                else if (stillDrawn)
+                {
+                    clearPath();
+                }
+
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    walkToMousePos();
+                }
             }
-        }
-		if (Input.GetButtonDown("Fire1") && playing && walkPhase){
-
-        	if (!EventSystem.current.IsPointerOverGameObject() && !isWalking)
+            else if(attackPhase)// In attack phase, the user can instantiate already made spells
             {
-        		Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        		GameObject g = PathFinding.getTileAt(mousePos);
-        		if(g != null){
-        			Vector3 target = g.transform.position;
-                    List<GameObject> path = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.transform.position), g);
-
-                    if (path.Count <= currentMovementPoints){
-                        bool canMove = GetComponent<playerOverall>().takeTile(target);
-                        if (canMove)
-                        {
-                            isWalking = true;
-                            GetComponent<playerOverall>().updatePath(path);
-                            currentMovementPoints -= path.Count;
-                            updateMovementPoints();
-                        }
-	        		}
-        		}
-        	}
+                if (currentSpell != null)
+                {
+                    if (Input.GetButton("Fire1"))
+                    {
+                        if (Input.GetKey(KeyCode.Escape))
+                            cancelSpell();
+                        else
+                            updateSpellPos();
+                    }
+                    else
+                    {
+                        updateSpellPos();
+                        confirmSpell();
+                    }
+                }
+            }
         }
         if(waitingForSpells && spellsStillRunning <= 0){
         	waitingForSpells = false;
@@ -116,7 +118,8 @@ public class playerCombat : MonoBehaviour {
 			if(walkPhase){
 				walkPhase = false;
 				attackPhase = true;
-				currentMovementPoints = transform.GetComponent<playerStats>().movement;
+                clearPath();
+                currentMovementPoints = transform.GetComponent<playerStats>().movement;
                 UiManager.changeAlpha(mvmtPointsUi, true, 0.5f);
                 UiManager.changeAlpha(spellPointsUi, true, 1f);
                 uiManager.GetComponent<UiManager>().changeAlphaSpells(1f);
@@ -139,33 +142,157 @@ public class playerCombat : MonoBehaviour {
 			}
 		}
 	}
+
 	public void instantiateSpell(int index){
-		if(playing && attackPhase){
+		if(attackPhase){
 			if (index < 0 || index >= spellBook.GetComponent<SpellBook>().getSpellCount() || currentSpellPoints <= 0) return;
+
 			GameObject spell = spellBook.GetComponent<SpellBook>().getSpell(index);
 			int availableMana = currentMana - spell.GetComponent<SpellScript>().cost;
-			if (availableMana >= 0) {
-				currentMana = availableMana;
-				currentSpellPoints--;
-				spellBook.GetComponent<SpellBook>().instantiateSpell(index);
-				updateMana();
-				updateSpellPoints();
-			}
+            if (availableMana >= 0) {
+                currentSpell = spellBook.GetComponent<SpellBook>().instantiateSpell(index);
+                updateSpellPos();
+                currentMana = availableMana;
+                currentSpellPoints--;
+                updateMana();
+                updateSpellPoints();
+            }
 		}	
 	}
+
+    //updates the position of the spell
+    void updateSpellPos()
+    {
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        GameObject g = PathFinding.getTileAt(mousePos);
+        if(g != null)
+            currentSpell.transform.position = g.transform.position;
+        else
+            currentSpell.transform.position = mousePos;
+    }
+
+    //returns true if an appropriate tile has been found, so that the user may not create spells in walls.
+    bool canSpellAppear(Vector2 pos)
+    {
+        GameObject g = PathFinding.getTileAt(pos);
+        if (g != null)
+        {
+            currentSpell.transform.position = g.transform.position;
+            if (g.GetComponent<tile>().takenBy != null)
+            {
+                int layer = g.GetComponent<tile>().takenBy.layer;
+                if (layer != 11 && layer != 12)
+                    return false;
+            }
+            return true;
+        }
+        return false;
+    }
+
+    void confirmSpell()
+    {
+        if (EventSystem.current.IsPointerOverGameObject()) //if user cancels spell
+        {
+            cancelSpell();
+        }
+        else
+        {
+            Transform branch = currentSpell.transform.GetChild(0);
+            bool isAllDeleted = true;
+            foreach (Transform point in branch)
+            {
+                bool d = confirmSpellPoint(point);
+                if (d)
+                    isAllDeleted = false;
+            }
+            if (isAllDeleted)
+                cancelSpell();
+            currentSpell = null;
+        }
+    } 
+
+
+    bool confirmSpellPoint(Transform point)
+    {
+        bool shouldDelete = !canSpellAppear(point.position);
+        if (shouldDelete)
+        {
+            Destroy(point.gameObject);
+            return false;
+        }
+        List<GameObject> children = new List<GameObject>();
+        foreach (Transform p in point)
+        {
+            shouldDelete = !canSpellAppear(p.position);
+            if (shouldDelete)
+            {
+                children.Add(p.gameObject);
+            }
+            else
+            {
+                confirmSpellPoint(p);
+            }
+        }
+        foreach(GameObject g in children)
+        {
+            Destroy(g);
+        }
+        return true;
+    }
+
+    void cancelSpell()
+    {
+        currentMana += currentSpell.GetComponent<SpellScript>().cost;
+        currentSpellPoints++;
+        updateMana();
+        updateSpellPoints();
+        Destroy(currentSpell);
+        currentSpell = null;
+    }
+
+    void walkToMousePos()
+    {
+        if (!EventSystem.current.IsPointerOverGameObject() && !isWalking)
+        {
+            Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            GameObject g = PathFinding.getTileAt(mousePos);
+            if (g != null)
+            {
+                Vector3 target = g.transform.position;
+                List<GameObject> path = PathFinding.aStarPathFinding(PathFinding.getTileAt(transform.transform.position), g);
+
+                if (path.Count <= currentMovementPoints)
+                {
+                    bool canMove = GetComponent<playerOverall>().takeTile(target);
+                    if (canMove)
+                    {
+                        isWalking = true;
+                        GetComponent<playerOverall>().updatePath(path);
+                        currentMovementPoints -= path.Count;
+                        updateMovementPoints();
+                    }
+                }
+            }
+        }
+    }
+
     public void finishedWalking()
     {
         isWalking = false;
     }
+
 	public void addSpell(GameObject spell){
 		spells.Add(spell);
 	}
+
 	public void removeSpell(GameObject spell){
 		spells.Remove(spell);
 	}
+
 	public void spellFinished(){
 		spellsStillRunning--;
 	}
+
 	public void endCombat(){
 		foreach(GameObject spell in spells){
 			Destroy(spell);
@@ -173,6 +300,7 @@ public class playerCombat : MonoBehaviour {
         GetComponent<playerWorld>().enabled = true;
         this.enabled = false;
 	}
+
 	public void takeDamage(int damage){
 		currentLifePoints -= damage;
 		if(currentLifePoints <= 0){
@@ -190,20 +318,23 @@ public class playerCombat : MonoBehaviour {
 	public void startCombat(){
         GetComponent<playerOverall>().moveToNearestTile();
 	}
+
 	// ui stuff
 	void updateMana(){
 		manaUi.transform.GetChild(0).GetComponent<Text>().text = currentMana + "";
 	}
+
 	void updateMovementPoints(){
 		mvmtPointsUi.transform.GetChild(0).GetComponent<Text>().text = currentMovementPoints + "";
 	}
+
 	void updateHealth(){
 		lifePointsUi.transform.GetChild(0).GetComponent<Text>().text = currentLifePoints + "";
 	}
+
 	void updateSpellPoints(){
 		spellPointsUi.transform.GetChild(0).GetComponent<Text>().text = currentSpellPoints + "";
 	}
-
 
     //shows possible paths to the user
 	void drawPath(){
@@ -230,4 +361,11 @@ public class playerCombat : MonoBehaviour {
 		}
 	}
   
+    void clearPath()
+    {
+        foreach (GameObject tile in drawnPaths)
+        {
+            UiManager.changeAlpha(tile, false, 1f);
+        }
+    }
 }

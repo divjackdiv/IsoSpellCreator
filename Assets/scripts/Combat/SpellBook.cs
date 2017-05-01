@@ -21,21 +21,20 @@ public class SpellBook : MonoBehaviour {
         uiManager = overallManager.GetComponent<overallManager>().uiManager;
     }
 
-	public void instantiateSpell(int index){
-        if (index < 0 || Spells == null) return;
-		if (index < Spells.Count){
-			GameObject s = Spells[index];
-			s = (GameObject) Instantiate(s);
-			s.SetActive(true);
-			foreach(Transform branch in s.transform){
-				setupSpell(branch.transform.GetChild(0).gameObject, true);
-			}
-			player.GetComponent<playerCombat>().addSpell(s);
-			s.transform.parent = player.transform;
-			s.transform.localPosition = new Vector3(0, 0, 0);
-			s.transform.parent = combatManager.transform;
+	public GameObject instantiateSpell(int index)
+    {
+        if (index < 0 || Spells == null || index > Spells.Count) return null;
+		GameObject s = Spells[index];
+		s = (GameObject) Instantiate(s);
+		s.SetActive(true);
+		foreach(Transform branch in s.transform){
+			setupSpell(branch.transform.GetChild(0).gameObject, true);
 		}
+		player.GetComponent<playerCombat>().addSpell(s);
+		s.transform.parent = combatManager.transform;
+        return s;
 	}
+
     public List<GameObject> getAllSpells()
     {
         if (Spells == null) return new List<GameObject>();

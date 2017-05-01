@@ -56,6 +56,7 @@ public class mobCombat : MonoBehaviour {
 				animator.SetInteger("state", 0); 	//State 0 is Idle
 			}
 			else if(state == 1){
+                //UnityEditor.EditorApplication.isPaused = true;
                 currentTile = PathFinding.getTileAt(transform.position);
                 List<GameObject> path = PathFinding.aStarPathFinding(currentTile, nextTile);
                 int howMuchShouldIWalk = currentMovementPoints;
