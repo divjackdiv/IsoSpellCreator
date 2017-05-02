@@ -20,7 +20,7 @@ public class CombatManager : MonoBehaviour {
 		index = 0;
 	}
 	
-	// Update is called once per frame
+    //Can probably find a way where you don't need to call update here for efficiency
 	void Update () {
 		if(combatStarted && characterPlayed){
 			if(characters.Count == 1) endCombat();
@@ -68,6 +68,7 @@ public class CombatManager : MonoBehaviour {
 			character.GetComponent<mobCombat>().play();
 		}
 	}
+
 	public void finishedPlaying(){
 		index++;
 		characterPlayed = true;

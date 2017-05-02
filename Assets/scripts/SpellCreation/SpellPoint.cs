@@ -114,7 +114,7 @@ public class SpellPoint : MonoBehaviour {
         currentTile = PathFinding.getTileAt(transform.position);
         if(currentTile.GetComponent<tile>().taken){
             GameObject takenBy = currentTile.GetComponent<tile>().takenBy;
-            if (takenBy.tag == "mob"){
+            if (takenBy != null && takenBy.tag == "mob"){
                 takenBy.GetComponent<mobCombat>().takeDamage(damage);
             }
         }

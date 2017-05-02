@@ -27,9 +27,7 @@ public class SpellBook : MonoBehaviour {
 		GameObject s = Spells[index];
 		s = (GameObject) Instantiate(s);
 		s.SetActive(true);
-		foreach(Transform branch in s.transform){
-			setupSpell(branch.transform.GetChild(0).gameObject, true);
-		}
+        UiManager.recursiveActive(s.transform.GetChild(0), true);
 		player.GetComponent<playerCombat>().addSpell(s);
 		s.transform.parent = combatManager.transform;
         return s;
@@ -51,22 +49,9 @@ public class SpellBook : MonoBehaviour {
         return Spells.Count;
 	}
 
-	void setupSpell(GameObject spell, bool isRoot){
-        if (isRoot)
-        {
-            spell.SetActive(true);
-            spell.GetComponent<SpellPoint>().initPoint();
-        }
-        else
-        {
-            spell.SetActive(false);
-        }
-		foreach(Transform child in spell.transform){
-			setupSpell(child.gameObject, false);
-		}
-	}
+	
 
-	public void addSpell(GameObject spell){
+    public void addSpell(GameObject spell){
         if (Spells == null) Spells = new List<GameObject>();
         Spells.Add(spell);
 	}

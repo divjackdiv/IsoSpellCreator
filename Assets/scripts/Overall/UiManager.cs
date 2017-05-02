@@ -131,5 +131,12 @@ public class UiManager : MonoBehaviour {
             UiManager.changeAlpha(child.gameObject, true, alpha);
         }
     }
-
+    public static void recursiveActive(Transform obj, bool value)
+    {
+        obj.gameObject.SetActive(value);
+        foreach (Transform child in obj.transform)
+        {
+            recursiveActive(child, value);
+        }
+    }
 }

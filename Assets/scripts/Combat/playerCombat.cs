@@ -32,15 +32,12 @@ public class playerCombat : MonoBehaviour {
     bool attackPhase;
     bool stillDrawn; //are paths still drawn and need to be cleaned up?
     bool isWalking;
-
-    void Awake()
+    
+	void Start ()
     {
         combatManager = overallManager.GetComponent<overallManager>().combatManager;
         spellBook = overallManager.GetComponent<overallManager>().spellBook;
         uiManager = overallManager.GetComponent<overallManager>().uiManager;
-    }
-    
-	void Start () {
         spells = new List<GameObject>();
         drawnPaths = new List<GameObject>();
 
@@ -82,6 +79,8 @@ public class playerCombat : MonoBehaviour {
                         if (Input.GetKey(KeyCode.Escape))
                             cancelSpell();
                         else
+                            if(Input.GetButton("Rotate"))
+                                rotateSpell();
                             updateSpellPos();
                     }
                     else
@@ -95,7 +94,7 @@ public class playerCombat : MonoBehaviour {
         if(waitingForSpells && spellsStillRunning <= 0){
         	waitingForSpells = false;
 			combatManager.GetComponent<CombatManager>().finishedPlaying();
-			combatManager.GetComponent<CombatManager>().nextTurn();
+			combatManager.GetComponent<CombatManager>().nextTurn(); // calling next turn from here will be changed later, the player shouldn't always be the last person to play
         }
 	}
 
@@ -103,6 +102,7 @@ public class playerCombat : MonoBehaviour {
 		walkPhase = true;
 		attackPhase = false;
 		playing = true;
+        waitingForSpells = false;
 
         UiManager.changeAlpha(spellPointsUi, true, 0.5f);
         UiManager.changeAlpha(mvmtPointsUi, true, 1f);
@@ -115,8 +115,9 @@ public class playerCombat : MonoBehaviour {
 
 	public void finishedPhase(){
 		if (playing &&  !isWalking){
-			if(walkPhase){
-				walkPhase = false;
+			if(walkPhase)
+            {
+                walkPhase = false;
 				attackPhase = true;
                 clearPath();
                 currentMovementPoints = transform.GetComponent<playerStats>().movement;
@@ -130,16 +131,18 @@ public class playerCombat : MonoBehaviour {
 				updateSpellPoints();
                 UiManager.changeAlpha(spellPointsUi, true, 0.5f);
                 UiManager.changeAlpha(mvmtPointsUi, true, 1f);
+                uiManager.GetComponent<UiManager>().changeAlphaSpells(0.5f);
 
-				//Update spell durations and move spells
-				spellsStillRunning = 0;
+                //Update spell durations and move spells
+                spellsStillRunning = 0;
 				foreach (GameObject s in spells){
 					spellsStillRunning++;
 	       			s.GetComponent<SpellScript>().nextTurn();
-	   			}
-	   			waitingForSpells = true;
-	   			playing = false;
-			}
+                    waitingForSpells = true;
+                }
+                playing = false;
+                attackPhase = false;
+            }
 		}
 	}
 
@@ -171,13 +174,17 @@ public class playerCombat : MonoBehaviour {
             currentSpell.transform.position = mousePos;
     }
 
+    //updates the rotation of the spell
+    void rotateSpell()
+    {
+        //not yet implemented
+    }
     //returns true if an appropriate tile has been found, so that the user may not create spells in walls.
-    bool canSpellAppear(Vector2 pos)
+    bool canPointAppear(Vector2 pos)
     {
         GameObject g = PathFinding.getTileAt(pos);
         if (g != null)
         {
-            currentSpell.transform.position = g.transform.position;
             if (g.GetComponent<tile>().takenBy != null)
             {
                 int layer = g.GetComponent<tile>().takenBy.layer;
@@ -207,14 +214,38 @@ public class playerCombat : MonoBehaviour {
             }
             if (isAllDeleted)
                 cancelSpell();
+            else
+            {
+                foreach (Transform root in branch)
+                {
+                    activateSpell(root.gameObject, true);
+                }
+            }
             currentSpell = null;
         }
-    } 
+    }
+
+    void activateSpell(GameObject spell, bool isRoot)
+    {
+        if (isRoot)
+        {
+            spell.SetActive(true);
+            spell.GetComponent<SpellPoint>().initPoint();
+        }
+        else
+        {
+            spell.SetActive(false);
+        }
+        foreach (Transform child in spell.transform)
+        {
+            activateSpell(child.gameObject, false);
+        }
+    }
 
 
     bool confirmSpellPoint(Transform point)
     {
-        bool shouldDelete = !canSpellAppear(point.position);
+        bool shouldDelete = !canPointAppear(point.position);
         if (shouldDelete)
         {
             Destroy(point.gameObject);
@@ -223,7 +254,7 @@ public class playerCombat : MonoBehaviour {
         List<GameObject> children = new List<GameObject>();
         foreach (Transform p in point)
         {
-            shouldDelete = !canSpellAppear(p.position);
+            shouldDelete = !canPointAppear(p.position);
             if (shouldDelete)
             {
                 children.Add(p.gameObject);
