@@ -12,6 +12,12 @@ public class tileCreatorWindow : EditorWindow
 
     // Add menu item named "My Window" to the Window menu
     [MenuItem("Window/tileCreatorWindow")]
+    void OnEnable()
+    {
+        EditorWindow window = EditorWindow.GetWindow(typeof(tileCreatorWindow));
+        ShowWindow();
+    }
+
     public static void ShowWindow()
     {
         EditorWindow.GetWindow(typeof(tileCreatorWindow));
@@ -30,6 +36,12 @@ public class tileCreatorWindow : EditorWindow
                 objects[name].Add(t, false);
             }
         }
+    }
+
+    void OnFocus()
+    {
+        SceneView.onSceneGUIDelegate -= tileCreationEditor.OnScene;
+        SceneView.onSceneGUIDelegate += tileCreationEditor.OnScene;
     }
 
     void OnGUI()

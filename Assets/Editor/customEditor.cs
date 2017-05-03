@@ -2,11 +2,11 @@
 using System.Collections;
 using UnityEditor;
 
-[CustomEditor(typeof(GameObject))]
+[CustomEditor(typeof(tileCreationEditor))]
 public class tileCreationEditor : Editor
 {
     public static Vector3 mousePosition;
-    private void OnScene(SceneView sceneview)
+    public static void OnScene(SceneView sceneview)
     {
         Event e = Event.current;
         if (e.type == EventType.keyDown)
@@ -34,11 +34,5 @@ public class tileCreationEditor : Editor
                 }
             }
         }
-    }
-
-    void OnEnable()
-    {
-        SceneView.onSceneGUIDelegate -= OnScene;
-        SceneView.onSceneGUIDelegate += OnScene;
     }
 }

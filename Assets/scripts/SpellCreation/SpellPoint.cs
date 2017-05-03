@@ -47,8 +47,10 @@ public class SpellPoint : MonoBehaviour {
                 //state = 2;
                 // animator.SetInteger("state", 2);    // 2 is moving
                 GameObject tile = PathFinding.getTileAt(transform.position);
-                if (tile != currentTile){
+                if (tile != currentTile && tileOverlay != null)
+                {
                     currentTile = tile;
+
                     GameObject tileOvl = (GameObject) Instantiate(tileOverlay);
                     tileOvl.transform.parent = currentTile.transform;
                     tileOvl.transform.localPosition = new Vector3(0, 0, 0);
@@ -59,7 +61,7 @@ public class SpellPoint : MonoBehaviour {
             }
             GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1; 
         }
-        else if(appearing){
+        else if(animator != null && appearing){
             if (state != 1)
             {
                 animCounter = 0;

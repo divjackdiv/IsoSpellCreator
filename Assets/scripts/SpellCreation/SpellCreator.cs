@@ -165,6 +165,8 @@ public class SpellCreator : MonoBehaviour {
     public void saveSpell(InputField saveField)
     {
         spellName = saveField.text;
+        if (spellName == null)
+            return;
         if (spell.transform.childCount > 0 && spell.transform.GetChild(0).childCount > 0)
         {
             enableChildrenLineRenderers(spell, false);

@@ -79,9 +79,11 @@ public class playerCombat : MonoBehaviour {
                         if (Input.GetKey(KeyCode.Escape))
                             cancelSpell();
                         else
-                            if(Input.GetButton("Rotate"))
+                        {
+                            if (Input.GetButton("Rotate"))
                                 rotateSpell();
                             updateSpellPos();
+                        }
                     }
                     else
                     {

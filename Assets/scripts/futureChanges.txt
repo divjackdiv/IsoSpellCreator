@@ -1,13 +1,36 @@
-Done in last iteration
-- "close" button when creating spells now functioning
-- hovered points are back
-- Level creation is made a lot easier through an editor script. We can create tiles automatically at mouse position if there is space. Objects can also automatically be created on tiles. Open the tile creation window, choose a tile or object to spawn and press 't' in the scene to spawn the object.
+//
+This file outlines the future changes to be made to this project in the near future.
+The letter following each task indicates the type of modification/implementation :
+(A) = Architectural, (E) = Efficiency, (F) = Functionality, (G) = Graphical
+Anything starting with "look at" indicates a possible architectural change, the game itself would not be modified by these changes.
+//
 
+Done in last iteration
+- repaired animation bugs
+- can now move spells
+- repaired bug which made editing spells, or adding more than one spell impossible
+- repaired bug with the cancel button in editting spells
+- changed custom window so it doesn't change the layout of the basic gameobject window (and reloads automatically at startup)
+- add a confirm button with spell name, so it doesn't save automatically
+- fixed a few other minor bugs
+
+---------------------------------------------------------------------------------------------------------------------------------------------
 TO BE DONE
-- Change save names to be automated
-- make better ai for attacking from a distance
-- resize ui spell template
-- create a map of the tiles at start
-- look at a possible conversion of sceneStateManager functions towards more static functions
-- redo/change mainMenu script to be more in tune with the other scripts
-- get rid of branch script, as all it's use is within the point
+
+SMALL
+- Show last saved game in load (F)
+- Change save names to be automated (F)
+- allow for spells to be rotated when put in combat (F)
+- get rid of the invisible player in spellcreation (A)
+- resize ui spell template (G)
+
+MEDIUM
+- make better ai for attacking from a distance (F)
+- redo/change mainMenu script to be more in tune with the other scripts (A)
+- get rid of branch script, as all it's use is within the point (A)
+- look at, in SpellCreator,  getting rid of any mention of Spellbook (A)
+- look at a possible conversion of sceneStateManager functions towards more static functions (A)
+- look at using a custom data type "Scene" for each scene data (A)
+
+LARGE
+- create a map of the tiles at start (E)

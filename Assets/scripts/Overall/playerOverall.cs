@@ -42,7 +42,7 @@ public class playerOverall : MonoBehaviour {
             path.RemoveAt(0);
         }
     }
-
+    
     bool walkTo(Vector2 position)
     {
         transform.position = Vector3.MoveTowards(transform.position, position, walkSpeed * Time.deltaTime);

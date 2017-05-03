@@ -16,6 +16,7 @@ public class SceneStateManager : MonoBehaviour {
     GameObject player;
     GameObject uiManager;
     GameObject spellBook;
+
     //Load any known data for this scene, such as ennemies position, spells ect
     void Awake () {
         player = overallManager.GetComponent<overallManager>().player;
@@ -23,10 +24,11 @@ public class SceneStateManager : MonoBehaviour {
         spellBook = overallManager.GetComponent<overallManager>().spellBook;
         if (Game.current != null)
         {
+            Scene scene = SceneManager.GetActiveScene();
             if (player != null && Game.current.playerData != null) player.GetComponent<playerStats>().load();
-            if (Game.current.sceneSpecificMobs.ContainsKey(SceneManager.GetActiveScene().name) && Game.current.sceneSpecificMobs[SceneManager.GetActiveScene().name].Count > 0) loadMobs(mobs.transform);
-            if (Game.current.spells != null && spellBook != null)
-            {
+            if (Game.current.sceneSpecificMobs.ContainsKey(scene.name) && Game.current.sceneSpecificMobs[scene.name].Count > 0) loadMobs(mobs.transform);
+            if (scene.name != "spellCreation" && Game.current.spells != null && spellBook != null) //TODO change this check to be based on something else than the scene name
+            { 
                 loadSpells(spellBook.transform);
             }
         }
