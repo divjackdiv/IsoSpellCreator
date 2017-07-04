@@ -80,7 +80,7 @@ public class playerCombat : MonoBehaviour {
                             cancelSpell();
                         else
                         {
-                            if (Input.GetButton("Rotate"))
+                            if (Input.GetButtonDown("Rotate"))
                                 rotateSpell();
                             updateSpellPos();
                         }
@@ -179,8 +179,38 @@ public class playerCombat : MonoBehaviour {
     //updates the rotation of the spell
     void rotateSpell()
     {
-        //not yet implemented
+        foreach (Transform child in currentSpell.transform.GetChild(0))
+        {
+            foreach (Transform grandChild in child)
+            {
+                rotateAroundParent(grandChild);
+            }
+        }
     }
+
+    void rotateAroundParent(Transform child)
+    {
+        Vector2 pos = child.transform.localPosition;
+        if (pos.x > 0)
+        {
+            if (pos.y > 0)
+                child.localPosition = new Vector2(-pos.x, pos.y);
+            else
+                child.localPosition = new Vector2(pos.x, -pos.y);
+        }
+        else
+        {
+            if (pos.y > 0)
+                child.localPosition = new Vector2(pos.x, -pos.y);
+            else
+                child.localPosition = new Vector2(-pos.x, pos.y);
+        }
+        foreach (Transform grandChildren in child)
+        {
+            rotateAroundParent(grandChildren);
+        }
+    }
+
     //returns true if an appropriate tile has been found, so that the user may not create spells in walls.
     bool canPointAppear(Vector2 pos)
     {

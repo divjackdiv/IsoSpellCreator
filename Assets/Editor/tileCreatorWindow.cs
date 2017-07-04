@@ -12,9 +12,9 @@ public class tileCreatorWindow : EditorWindow
 
     // Add menu item named "My Window" to the Window menu
     [MenuItem("Window/tileCreatorWindow")]
-    void OnEnable()
+    static void OnEnable()
     {
-        EditorWindow window = EditorWindow.GetWindow(typeof(tileCreatorWindow));
+        EditorWindow.GetWindow(typeof(tileCreatorWindow));
         ShowWindow();
     }
 

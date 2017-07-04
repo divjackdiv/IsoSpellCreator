@@ -50,7 +50,6 @@ public class SpellPoint : MonoBehaviour {
                 if (tile != currentTile && tileOverlay != null)
                 {
                     currentTile = tile;
-
                     GameObject tileOvl = (GameObject) Instantiate(tileOverlay);
                     tileOvl.transform.parent = currentTile.transform;
                     tileOvl.transform.localPosition = new Vector3(0, 0, 0);

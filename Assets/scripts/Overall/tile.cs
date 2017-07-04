@@ -10,7 +10,12 @@ public class tile : MonoBehaviour {
     public List<GameObject> smallProps;
 
 	void Start(){
-        GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        if (taken)
+        {
+            if (takenBy == null)
+                taken = false;
+        }
+        resetSortingOrder(transform);
 	}
 
 	public bool takeTile(GameObject g){
@@ -32,6 +37,14 @@ public class tile : MonoBehaviour {
 	public GameObject getTakenBy(){
 		return takenBy;
 	}
-
-
+    
+    public void resetSortingOrder(Transform t)
+    {
+        if(t.GetComponent<SpriteRenderer>())
+            t.GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
+        foreach(Transform child in t)
+        {
+            resetSortingOrder(child);
+        }
+    }
 }
