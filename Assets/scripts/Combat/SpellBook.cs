@@ -96,7 +96,7 @@ public class SpellBook : MonoBehaviour {
                     point.transform.parent = pointsGO[p.getParentIndex()];
                     if (editing)
                     {
-                        point.GetComponent<LineRenderer>().SetVertexCount(2);
+                        point.GetComponent<LineRenderer>().positionCount = 2;
                         point.GetComponent<LineRenderer>().SetPosition(0, pointsGO[p.getParentIndex()].transform.position);
                         point.GetComponent<LineRenderer>().SetPosition(1, p.getPosition());
                         point.GetComponent<LineRenderer>().sortingLayerName = point.GetComponent<SpriteRenderer>().sortingLayerName;

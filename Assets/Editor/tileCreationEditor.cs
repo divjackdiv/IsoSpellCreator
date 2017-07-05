@@ -23,11 +23,15 @@ public class tileCreationEditor : Editor
                     {
                         gridManager.createTileSceneView(objToSpawn, mousePosition);
                     }
-                    else if (((GameObject)objToSpawn).layer > 9 && ((GameObject)objToSpawn).layer < 12)
-                    {
+                    else if (((GameObject)objToSpawn).layer == 10)
+                    { 
                         gridManager.createLargeObjSceneView(objToSpawn, mousePosition);
                     }
-                    else
+                    else if (((GameObject)objToSpawn).layer == 11)
+                    {
+                        gridManager.createCharacterSceneView(objToSpawn, mousePosition);
+                    }
+                    else if (((GameObject)objToSpawn).layer == 12)
                     {
                         gridManager.createSmallObjSceneView(objToSpawn, mousePosition);
                     }

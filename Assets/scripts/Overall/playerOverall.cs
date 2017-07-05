@@ -16,10 +16,6 @@ public class playerOverall : MonoBehaviour {
         path = new List<GameObject>();
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
     }
-    public bool isWalking()
-    {
-        return shouldWalk;
-    }
     void Update()
     {
         if (shouldWalk)
@@ -27,6 +23,11 @@ public class playerOverall : MonoBehaviour {
             walkAlongPath();
             GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
         }
+    }
+
+    public bool isWalking()
+    {
+        return shouldWalk;
     }
 
     void walkAlongPath()

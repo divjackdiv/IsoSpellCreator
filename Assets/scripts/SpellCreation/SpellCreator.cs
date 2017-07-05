@@ -154,7 +154,7 @@ public class SpellCreator : MonoBehaviour {
         {
             lineRenderer = currentObj.AddComponent<LineRenderer>();
         }
-        lineRenderer.SetVertexCount(2);
+        lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, startPos);
         lineRenderer.SetPosition(1, startPos);
         lineRenderer.sortingLayerName = currentObj.GetComponent<SpriteRenderer>().sortingLayerName;

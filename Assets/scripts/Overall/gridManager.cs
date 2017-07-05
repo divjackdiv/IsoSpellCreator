@@ -65,6 +65,21 @@ public class gridManager : MonoBehaviour {
         }
     }
 
+    public static void createCharacterSceneView(Object largeObj, Vector2 position)
+    {
+        position = nearestTilePos(position);
+        RaycastHit2D hit = Physics2D.Raycast(position, Vector2.zero, Mathf.Infinity);
+        if (hit.collider != null)
+        {
+            Transform tile = hit.collider.transform;
+            if (tile.GetComponent<tile>().getTakenBy() == null)
+            {
+                GameObject t = (GameObject)Instantiate(largeObj, position, Quaternion.identity);
+                tile.GetComponent<tile>().takeTile(t);
+            }
+        }
+    }
+
     public static void createSmallObjSceneView(Object largeObj, Vector2 position)
     {
         position = nearestTilePos(position);
@@ -79,9 +94,9 @@ public class gridManager : MonoBehaviour {
                 tile.GetComponent<tile>().smallProps.Add(t);
             }
         }
-    }    
+    }
 
-    //returns the nearest tile possible position, even if it's taken
+    //returns the nearest tile to the position, even if it's taken
     public static Vector2 nearestTilePos(Vector2 pos)
     {
         Vector2 nearestPos = new Vector2(0,0);

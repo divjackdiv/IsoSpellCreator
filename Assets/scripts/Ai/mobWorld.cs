@@ -4,22 +4,22 @@ using System.Collections.Generic;
 
 public class mobWorld : MonoBehaviour {
 
-    public List<GameObject> roamingTargets;
-    public GameObject overallManager;
-    public int targetIndex = 0;
+    public int roamingRange; //how far should the mob be able to roam from it's anchor, in tiles
+    public float waitTime;
 
-
+    private GameObject overallManager;
+    GameObject roamingAnchor;
+    GameObject roamingTarget;
     GameObject player;
     float detectionRange;
     int state;
     bool waiting;
 
-    void Awake()
-    { 
+    void Start ()
+    {
+        overallManager = GetComponent<mobOverall>().overallManager;
         player = overallManager.GetComponent<overallManager>().player;
-    }
-
-    void Start () {
+        roamingAnchor = PathFinding.getTileAt(transform.position);
         detectionRange = GetComponent<mobStats>().detectionRange;
 		state = 0;
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
@@ -34,15 +34,7 @@ public class mobWorld : MonoBehaviour {
 				if(!waiting) StartCoroutine(waitThenWalk());
 			}
 			else if(state == 1){
-                state = 0;
-                waiting = true;
-                GameObject currentTile = PathFinding.getTileAt(transform.position);
-                if(targetIndex < roamingTargets.Count)
-                { 
-                    List<GameObject> path = PathFinding.aStarPathFinding(currentTile, roamingTargets[targetIndex++]); //Can be stored for more efficiency //
-                    if (targetIndex >= roamingTargets.Count) targetIndex = 0;
-                    GetComponent<mobOverall>().updatePath(path);
-                }         
+                roam();   
             }
 		}
 	}
@@ -62,9 +54,26 @@ public class mobWorld : MonoBehaviour {
         waiting = false;
     }
 
+    void roam()
+    {
+        state = 0;
+        waiting = true;
+        GameObject currentTile = PathFinding.getTileAt(transform.position);
+        Vector2 roamingTargetPos = roamingAnchor.transform.position;
+        roamingTargetPos.x += (Random.Range(-roamingRange * 100, roamingRange * 100) / 200f);
+        roamingTargetPos.y += (Random.Range(-roamingRange * 100, roamingRange * 100) / 400f);
+        GameObject newTarget= PathFinding.getTileAt(roamingTargetPos);
+        if (newTarget != null)
+            roamingTarget = PathFinding.findNearestFreeTile(newTarget);
+        else
+            roamingTarget = PathFinding.findNearestFreeTile(roamingAnchor);
+        List<GameObject> path = PathFinding.aStarPathFinding(currentTile, roamingTarget);
+        GetComponent<mobOverall>().updatePath(path);
+    }
+
     IEnumerator waitThenWalk(){
 		waiting = true;
-		yield return new WaitForSeconds(Random.Range(1.0f, 3.0f));
+		yield return new WaitForSeconds(Random.Range(waitTime - waitTime/3, waitTime + waitTime / 3));
 		waiting = false;
 		state = 1;
 	}

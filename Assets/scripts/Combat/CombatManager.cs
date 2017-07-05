@@ -9,35 +9,27 @@ public class CombatManager : MonoBehaviour {
 
     GameObject player;
     int index;
-	bool characterPlayed;
-	bool combatStarted;
-	// Use this for initialization
+    int charactersGettingReady;
+
+    // Use this for initialization
     void Awake()
     {
         player = overallManager.GetComponent<overallManager>().player;
+        charactersGettingReady = 0;
     }
 	void Start () {
 		index = 0;
 	}
-	
-    //Can probably find a way where you don't need to call update here for efficiency
-	void Update () {
-		if(combatStarted && characterPlayed){
-			if(characters.Count == 1) endCombat();
-			if(index < characters.Count){
-				permissionToPlay(characters[index]);
-			}
-			else{
-				nextTurn();
-				index = 0;
-			}
-		}
-	
-	}
 
-	public void nextTurn(){
-		turn++;
-	}
+    public void nextCharacter()
+    {
+        if (index >= characters.Count)
+        {
+            turn++;
+            index = 0;
+        }
+        permissionToPlay(characters[index]);
+    }
 
 	public void startCombat(GameObject enemies){
 		characters = new List<GameObject>();
@@ -54,13 +46,18 @@ public class CombatManager : MonoBehaviour {
             child.GetComponent<mobOverall>().moveToNearestTile();
 			child.GetComponent<mobCombat>().startCombat();
 		}
-		characterPlayed = true;
-		combatStarted = true;
-	}
+        charactersGettingReady = characters.Count;
+    }
 
-	//permissionToPlay method tells a mob or the player it is his turn to play. This allows it to take an action
-	public void permissionToPlay(GameObject character){
-		characterPlayed = false;
+    public void characterReady()
+    {
+        charactersGettingReady -= 1;
+        if (charactersGettingReady == 0)
+            nextCharacter(); //effectively start the combat
+    }
+
+    //permissionToPlay method tells a mob or the player it is his turn to play. This allows it to take an action
+    public void permissionToPlay(GameObject character){
 		if(character == player){
 			player.GetComponent<playerCombat>().play();
 		}
@@ -69,14 +66,14 @@ public class CombatManager : MonoBehaviour {
 		}
 	}
 
-	public void finishedPlaying(){
-		index++;
-		characterPlayed = true;
-	}
-
+    public void finishedPlaying()
+    {
+        index++;
+        if (characters.Count == 1) endCombat(); //or player died
+        else nextCharacter();
+    }
+    
 	public void endCombat(){
-		combatStarted = false;
-		characterPlayed = true;
 		player.GetComponent<playerCombat>().endCombat();
 		characters.Remove(player);
 		foreach(GameObject g in characters){

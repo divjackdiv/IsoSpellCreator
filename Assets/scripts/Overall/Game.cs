@@ -7,8 +7,8 @@ public class Game {
 	public static Game current;
 
     public playerData playerData;
-    public Dictionary<string, Dictionary<int, mobData>> sceneSpecificMobs = new Dictionary<string, Dictionary<int, mobData>>();//area name, mobs
-    public List<SpellData> spells = new List<SpellData>();
+    public Dictionary<string, Dictionary<int, mobData>> sceneSpecificMobs;//area name, mobs
+    public List<SpellData> spells;
     public string fileName;
 	public string yearDate;
 	public string monthDate;
@@ -21,5 +21,7 @@ public class Game {
     public int editingSpell;
 
 	public Game(){
-	}
+        spells = new List<SpellData>();
+        sceneSpecificMobs = new Dictionary<string, Dictionary<int, mobData>>();
+    }
 }

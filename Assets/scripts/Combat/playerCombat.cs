@@ -32,8 +32,9 @@ public class playerCombat : MonoBehaviour {
     bool attackPhase;
     bool stillDrawn; //are paths still drawn and need to be cleaned up?
     bool isWalking;
-    
-	void Start ()
+    bool movingToNearestTile;
+
+    void Start ()
     {
         combatManager = overallManager.GetComponent<overallManager>().combatManager;
         spellBook = overallManager.GetComponent<overallManager>().spellBook;
@@ -93,10 +94,10 @@ public class playerCombat : MonoBehaviour {
                 }
             }
         }
-        if(waitingForSpells && spellsStillRunning <= 0){
-        	waitingForSpells = false;
-			combatManager.GetComponent<CombatManager>().finishedPlaying();
-			combatManager.GetComponent<CombatManager>().nextTurn(); // calling next turn from here will be changed later, the player shouldn't always be the last person to play
+        else if(waitingForSpells && spellsStillRunning <= 0)
+        {
+            waitingForSpells = false;
+            combatManager.GetComponent<CombatManager>().finishedPlaying();
         }
 	}
 
@@ -140,8 +141,8 @@ public class playerCombat : MonoBehaviour {
 				foreach (GameObject s in spells){
 					spellsStillRunning++;
 	       			s.GetComponent<SpellScript>().nextTurn();
-                    waitingForSpells = true;
                 }
+                waitingForSpells = true;
                 playing = false;
                 attackPhase = false;
             }
@@ -191,23 +192,10 @@ public class playerCombat : MonoBehaviour {
     void rotateAroundParent(Transform child)
     {
         Vector2 pos = child.transform.localPosition;
-        if (pos.x > 0)
-        {
-            if (pos.y > 0)
-                child.localPosition = new Vector2(-pos.x, pos.y);
-            else
-                child.localPosition = new Vector2(pos.x, -pos.y);
-        }
-        else
-        {
-            if (pos.y > 0)
-                child.localPosition = new Vector2(pos.x, -pos.y);
-            else
-                child.localPosition = new Vector2(-pos.x, pos.y);
-        }
+        child.localPosition = new Vector2(-2 * pos.y, pos.x / 2);
         foreach (Transform grandChildren in child)
         {
-            rotateAroundParent(grandChildren);
+            rotateAroundParent(child);
         }
     }
 
@@ -342,6 +330,11 @@ public class playerCombat : MonoBehaviour {
     public void finishedWalking()
     {
         isWalking = false;
+        if (movingToNearestTile)
+        {
+            movingToNearestTile = false;
+            combatManager.GetComponent<CombatManager>().characterReady();
+        }
     }
 
 	public void addSpell(GameObject spell){
@@ -378,7 +371,9 @@ public class playerCombat : MonoBehaviour {
 		//menu appears;
 	}
 	
-	public void startCombat(){
+	public void startCombat()
+    {
+        movingToNearestTile = true;
         GetComponent<playerOverall>().moveToNearestTile();
 	}
 

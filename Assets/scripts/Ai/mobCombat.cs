@@ -5,8 +5,6 @@ using System.Collections.Generic;
 public class mobCombat : MonoBehaviour {
 
     public GameObject target;
-    public GameObject spellCreator;
-    public GameObject combatManager;
     public float walkingSpeed; //PURELY COSMETIC
     public int mobType;
     /*Mob types are : 
@@ -18,6 +16,8 @@ public class mobCombat : MonoBehaviour {
 
 
     Animator animator;
+    GameObject overallManager;
+    GameObject combatManager;
     GameObject currentTile;
     GameObject nextTile;
     float animCounter;
@@ -34,8 +34,11 @@ public class mobCombat : MonoBehaviour {
     //GameObject currentGoal;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
+        overallManager = GetComponent<mobOverall>().overallManager;
+        combatManager = overallManager.GetComponent<overallManager>().combatManager;
+        state = 0;
         animCounter = 0;
         animator = GetComponent<Animator>();
     }
@@ -51,12 +54,10 @@ public class mobCombat : MonoBehaviour {
 			}
 		}
 		else {
-            if (state == -1) ;
-			else if (state == 0){
+            if (state == 0){
 				animator.SetInteger("state", 0); 	//State 0 is Idle
 			}
 			else if(state == 1){
-                //UnityEditor.EditorApplication.isPaused = true;
                 currentTile = PathFinding.getTileAt(transform.position);
                 List<GameObject> path = PathFinding.aStarPathFinding(currentTile, nextTile);
                 int howMuchShouldIWalk = currentMovementPoints;
@@ -70,7 +71,7 @@ public class mobCombat : MonoBehaviour {
 				attack();
 			}
 			else if(state == 4){	//To avoid any confusion between the animation states and the states used for this AI i will not use the value 3 for state
-									// as it is the value for the animation state of dying (see line 45)
+									// as it is the value for the animation state of dying (see line 49)
 				if(playing) endPlay();		   		//State 4 is finishing your turn
 				else state = 0;
 			}

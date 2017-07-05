@@ -6,13 +6,11 @@ using System.Collections.Generic;
 public class playerWorld : MonoBehaviour {
 
     List<GameObject> path;
-    int groundLayerMask;
     bool creatingSpell;
 
 
     void Start () {
         path = new List<GameObject>();
-        groundLayerMask = 1<<gridManager.groundLayerS;
 	}
 	
 	// Update is called once per frame

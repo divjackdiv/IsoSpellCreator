@@ -86,7 +86,7 @@ public class MainMenu : MonoBehaviour {
     }
     public void loadButton(Game g, Transform parent, bool interactive, int index){
 		GameObject s = (GameObject) Instantiate(SaveTemplate);
-		s.transform.parent = parent;
+		s.transform.SetParent(parent);
 		s.transform.position = new Vector2(s.transform.parent.position.x,s.transform.parent.position.y)  + startPos;
 		startPos.y -= displacement;
 		s.transform.localScale = new Vector3(1,1,1);	

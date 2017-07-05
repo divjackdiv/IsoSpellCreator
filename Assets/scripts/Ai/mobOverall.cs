@@ -8,21 +8,25 @@ public class mobOverall : MonoBehaviour
     
     public float walkSpeed;
 
+    public GameObject overallManager;
+    GameObject combatManager;
     Animator animator;
     List<GameObject> path;
     GameObject currentGoal; //next tile normally
     GameObject currentTile;
-    int range;
     bool shouldWalk;
-
+    bool movingToNearestTile;
+    
     void Start()
     {
+        if(overallManager == null)
+            overallManager = GameObject.Find("overallManager");
+        combatManager = overallManager.GetComponent<overallManager>().combatManager;
         animator = GetComponent<Animator>();
         currentTile = PathFinding.getTileAt(transform.position);
         shouldWalk = false;
         path = new List<GameObject>();
         GetComponent<SpriteRenderer>().sortingOrder = Mathf.RoundToInt(transform.position.y * 100f) * -1;
-        range = GetComponent<mobStats>().range;
     }
 
     void Update()
@@ -39,6 +43,7 @@ public class mobOverall : MonoBehaviour
         if (path.Count <= 0)
         {
             shouldWalk = false;
+            animator.SetInteger("state", 0);
             if (GetComponent<mobCombat>().enabled)
             {
                 GetComponent<mobCombat>().finishedWalking();
@@ -46,6 +51,11 @@ public class mobOverall : MonoBehaviour
             else
             {
                 GetComponent<mobWorld>().finishedWalking();
+            }
+            if (movingToNearestTile)
+            {
+                combatManager.GetComponent<CombatManager>().characterReady();
+                movingToNearestTile = false;
             }
             return;
         }
@@ -96,6 +106,7 @@ public class mobOverall : MonoBehaviour
         }           
         path = PathFinding.aStarPathFinding(currentTile, nearestTile);
         shouldWalk = true;
+        movingToNearestTile = true;
     }
     
     public bool takeTile(Vector2 pos)
